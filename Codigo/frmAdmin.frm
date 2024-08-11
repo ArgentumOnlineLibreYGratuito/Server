@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin VB.Form frmAdmin 
    BackColor       =   &H00C0C0C0&
-   Caption         =   "Administración del servidor"
+   Caption         =   "AdministraciÃ³n del servidor"
    ClientHeight    =   3135
    ClientLeft      =   60
    ClientTop       =   450
@@ -96,18 +96,11 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub cboPjs_Change()
-Call ActualizaPjInfo
-End Sub
-
-Private Sub cboPjs_Click()
-Call ActualizaPjInfo
-End Sub
 
 Private Sub Command1_Click()
 Dim tIndex As Long
 
-tIndex = NameIndex(cboPjs.Text)
+tIndex = NameIndex(cboPjs.text)
 If tIndex > 0 Then
     Call SendData(SendTarget.ToAll, 0, PrepareMessageConsoleMsg("Servidor> " & UserList(tIndex).name & " ha sido hechado. ", FontTypeNames.FONTTYPE_SERVER))
     Call CloseSocket(tIndex)
@@ -138,14 +131,3 @@ Call EcharPjsNoPrivilegiados
 
 End Sub
 
-Private Sub ActualizaPjInfo()
-Dim tIndex As Long
-
-tIndex = NameIndex(cboPjs.Text)
-If tIndex > 0 Then
-    With UserList(tIndex)
-        Text1.Text = .outgoingData.length & " elementos en cola." & vbCrLf
-    End With
-End If
-
-End Sub

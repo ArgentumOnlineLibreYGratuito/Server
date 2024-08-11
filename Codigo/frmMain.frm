@@ -28,17 +28,6 @@ Begin VB.Form frmMain
    ScaleWidth      =   5190
    StartUpPosition =   2  'CenterScreen
    WindowState     =   1  'Minimized
-   Begin VB.Timer packetResend 
-      Interval        =   10
-      Left            =   480
-      Top             =   60
-   End
-   Begin VB.Timer securityTimer 
-      Enabled         =   0   'False
-      Interval        =   10000
-      Left            =   960
-      Top             =   60
-   End
    Begin VB.CheckBox SUPERLOG 
       Caption         =   "log"
       Height          =   255
@@ -242,7 +231,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Argentum Online 0.11.6
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÃ¡rquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -264,10 +253,10 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÃºmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÃ³digo Postal 1900
+'Pablo Ignacio MÃ¡rquez
 
 Option Explicit
 
@@ -326,7 +315,6 @@ Sub CheckIdleUser()
                         If UserList(UserList(iUserIndex).ComUsu.DestUsu).ComUsu.DestUsu = iUserIndex Then
                             Call WriteConsoleMsg(UserList(iUserIndex).ComUsu.DestUsu, "Comercio cancelado por el otro usuario.", FontTypeNames.FONTTYPE_TALK)
                             Call FinComerciarUsu(UserList(iUserIndex).ComUsu.DestUsu)
-                            Call FlushBuffer(UserList(iUserIndex).ComUsu.DestUsu) 'flush the buffer to send the message right away
                         End If
                     End If
                     Call FinComerciarUsu(iUserIndex)
@@ -352,14 +340,11 @@ End If
 
 Call PasarSegundo 'sistema de desconexion de 10 segs
 
-Call ActualizaEstadisticasWeb
-Call ActualizaStatsES
-
 Exit Sub
 
 errhand:
 
-Call LogError("Error en Timer Auditoria. Err: " & Err.description & " - " & Err.Number)
+Call LogError("Error en Timer Auditoria. Err: " & Err.Description & " - " & Err.Number)
 Resume Next
 
 End Sub
@@ -394,9 +379,9 @@ End If
     
 Minutos = Minutos + 1
 
-'¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
 Call ModAreas.AreasOptimizacion
-'¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
 
 'Actualizamos el centinela
 Call modCentinela.PasarMinutoCentinela
@@ -432,7 +417,7 @@ Close #N
 
 Exit Sub
 Errhandler:
-    Call LogError("Error en TimerAutoSave " & Err.Number & ": " & Err.description)
+    Call LogError("Error en TimerAutoSave " & Err.Number & ": " & Err.Description)
     Resume Next
 End Sub
 
@@ -449,7 +434,7 @@ Call LogCriticEvent("Lastuser: " & LastUser & " NextOpenUser: " & NextOpenUser)
 End Sub
 
 Private Sub Command1_Click()
-Call SendData(SendTarget.ToAll, 0, PrepareMessageShowMessageBox(BroadMsg.Text))
+Call SendData(SendTarget.ToAll, 0, PrepareMessageShowMessageBox(BroadMsg.text))
 End Sub
 
 Public Sub InitMain(ByVal f As Byte)
@@ -463,7 +448,7 @@ End If
 End Sub
 
 Private Sub Command2_Click()
-Call SendData(SendTarget.ToAll, 0, PrepareMessageConsoleMsg("Servidor> " & BroadMsg.Text, FontTypeNames.FONTTYPE_SERVER))
+Call SendData(SendTarget.ToAll, 0, PrepareMessageConsoleMsg("Servidor> " & BroadMsg.text, FontTypeNames.FONTTYPE_SERVER))
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -504,18 +489,7 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
 On Error Resume Next
 
-'Save stats!!!
-Call Statistics.DumpStatistics
-
 Call QuitarIconoSystray
-
-#If UsarQueSocket = 1 Then
-Call LimpiaWsApi
-#ElseIf UsarQueSocket = 0 Then
-Socket1.Cleanup
-#ElseIf UsarQueSocket = 2 Then
-Serv.Detener
-#End If
 
 Dim LoopC As Integer
 
@@ -558,7 +532,7 @@ On Error GoTo hayerror
         With UserList(iUserIndex)
            'Conexion activa?
            If .ConnID <> -1 Then
-                '¿User valido?
+                'Â¿User valido?
                 
                 If .ConnIDValida And .flags.UserLogged Then
                     
@@ -681,20 +655,20 @@ On Error GoTo hayerror
                 End If 'UserLogged
                 
                 'If there is anything to be sent, we send it
-                Call FlushBuffer(iUserIndex)
+                'TODO Call FlushBuffer(iUserIndex)
             End If
         End With
     Next iUserIndex
 Exit Sub
 
 hayerror:
-    LogError ("Error en GameTimer: " & Err.description & " UserIndex = " & iUserIndex)
+    LogError ("Error en GameTimer: " & Err.Description & " UserIndex = " & iUserIndex)
 End Sub
 
 Private Sub mnuCerrar_Click()
 
 
-If MsgBox("¡¡Atencion!! Si cierra el servidor puede provocar la perdida de datos. ¿Desea hacerlo de todas maneras?", vbYesNo) = vbYes Then
+If MsgBox("Â¡Â¡Atencion!! Si cierra el servidor puede provocar la perdida de datos. Â¿Desea hacerlo de todas maneras?", vbYesNo) = vbYes Then
     Dim f
     For Each f In Forms
         Unload f
@@ -756,37 +730,6 @@ Next npc
 
 End Sub
 
-Private Sub packetResend_Timer()
-'***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 04/01/07
-'Attempts to resend to the user all data that may be enqueued.
-'***************************************************
-On Error GoTo Errhandler:
-    Dim i As Long
-    
-    For i = 1 To MaxUsers
-        If UserList(i).ConnIDValida Then
-            If UserList(i).outgoingData.length > 0 Then
-                Call EnviarDatosASlot(i, UserList(i).outgoingData.ReadASCIIStringFixed(UserList(i).outgoingData.length))
-            End If
-        End If
-    Next i
-
-Exit Sub
-
-Errhandler:
-    LogError ("Error en packetResend - Error: " & Err.Number & " - Desc: " & Err.description)
-    Resume Next
-End Sub
-
-Private Sub securityTimer_Timer()
-
-#If SeguridadAlkon Then
-    Call Security.SecurityCheck
-#End If
-
-End Sub
 
 Private Sub TIMER_AI_Timer()
 
@@ -861,7 +804,7 @@ End If
 
 Exit Sub
 Errhandler:
-Call LogError("tLluvia " & Err.Number & ": " & Err.description)
+Call LogError("tLluvia " & Err.Number & ": " & Err.Description)
 End Sub
 
 Private Sub tLluviaEvent_Timer()
@@ -919,7 +862,7 @@ For i = 1 To LastUser
     If UserList(i).flags.UserLogged Then
         If MapData(UserList(i).Pos.map, UserList(i).Pos.X, UserList(i).Pos.Y).trigger = eTrigger.ANTIPIQUETE Then
             UserList(i).Counters.PiqueteC = UserList(i).Counters.PiqueteC + 1
-            Call WriteConsoleMsg(i, "Estás obstruyendo la via pública, muévete o serás encarcelado!!!", FontTypeNames.FONTTYPE_INFO)
+            Call WriteConsoleMsg(i, "EstÃ¡s obstruyendo la via pÃºblica, muÃ©vete o serÃ¡s encarcelado!!!", FontTypeNames.FONTTYPE_INFO)
             
             If UserList(i).Counters.PiqueteC > 23 Then
                 UserList(i).Counters.PiqueteC = 0
@@ -939,14 +882,14 @@ For i = 1 To LastUser
             NuevaA = False
             NuevoL = False
             If Not modGuilds.m_ValidarPermanencia(i, True, NuevaA, NuevoL) Then
-                Call WriteConsoleMsg(i, "Has sido expulsado del clan. ¡El clan ha sumado un punto de antifacción!", FontTypeNames.FONTTYPE_GUILD)
+                Call WriteConsoleMsg(i, "Has sido expulsado del clan. Â¡El clan ha sumado un punto de antifacciÃ³n!", FontTypeNames.FONTTYPE_GUILD)
             End If
             If NuevaA Then
-                Call SendData(SendTarget.ToGuildMembers, GI, PrepareMessageConsoleMsg("¡El clan ha pasado a tener alineación neutral!", FontTypeNames.FONTTYPE_GUILD))
+                Call SendData(SendTarget.ToGuildMembers, GI, PrepareMessageConsoleMsg("Â¡El clan ha pasado a tener alineaciÃ³n neutral!", FontTypeNames.FONTTYPE_GUILD))
                 Call LogClanes("El clan cambio de alineacion!")
             End If
             If NuevoL Then
-                Call SendData(SendTarget.ToGuildMembers, GI, PrepareMessageConsoleMsg("¡El clan tiene un nuevo líder!", FontTypeNames.FONTTYPE_GUILD))
+                Call SendData(SendTarget.ToGuildMembers, GI, PrepareMessageConsoleMsg("Â¡El clan tiene un nuevo lÃ­der!", FontTypeNames.FONTTYPE_GUILD))
                 Call LogClanes("El clan tiene nuevo lider!")
             End If
         End If
@@ -954,7 +897,7 @@ For i = 1 To LastUser
         If Segundos >= 18 Then
             If Segundos >= 18 Then UserList(i).Counters.Pasos = 0
         End If
-                Call FlushBuffer(i)
+
     End If
     
 Next i
@@ -964,107 +907,5 @@ If Segundos >= 18 Then Segundos = 0
 Exit Sub
 
 Errhandler:
-    Call LogError("Error en tPiqueteC_Timer " & Err.Number & ": " & Err.description)
+    Call LogError("Error en tPiqueteC_Timer " & Err.Number & ": " & Err.Description)
 End Sub
-
-
-
-
-
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-'''''''''''''''''USO DEL CONTROL TCPSERV'''''''''''''''''''''''''''
-'''''''''''''Compilar con UsarQueSocket = 3''''''''''''''''''''''''
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-
-#If UsarQueSocket = 3 Then
-
-Private Sub TCPServ_Eror(ByVal Numero As Long, ByVal Descripcion As String)
-    Call LogError("TCPSERVER SOCKET ERROR: " & Numero & "/" & Descripcion)
-End Sub
-
-Private Sub TCPServ_NuevaConn(ByVal ID As Long)
-On Error GoTo errorHandlerNC
-
-    ESCUCHADAS = ESCUCHADAS + 1
-    Escuch.Caption = ESCUCHADAS
-    
-    Dim i As Integer
-    
-    Dim NewIndex As Integer
-    NewIndex = NextOpenUser
-    
-    If NewIndex <= MaxUsers Then
-        'call logindex(NewIndex, "******> Accept. ConnId: " & ID)
-        
-        TCPServ.SetDato ID, NewIndex
-        
-        If aDos.MaxConexiones(TCPServ.GetIP(ID)) Then
-            Call aDos.RestarConexion(TCPServ.GetIP(ID))
-            Call ResetUserSlot(NewIndex)
-            Exit Sub
-        End If
-
-        If NewIndex > LastUser Then LastUser = NewIndex
-
-        UserList(NewIndex).ConnID = ID
-        UserList(NewIndex).ip = TCPServ.GetIP(ID)
-        UserList(NewIndex).ConnIDValida = True
-        Set UserList(NewIndex).CommandsBuffer = New CColaArray
-        
-        For i = 1 To BanIps.Count
-            If BanIps.Item(i) = TCPServ.GetIP(ID) Then
-                Call ResetUserSlot(NewIndex)
-                Exit Sub
-            End If
-        Next i
-
-    Else
-        Call CloseSocket(NewIndex, True)
-        LogCriticEvent ("NEWINDEX > MAXUSERS. IMPOSIBLE ALOCATEAR SOCKETS")
-    End If
-
-Exit Sub
-
-errorHandlerNC:
-Call LogError("TCPServer::NuevaConexion " & Err.description)
-End Sub
-
-Private Sub TCPServ_Close(ByVal ID As Long, ByVal MiDato As Long)
-    On Error GoTo eh
-    '' No cierro yo el socket. El on_close lo cierra por mi.
-    'call logindex(MiDato, "******> Remote Close. ConnId: " & ID & " Midato: " & MiDato)
-    Call CloseSocket(MiDato, False)
-Exit Sub
-eh:
-    Call LogError("Ocurrio un error en el evento TCPServ_Close. ID/miDato:" & ID & "/" & MiDato)
-End Sub
-
-Private Sub TCPServ_Read(ByVal ID As Long, Datos As Variant, ByVal Cantidad As Long, ByVal MiDato As Long)
-On Error GoTo errorh
-
-With UserList(MiDato)
-    Datos = StrConv(StrConv(Datos, vbUnicode), vbFromUnicode)
-    
-    Call .incomingData.WriteASCIIStringFixed(Datos)
-    
-    If .ConnID <> -1 Then
-        Call HandleIncomingData(MiDato)
-    Else
-        Exit Sub
-    End If
-End With
-
-Exit Sub
-
-errorh:
-Call LogError("Error socket read: " & MiDato & " dato:" & RD & " userlogged: " & UserList(MiDato).flags.UserLogged & " connid:" & UserList(MiDato).ConnID & " ID Parametro" & ID & " error:" & Err.description)
-
-End Sub
-
-#End If
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-''''''''''''''FIN  USO DEL CONTROL TCPSERV'''''''''''''''''''''''''
-'''''''''''''Compilar con UsarQueSocket = 3''''''''''''''''''''''''
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-

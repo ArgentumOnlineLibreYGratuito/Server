@@ -3,7 +3,7 @@ Attribute VB_Name = "ModAreas"
 ' ModAreas.bas - Module to allow the usage of areas instead of maps.
 ' Saves a lot of bandwidth.
 '
-' Original Idea by Juan MartÌn Sotuyo Dodero (Maraxus)
+' Original Idea by Juan Mart√≠n Sotuyo Dodero (Maraxus)
 ' (juansotuyo@gmail.com)
 ' Implemented by Lucio N. Tourrilhes (DuNga)
 '**************************************************************
@@ -22,7 +22,7 @@ Attribute VB_Name = "ModAreas"
 'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
 '**************************************************************************
 
-' Modulo de envio por areas compatible con la versiÛn 9.10.x ... By DuNga
+' Modulo de envio por areas compatible con la versi√≥n 9.10.x ... By DuNga
 
 Option Explicit
 
@@ -49,7 +49,7 @@ End Type
 Public Const USER_NUEVO As Byte = 255
 
 'Cuidado:
-' °°°LAS AREAS EST¡N HARDCODEADAS!!!
+' ¬°¬°¬°LAS AREAS EST√ÅN HARDCODEADAS!!!
 Private CurDay As Byte
 Private CurHour As Byte
 
@@ -80,7 +80,7 @@ Public Sub InitAreas()
     
     For LoopC = 1 To 100
         For loopX = 1 To 100
-            'Usamos 121 IDs de area para saber si pasasamos de area "m·s r·pido"
+            'Usamos 121 IDs de area para saber si pasasamos de area "m√°s r√°pido"
             AreasInfo(LoopC, loopX) = (LoopC \ 9 + 1) * (loopX \ 9 + 1)
         Next loopX
     Next LoopC
@@ -103,7 +103,7 @@ Public Sub AreasOptimizacion()
 '**************************************************************
 'Author: Lucio N. Tourrilhes (DuNga)
 'Last Modify Date: Unknow
-'Es la funciÛn de autooptimizacion.... la idea es no mandar redimensionando arrays grandes todo el tiempo
+'Es la funci√≥n de autooptimizacion.... la idea es no mandar redimensionando arrays grandes todo el tiempo
 '**************************************************************
     Dim LoopC As Long
     Dim tCurDay As Byte
@@ -133,7 +133,7 @@ Public Sub CheckUpdateNeededUser(ByVal UserIndex As Integer, ByVal Head As Byte)
 '**************************************************************
 'Author: Lucio N. Tourrilhes (DuNga)
 'Last Modify Date: Unknow
-'Es la funciÛn clave del sistema de areas... Es llamada al mover un user
+'Es la funci√≥n clave del sistema de areas... Es llamada al mover un user
 '**************************************************************
     If UserList(UserIndex).AreasInfo.AreaID = AreasInfo(UserList(UserIndex).Pos.X, UserList(UserIndex).Pos.Y) Then Exit Sub
     
@@ -217,7 +217,7 @@ Public Sub CheckUpdateNeededUser(ByVal UserIndex As Integer, ByVal Head As Byte)
                             Call WriteSetInvisible(TempInt, UserList(UserIndex).Char.CharIndex, True)
                         End If
                         
-                        Call FlushBuffer(TempInt)
+                        'TODO Call FlushBuffer(TempInt)
                     
                     ElseIf Head = USER_NUEVO Then
                         Call MakeUserChar(False, UserIndex, UserIndex, map, X, Y)
@@ -379,7 +379,7 @@ Public Sub AgregarUser(ByVal UserIndex As Integer, ByVal map As Integer)
 '**************************************************************
 'Author: Lucio N. Tourrilhes (DuNga)
 'Last Modify Date: 04/01/2007
-'Modified by Juan MartÌn Sotuyo Dodero (Maraxus)
+'Modified by Juan Mart√≠n Sotuyo Dodero (Maraxus)
 '   - Now the method checks for repetead users instead of trusting parameters.
 '   - If the character is new to the map, update it
 '**************************************************************

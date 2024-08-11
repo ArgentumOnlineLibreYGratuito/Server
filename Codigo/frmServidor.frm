@@ -25,7 +25,7 @@ Begin VB.Form frmServidor
       EndProperty
       Height          =   255
       Left            =   1920
-      TabIndex        =   28
+      TabIndex        =   24
       Top             =   6180
       Width           =   1455
    End
@@ -46,7 +46,7 @@ Begin VB.Form frmServidor
          LargeChange     =   50
          Left            =   4320
          SmallChange     =   17
-         TabIndex        =   26
+         TabIndex        =   22
          Top             =   0
          Width           =   255
       End
@@ -74,7 +74,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   29
+            TabIndex        =   25
             Top             =   4920
             Width           =   4095
          End
@@ -91,12 +91,12 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   25
+            TabIndex        =   21
             Top             =   4680
             Width           =   4095
          End
          Begin VB.CommandButton Command22 
-            Caption         =   "Administraci髇"
+            Caption         =   "Administraci贸n"
             BeginProperty Font 
                Name            =   "Tahoma"
                Size            =   8.25
@@ -159,7 +159,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   27
+            TabIndex        =   23
             Top             =   3720
             Width           =   4095
          End
@@ -193,7 +193,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   30
+            TabIndex        =   26
             Top             =   3240
             Width           =   4095
          End
@@ -248,74 +248,6 @@ Begin VB.Form frmServidor
             Top             =   2520
             Width           =   4095
          End
-         Begin VB.CommandButton Command13 
-            Caption         =   "Debug listening socket"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   120
-            TabIndex        =   15
-            Top             =   2280
-            Width           =   4095
-         End
-         Begin VB.CommandButton Command12 
-            Caption         =   "Debug Npcs"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   120
-            TabIndex        =   16
-            Top             =   2040
-            Width           =   4095
-         End
-         Begin VB.CommandButton Command11 
-            Caption         =   "Stats de los slots"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   120
-            TabIndex        =   17
-            Top             =   1800
-            Width           =   4095
-         End
-         Begin VB.CommandButton Command10 
-            Caption         =   "Trafico"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   120
-            TabIndex        =   18
-            Top             =   1560
-            Width           =   4095
-         End
          Begin VB.CommandButton Command9 
             Caption         =   "Reload Lista Nombres Prohibidos"
             BeginProperty Font 
@@ -329,7 +261,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   19
+            TabIndex        =   15
             Top             =   1320
             Width           =   4095
          End
@@ -346,7 +278,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   20
+            TabIndex        =   16
             Top             =   1080
             Width           =   4095
          End
@@ -363,7 +295,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   21
+            TabIndex        =   17
             Top             =   840
             Width           =   4095
          End
@@ -381,7 +313,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   22
+            TabIndex        =   18
             Top             =   600
             Width           =   4095
          End
@@ -398,7 +330,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   23
+            TabIndex        =   19
             Top             =   360
             Width           =   4095
          End
@@ -415,7 +347,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   24
+            TabIndex        =   20
             Top             =   120
             Width           =   4095
          End
@@ -528,7 +460,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Argentum Online 0.11.6
-'Copyright (C) 2002 M醨quez Pablo Ignacio
+'Copyright (C) 2002 M谩rquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -550,32 +482,16 @@ Attribute VB_Exposed = False
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 n鷐ero 983 piso 7 dto A
+'Calle 3 n煤mero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'C骴igo Postal 1900
-'Pablo Ignacio M醨quez
+'C贸digo Postal 1900
+'Pablo Ignacio M谩rquez
 
 Option Explicit
 
 Private Sub Command1_Click()
 Call LoadOBJData
 
-End Sub
-
-Private Sub Command10_Click()
-frmTrafic.Show
-End Sub
-
-Private Sub Command11_Click()
-frmConID.Show
-End Sub
-
-Private Sub Command12_Click()
-frmDebugNpc.Show
-End Sub
-
-Private Sub Command13_Click()
-frmDebugSocket.Visible = True
 End Sub
 
 Private Sub Command14_Click()
@@ -591,7 +507,7 @@ Dim N As Integer, k As Integer
 
 Dim sENtrada As String
 
-sENtrada = InputBox("Escribe ""estoy DE acuerdo"" entre comillas y con distici髇 de mayusculas minusculas para desbanear a todos los personajes", "UnBan", "hola")
+sENtrada = InputBox("Escribe ""estoy DE acuerdo"" entre comillas y con distici贸n de mayusculas minusculas para desbanear a todos los personajes", "UnBan", "hola")
 If sENtrada = "estoy DE acuerdo" Then
 
     Fn = App.Path & "\logs\GenteBanned.log"
@@ -634,7 +550,7 @@ Dim i As Long, N As Long
 
 Dim sENtrada As String
 
-sENtrada = InputBox("Escribe ""estoy DE acuerdo"" sin comillas y con distici髇 de mayusculas minusculas para desbanear a todos los personajes", "UnBan", "hola")
+sENtrada = InputBox("Escribe ""estoy DE acuerdo"" sin comillas y con distici贸n de mayusculas minusculas para desbanear a todos los personajes", "UnBan", "hola")
 If sENtrada = "estoy DE acuerdo" Then
     
     N = BanIps.Count
@@ -649,31 +565,6 @@ End Sub
 
 Private Sub Command2_Click()
 frmServidor.Visible = False
-End Sub
-
-Private Sub Command20_Click()
-#If UsarQueSocket = 1 Then
-
-If MsgBox("Esta seguro que desea reiniciar los sockets ? Se cerrar醤 todas las conexiones activas.", vbYesNo, "Reiniciar Sockets") = vbYes Then
-    Call WSApiReiniciarSockets
-End If
-
-#ElseIf UsarQueSocket = 2 Then
-
-Dim LoopC As Integer
-
-If MsgBox("Esta seguro que desea reiniciar los sockets ? Se cerrar醤 todas las conexiones activas.", vbYesNo, "Reiniciar Sockets") = vbYes Then
-    For LoopC = 1 To MaxUsers
-        If UserList(LoopC).ConnID <> -1 And UserList(LoopC).ConnIDValida Then
-            Call CloseSocket(LoopC)
-        End If
-    Next LoopC
-    
-    Call frmMain.Serv.Detener
-    Call frmMain.Serv.Iniciar(Puerto)
-End If
-
-#End If
 End Sub
 
 'Barrin 29/9/03
@@ -716,24 +607,9 @@ If MsgBox("Esta seguro que desea hacer WorldSave, guardar pjs y cerrar ?", vbYes
 End If
 End Sub
 
-Private Sub Command24_Click()
-frmEstadisticas.Show
-
-End Sub
-
 Private Sub Command25_Click()
 Call MD5sCarga
 
-End Sub
-
-Private Sub Command26_Click()
-#If UsarQueSocket = 1 Then
-    'Cierra el socket de escucha
-    If SockListen >= 0 Then Call apiclosesocket(SockListen)
-    
-    'Inicia el socket de escucha
-    SockListen = ListenForConnect(Puerto, hWndMsg, "")
-#End If
 End Sub
 
 Private Sub Command27_Click()
@@ -746,7 +622,7 @@ Private Sub Command28_Click()
 End Sub
 
 Private Sub Command3_Click()
-If MsgBox("　Atencion!! Si reinicia el servidor puede provocar la perdida de datos de los usarios. 緿esea reiniciar el servidor de todas maneras?", vbYesNo) = vbYes Then
+If MsgBox("隆隆Atencion!! Si reinicia el servidor puede provocar la perdida de datos de los usarios. 驴Desea reiniciar el servidor de todas maneras?", vbYesNo) = vbYes Then
     Me.Visible = False
     Call Restart
 End If
@@ -781,14 +657,7 @@ If FileExist(App.Path & "\logs\Resurrecciones.log", vbNormal) Then Kill App.Path
 If FileExist(App.Path & "\logs\Teleports.Log", vbNormal) Then Kill App.Path & "\logs\Teleports.Log"
 
 
-#If UsarQueSocket = 1 Then
-Call apiclosesocket(SockListen)
-#ElseIf UsarQueSocket = 0 Then
-frmMain.Socket1.Cleanup
-frmMain.Socket2(0).Cleanup
-#ElseIf UsarQueSocket = 2 Then
-frmMain.Serv.Detener
-#End If
+Call modEngine.NetClose
 
 Dim LoopC As Integer
 
@@ -807,27 +676,7 @@ Call LoadSini
 Call CargarBackUp
 Call LoadOBJData
 
-#If UsarQueSocket = 1 Then
-SockListen = ListenForConnect(Puerto, hWndMsg, "")
-
-#ElseIf UsarQueSocket = 0 Then
-frmMain.Socket1.AddressFamily = AF_INET
-frmMain.Socket1.Protocol = IPPROTO_IP
-frmMain.Socket1.SocketType = SOCK_STREAM
-frmMain.Socket1.Binary = False
-frmMain.Socket1.Blocking = False
-frmMain.Socket1.BufferSize = 1024
-
-frmMain.Socket2(0).AddressFamily = AF_INET
-frmMain.Socket2(0).Protocol = IPPROTO_IP
-frmMain.Socket2(0).SocketType = SOCK_STREAM
-frmMain.Socket2(0).Blocking = False
-frmMain.Socket2(0).BufferSize = 2048
-
-'Escucha
-frmMain.Socket1.LocalPort = Puerto
-frmMain.Socket1.listen
-#End If
+Call modEngine.NetListen("0.0.0.0", Puerto)
 
 If frmMain.Visible Then frmMain.txStatus.Caption = "Escuchando conexiones entrantes ..."
 
@@ -854,16 +703,9 @@ frmServidor.Visible = False
 End Sub
 
 Private Sub Form_Load()
-#If UsarQueSocket = 1 Then
+
 Command20.Visible = True
 Command26.Visible = True
-#ElseIf UsarQueSocket = 0 Then
-Command20.Visible = False
-Command26.Visible = False
-#ElseIf UsarQueSocket = 2 Then
-Command20.Visible = True
-Command26.Visible = False
-#End If
 
 VS1.min = 0
 If picCont.Height > picFuera.ScaleHeight Then

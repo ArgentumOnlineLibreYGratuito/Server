@@ -1,6 +1,6 @@
 Attribute VB_Name = "Acciones"
 'Argentum Online 0.11.6
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÃ¡rquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -22,10 +22,10 @@ Attribute VB_Name = "Acciones"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÃºmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÃ³digo Postal 1900
+'Pablo Ignacio MÃ¡rquez
 
 Option Explicit
 
@@ -44,12 +44,12 @@ Option Explicit
 Sub Accion(ByVal UserIndex As Integer, ByVal map As Integer, ByVal X As Integer, ByVal Y As Integer)
 On Error Resume Next
 
-'¿Rango Visión? (ToxicWaste)
+'Â¿Rango VisiÃ³n? (ToxicWaste)
 If (Abs(UserList(UserIndex).Pos.Y - Y) > RANGO_VISION_Y) Or (Abs(UserList(UserIndex).Pos.X - X) > RANGO_VISION_X) Then
     Exit Sub
 End If
 
-'¿Posicion valida?
+'Â¿Posicion valida?
 If InMapBounds(map, X, Y) Then
    
     Dim FoundChar As Byte
@@ -61,9 +61,9 @@ If InMapBounds(map, X, Y) Then
         UserList(UserIndex).flags.TargetNPC = MapData(map, X, Y).NpcIndex
         
         If Npclist(MapData(map, X, Y).NpcIndex).Comercia = 1 Then
-            '¿Esta el user muerto? Si es asi no puede comerciar
+            'Â¿Esta el user muerto? Si es asi no puede comerciar
             If UserList(UserIndex).flags.Muerto = 1 Then
-                Call WriteConsoleMsg(UserIndex, "¡¡Estas muerto!!", FontTypeNames.FONTTYPE_INFO)
+                Call WriteConsoleMsg(UserIndex, "Â¡Â¡Estas muerto!!", FontTypeNames.FONTTYPE_INFO)
                 Exit Sub
             End If
             
@@ -81,9 +81,9 @@ If InMapBounds(map, X, Y) Then
             Call IniciarComercioNPC(UserIndex)
         
         ElseIf Npclist(MapData(map, X, Y).NpcIndex).NPCtype = eNPCType.Banquero Then
-            '¿Esta el user muerto? Si es asi no puede comerciar
+            'Â¿Esta el user muerto? Si es asi no puede comerciar
             If UserList(UserIndex).flags.Muerto = 1 Then
-                Call WriteConsoleMsg(UserIndex, "¡¡Estas muerto!!", FontTypeNames.FONTTYPE_INFO)
+                Call WriteConsoleMsg(UserIndex, "Â¡Â¡Estas muerto!!", FontTypeNames.FONTTYPE_INFO)
                 Exit Sub
             End If
             
@@ -118,7 +118,7 @@ If InMapBounds(map, X, Y) Then
             End If
         End If
         
-    '¿Es un obj?
+    'Â¿Es un obj?
     ElseIf MapData(map, X, Y).ObjInfo.ObjIndex > 0 Then
         UserList(UserIndex).flags.TargetObj = MapData(map, X, Y).ObjInfo.ObjIndex
         
@@ -130,7 +130,7 @@ If InMapBounds(map, X, Y) Then
                 Call AccionParaCartel(map, X, Y, UserIndex)
             Case eOBJType.otForos 'Foro
                 Call AccionParaForo(map, X, Y, UserIndex)
-            Case eOBJType.otLeña    'Leña
+            Case eOBJType.otLeÃ±a    'LeÃ±a
                 If MapData(map, X, Y).ObjInfo.ObjIndex = FOGATA_APAG And UserList(UserIndex).flags.Muerto = 0 Then
                     Call AccionParaRamita(map, X, Y, UserIndex)
                 End If
@@ -181,7 +181,7 @@ If Distancia(Pos, UserList(UserIndex).Pos) > 2 Then
     Exit Sub
 End If
 
-'¿Hay mensajes?
+'Â¿Hay mensajes?
 Dim f As String, tit As String, men As String, BASE As String, auxcad As String
 f = App.Path & "\foros\" & UCase$(ObjData(MapData(map, X, Y).ObjInfo.ObjIndex).ForoID) & ".for"
 If FileExist(f, vbNormal) Then

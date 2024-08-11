@@ -21,7 +21,7 @@ Call SendData(SendTarget.ToPCArea, UserIndex, PrepareMessageSetInvisible(UserLis
 
 Dim EstadoActual As Boolean
 
-' Est· invisible ?
+' Est√° invisible ?
 EstadoActual = (UserList(UserIndex).flags.invisible = 1)
 
 'If EstadoActual <> Modo Then

@@ -62,7 +62,7 @@ Public Const CASTIGOS As Boolean = False
 
 ''
 'Numero al que elevamos el nivel de cada miembro de la party
-'Esto es usado para calcular la distribución de la experiencia entre los miembros
+'Esto es usado para calcular la distribuciÃ³n de la experiencia entre los miembros
 'Se lee del archivo de balance
 Public ExponenteNivelParty As Single
 
@@ -97,7 +97,7 @@ Public Function PuedeCrearParty(ByVal UserIndex As Integer) As Boolean
         Call WriteConsoleMsg(UserIndex, "Tu carisma y liderazgo no son suficientes para liderar una party.", FontTypeNames.FONTTYPE_PARTY)
         PuedeCrearParty = False
     ElseIf UserList(UserIndex).flags.Muerto = 1 Then
-        Call WriteConsoleMsg(UserIndex, "Estás muerto!", FontTypeNames.FONTTYPE_PARTY)
+        Call WriteConsoleMsg(UserIndex, "EstÃ¡s muerto!", FontTypeNames.FONTTYPE_PARTY)
         PuedeCrearParty = False
     End If
 End Function
@@ -114,17 +114,17 @@ If UserList(UserIndex).PartyIndex = 0 Then
             Else
                 Set Parties(tInt) = New clsParty
                 If Not Parties(tInt).NuevoMiembro(UserIndex) Then
-                    Call WriteConsoleMsg(UserIndex, "La party está llena, no puedes entrar", FontTypeNames.FONTTYPE_PARTY)
+                    Call WriteConsoleMsg(UserIndex, "La party estÃ¡ llena, no puedes entrar", FontTypeNames.FONTTYPE_PARTY)
                     Set Parties(tInt) = Nothing
                     Exit Sub
                 Else
-                    Call WriteConsoleMsg(UserIndex, "¡Has formado una party!", FontTypeNames.FONTTYPE_PARTY)
+                    Call WriteConsoleMsg(UserIndex, "Â¡Has formado una party!", FontTypeNames.FONTTYPE_PARTY)
                     UserList(UserIndex).PartyIndex = tInt
                     UserList(UserIndex).PartySolicitud = 0
                     If Not Parties(tInt).HacerLeader(UserIndex) Then
-                        Call WriteConsoleMsg(UserIndex, "No puedes hacerte líder.", FontTypeNames.FONTTYPE_PARTY)
+                        Call WriteConsoleMsg(UserIndex, "No puedes hacerte lÃ­der.", FontTypeNames.FONTTYPE_PARTY)
                     Else
-                        Call WriteConsoleMsg(UserIndex, "¡ Te has convertido en líder de la party !", FontTypeNames.FONTTYPE_PARTY)
+                        Call WriteConsoleMsg(UserIndex, "Â¡ Te has convertido en lÃ­der de la party !", FontTypeNames.FONTTYPE_PARTY)
                     End If
                 End If
             End If
@@ -132,7 +132,7 @@ If UserList(UserIndex).PartyIndex = 0 Then
             Call WriteConsoleMsg(UserIndex, " No tienes suficientes puntos de liderazgo para liderar una party.", FontTypeNames.FONTTYPE_PARTY)
         End If
     Else
-        Call WriteConsoleMsg(UserIndex, "Estás muerto!", FontTypeNames.FONTTYPE_PARTY)
+        Call WriteConsoleMsg(UserIndex, "EstÃ¡s muerto!", FontTypeNames.FONTTYPE_PARTY)
     End If
 Else
     Call WriteConsoleMsg(UserIndex, " Ya perteneces a una party.", FontTypeNames.FONTTYPE_PARTY)
@@ -150,7 +150,7 @@ Dim tInt As Integer
         Exit Sub
     End If
     If UserList(UserIndex).flags.Muerto = 1 Then
-        Call WriteConsoleMsg(UserIndex, " ¡Estás muerto!", FontTypeNames.FONTTYPE_INFO)
+        Call WriteConsoleMsg(UserIndex, " Â¡EstÃ¡s muerto!", FontTypeNames.FONTTYPE_INFO)
         UserList(UserIndex).PartySolicitud = 0
         Exit Sub
     End If
@@ -158,7 +158,7 @@ Dim tInt As Integer
     If tInt > 0 Then
         If UserList(tInt).PartyIndex > 0 Then
             UserList(UserIndex).PartySolicitud = UserList(tInt).PartyIndex
-            Call WriteConsoleMsg(UserIndex, " El fundador decidirá si te acepta en la party", FontTypeNames.FONTTYPE_PARTY)
+            Call WriteConsoleMsg(UserIndex, " El fundador decidirÃ¡ si te acepta en la party", FontTypeNames.FONTTYPE_PARTY)
         Else
             Call WriteConsoleMsg(UserIndex, UserList(tInt).name & " no es fundador de ninguna party.", FontTypeNames.FONTTYPE_INFO)
             UserList(UserIndex).PartySolicitud = 0
@@ -244,11 +244,11 @@ If PI > 0 Then
                         Exit Sub
                     End If
                 Else
-                    Call WriteConsoleMsg(leader, "¡Está muerto, no puedes aceptar miembros en ese estado!", FontTypeNames.FONTTYPE_PARTY)
+                    Call WriteConsoleMsg(leader, "Â¡EstÃ¡ muerto, no puedes aceptar miembros en ese estado!", FontTypeNames.FONTTYPE_PARTY)
                     Exit Sub
                 End If
             Else
-                Call WriteConsoleMsg(leader, "¡Estás muerto, no puedes aceptar miembros en ese estado!", FontTypeNames.FONTTYPE_PARTY)
+                Call WriteConsoleMsg(leader, "Â¡EstÃ¡s muerto, no puedes aceptar miembros en ese estado!", FontTypeNames.FONTTYPE_PARTY)
                 Exit Sub
             End If
         Else
@@ -256,7 +256,7 @@ If PI > 0 Then
             ' ya tiene party el otro tipo
         End If
     Else
-        Call WriteConsoleMsg(leader, "No eres líder, no puedes aceptar miembros.", FontTypeNames.FONTTYPE_PARTY)
+        Call WriteConsoleMsg(leader, "No eres lÃ­der, no puedes aceptar miembros.", FontTypeNames.FONTTYPE_PARTY)
         Exit Sub
     End If
 Else
@@ -304,15 +304,15 @@ If PI > 0 Then
         If UserList(NewLeader).flags.Muerto = 0 Then
             If Parties(PI).EsPartyLeader(OldLeader) Then
                 If Parties(PI).HacerLeader(NewLeader) Then
-                    Call Parties(PI).MandarMensajeAConsola("El nuevo líder de la party es " & UserList(NewLeader).name, UserList(OldLeader).name)
+                    Call Parties(PI).MandarMensajeAConsola("El nuevo lÃ­der de la party es " & UserList(NewLeader).name, UserList(OldLeader).name)
                 Else
-                    Call WriteConsoleMsg(OldLeader, "¡No se ha hecho el cambio de mando!", FontTypeNames.FONTTYPE_PARTY)
+                    Call WriteConsoleMsg(OldLeader, "Â¡No se ha hecho el cambio de mando!", FontTypeNames.FONTTYPE_PARTY)
                 End If
             Else
-                Call WriteConsoleMsg(OldLeader, "¡No eres el líder!", FontTypeNames.FONTTYPE_PARTY)
+                Call WriteConsoleMsg(OldLeader, "Â¡No eres el lÃ­der!", FontTypeNames.FONTTYPE_PARTY)
             End If
         Else
-            Call WriteConsoleMsg(OldLeader, "¡Está muerto!", FontTypeNames.FONTTYPE_INFO)
+            Call WriteConsoleMsg(OldLeader, "Â¡EstÃ¡ muerto!", FontTypeNames.FONTTYPE_INFO)
         End If
     Else
         Call WriteConsoleMsg(OldLeader, UserList(NewLeader).name & " no pertenece a tu party.", FontTypeNames.FONTTYPE_INFO)

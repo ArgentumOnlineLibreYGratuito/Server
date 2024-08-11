@@ -1,6 +1,6 @@
 Attribute VB_Name = "Admin"
 'Argentum Online 0.11.6
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÃ¡rquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -22,10 +22,10 @@ Attribute VB_Name = "Admin"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÃºmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÃ³digo Postal 1900
+'Pablo Ignacio MÃ¡rquez
 
 Option Explicit
 
@@ -54,7 +54,6 @@ Public MinsRunning As Long
 Public ReiniciarServer As Long
 
 Public tInicioServer As Long
-Public EstadisticasWeb As New clsEstadisticasIPC
 
 'INTERVALOS
 Public SanaIntervaloSinDescansar As Integer
@@ -167,10 +166,6 @@ Dim Porc As Long
 
 Call SendData(SendTarget.ToAll, 0, PrepareMessageConsoleMsg("Servidor> Iniciando WorldSave", FontTypeNames.FONTTYPE_SERVER))
 
-#If SeguridadAlkon Then
-    Encriptacion.StringValidacion = Encriptacion.ArmarStringValidacion
-#End If
-
 Call ReSpawnOrigPosNpcs 'respawn de los guardias en las pos originales
 
 Dim j As Integer, k As Integer
@@ -205,7 +200,7 @@ For loopX = 1 To LastNPC
     End If
 Next
 
-Call SendData(SendTarget.ToAll, 0, PrepareMessageConsoleMsg("Servidor> WorldSave ha concluído", FontTypeNames.FONTTYPE_SERVER))
+Call SendData(SendTarget.ToAll, 0, PrepareMessageConsoleMsg("Servidor> WorldSave ha concluÃ­do", FontTypeNames.FONTTYPE_SERVER))
 
 End Sub
 
@@ -222,7 +217,6 @@ Public Sub PurgarPenas()
                     Call WarpUserChar(i, Libertad.map, Libertad.X, Libertad.Y, True)
                     Call WriteConsoleMsg(i, "Has sido liberado!", FontTypeNames.FONTTYPE_INFO)
                     
-                    Call FlushBuffer(i)
                 End If
             End If
         End If
@@ -388,65 +382,12 @@ Close #ArchN
 
 End Sub
 
-Public Sub ActualizaEstadisticasWeb()
-
-Static Andando As Boolean
-Static Contador As Long
-Dim Tmp As Boolean
-
-Contador = Contador + 1
-
-If Contador >= 10 Then
-    Contador = 0
-    Tmp = EstadisticasWeb.EstadisticasAndando()
-    
-    If Andando = False And Tmp = True Then
-        Call InicializaEstadisticas
-    End If
-    
-    Andando = Tmp
-End If
-
-End Sub
-
-Public Sub ActualizaStatsES()
-
-Static TUlt As Single
-Dim Transcurrido As Single
-
-Transcurrido = Timer - TUlt
-
-If Transcurrido >= 5 Then
-    TUlt = Timer
-    With TCPESStats
-        .BytesEnviadosXSEG = CLng(.BytesEnviados / Transcurrido)
-        .BytesRecibidosXSEG = CLng(.BytesRecibidos / Transcurrido)
-        .BytesEnviados = 0
-        .BytesRecibidos = 0
-        
-        If .BytesEnviadosXSEG > .BytesEnviadosXSEGMax Then
-            .BytesEnviadosXSEGMax = .BytesEnviadosXSEG
-            .BytesEnviadosXSEGCuando = CDate(Now)
-        End If
-        
-        If .BytesRecibidosXSEG > .BytesRecibidosXSEGMax Then
-            .BytesRecibidosXSEGMax = .BytesRecibidosXSEG
-            .BytesRecibidosXSEGCuando = CDate(Now)
-        End If
-        
-        If frmEstadisticas.Visible Then
-            Call frmEstadisticas.ActualizaStats
-        End If
-    End With
-End If
-
-End Sub
 
 Public Function UserDarPrivilegioLevel(ByVal name As String) As PlayerType
 '***************************************************
 'Author: Unknown
 'Last Modification: 03/02/07
-'Last Modified By: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modified By: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 '***************************************************
     If EsAdmin(name) Then
         UserDarPrivilegioLevel = PlayerType.Admin
@@ -463,7 +404,7 @@ End Function
 
 Public Sub BanCharacter(ByVal bannerUserIndex As Integer, ByVal UserName As String, ByVal reason As String)
 '***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modification: 03/02/07
 '
 '***************************************************

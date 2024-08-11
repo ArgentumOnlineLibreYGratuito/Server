@@ -48,7 +48,7 @@ Public Sub Comercio(ByVal Modo As eModoComercio, ByVal UserIndex As Integer, ByV
             Call Ban(UserList(UserIndex).name, "Sistema Anti Cheats", "Intentar hackear el sistema de comercio. Quiso comprar demasiados items:" & Cantidad)
             UserList(UserIndex).flags.Ban = 1
             Call WriteErrorMsg(UserIndex, "Has sido baneado por el Sistema AntiCheat.")
-            Call FlushBuffer(UserIndex)
+            'TODO Call FlushBuffer(UserIndex)
             Call CloseSocket(UserIndex)
             Exit Sub
         ElseIf Not Npclist(NpcIndex).Invent.Object(Slot).amount > 0 Then
@@ -82,11 +82,11 @@ Public Sub Comercio(ByVal Modo As eModoComercio, ByVal UserIndex As Integer, ByV
         'Bien, ahora logueo de ser necesario. Pablo (ToxicWaste) 07/09/07
         'Es un Objeto que tenemos que loguear?
         If ObjData(Objeto.ObjIndex).Log = 1 Then
-            Call LogDesarrollo(UserList(UserIndex).name & " comprÛ del NPC " & Objeto.amount & " " & ObjData(Objeto.ObjIndex).name)
+            Call LogDesarrollo(UserList(UserIndex).name & " compr√≥ del NPC " & Objeto.amount & " " & ObjData(Objeto.ObjIndex).name)
         ElseIf Objeto.amount = 1000 Then 'Es mucha cantidad?
             'Si no es de los prohibidos de loguear, lo logueamos.
             If ObjData(Objeto.ObjIndex).NoLog <> 1 Then
-                Call LogDesarrollo(UserList(UserIndex).name & " comprÛ del NPC " & Objeto.amount & " " & ObjData(Objeto.ObjIndex).name)
+                Call LogDesarrollo(UserList(UserIndex).name & " compr√≥ del NPC " & Objeto.amount & " " & ObjData(Objeto.ObjIndex).name)
             End If
         End If
         
@@ -122,7 +122,7 @@ Public Sub Comercio(ByVal Modo As eModoComercio, ByVal UserIndex As Integer, ByV
             End If
         ElseIf ObjData(Objeto.ObjIndex).Caos = 1 Then
             If Npclist(NpcIndex).name <> "SC" Then
-                Call WriteConsoleMsg(UserIndex, "Las armaduras de la LegiÛn solo pueden ser vendidas a los sastres del demonio.", FontTypeNames.FONTTYPE_INFO)
+                Call WriteConsoleMsg(UserIndex, "Las armaduras de la Legi√≥n solo pueden ser vendidas a los sastres del demonio.", FontTypeNames.FONTTYPE_INFO)
                 Call EnviarNpcInv(UserIndex, UserList(UserIndex).flags.TargetNPC)
                 Call WriteTradeOK(UserIndex)
                 Exit Sub
@@ -163,11 +163,11 @@ Public Sub Comercio(ByVal Modo As eModoComercio, ByVal UserIndex As Integer, ByV
         'Bien, ahora logueo de ser necesario. Pablo (ToxicWaste) 07/09/07
         'Es un Objeto que tenemos que loguear?
         If ObjData(Objeto.ObjIndex).Log = 1 Then
-            Call LogDesarrollo(UserList(UserIndex).name & " vendiÛ al NPC " & Objeto.amount & " " & ObjData(Objeto.ObjIndex).name)
+            Call LogDesarrollo(UserList(UserIndex).name & " vendi√≥ al NPC " & Objeto.amount & " " & ObjData(Objeto.ObjIndex).name)
         ElseIf Objeto.amount = 1000 Then 'Es mucha cantidad?
             'Si no es de los prohibidos de loguear, lo logueamos.
             If ObjData(Objeto.ObjIndex).NoLog <> 1 Then
-                Call LogDesarrollo(UserList(UserIndex).name & " vendiÛ al NPC " & Objeto.amount & " " & ObjData(Objeto.ObjIndex).name)
+                Call LogDesarrollo(UserList(UserIndex).name & " vendi√≥ al NPC " & Objeto.amount & " " & ObjData(Objeto.ObjIndex).name)
             End If
         End If
         
@@ -240,7 +240,7 @@ Private Sub EnviarNpcInv(ByVal UserIndex As Integer, ByVal NpcIndex As Integer)
 '*************************************************
 'Author: Nacho (Integer)
 'Last Modified: 06/14/08
-'Last Modified By: Nicol·s Ezequiel Bouhid (NicoNZ)
+'Last Modified By: Nicol√°s Ezequiel Bouhid (NicoNZ)
 '*************************************************
     Dim Slot As Byte
     Dim val As Long
@@ -267,7 +267,7 @@ End Sub
 
 Public Function SalePrice(ByVal Valor As Long) As Single
 '*************************************************
-'Author: Nicol·s (NicoNZ)
+'Author: Nicol√°s (NicoNZ)
 '
 '*************************************************
 

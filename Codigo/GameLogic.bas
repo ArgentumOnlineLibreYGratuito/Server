@@ -1,6 +1,6 @@
 Attribute VB_Name = "Extra"
 'Argentum Online 0.11.6
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÃ¡rquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -22,10 +22,10 @@ Attribute VB_Name = "Extra"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÃºmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÃ³digo Postal 1900
+'Pablo Ignacio MÃ¡rquez
 
 Option Explicit
 
@@ -78,12 +78,12 @@ If InMapBounds(map, X, Y) Then
     End If
     
     If (MapData(map, X, Y).TileExit.map > 0) And (MapData(map, X, Y).TileExit.map <= NumMaps) Then
-        '¿Es mapa de newbies?
+        'Â¿Es mapa de newbies?
         If UCase$(MapInfo(MapData(map, X, Y).TileExit.map).Restringir) = "NEWBIE" Then
-            '¿El usuario es un newbie?
+            'Â¿El usuario es un newbie?
             If EsNewbie(UserIndex) Or EsGM(UserIndex) Then
                 If LegalPos(MapData(map, X, Y).TileExit.map, MapData(map, X, Y).TileExit.X, MapData(map, X, Y).TileExit.Y, PuedeAtravesarAgua(UserIndex)) Then
-                    If FxFlag Then '¿FX?
+                    If FxFlag Then 'Â¿FX?
                         Call WarpUserChar(UserIndex, MapData(map, X, Y).TileExit.map, MapData(map, X, Y).TileExit.X, MapData(map, X, Y).TileExit.Y, True)
                     Else
                         Call WarpUserChar(UserIndex, MapData(map, X, Y).TileExit.map, MapData(map, X, Y).TileExit.X, MapData(map, X, Y).TileExit.Y, False)
@@ -106,11 +106,11 @@ If InMapBounds(map, X, Y) Then
                     Call WarpUserChar(UserIndex, nPos.map, nPos.X, nPos.Y, False)
                 End If
             End If
-        ElseIf UCase$(MapInfo(MapData(map, X, Y).TileExit.map).Restringir) = "ARMADA" Then '¿Es mapa de Armadas?
-            '¿El usuario es Armada?
+        ElseIf UCase$(MapInfo(MapData(map, X, Y).TileExit.map).Restringir) = "ARMADA" Then 'Â¿Es mapa de Armadas?
+            'Â¿El usuario es Armada?
             If esArmada(UserIndex) Or EsGM(UserIndex) Then
                 If LegalPos(MapData(map, X, Y).TileExit.map, MapData(map, X, Y).TileExit.X, MapData(map, X, Y).TileExit.Y, PuedeAtravesarAgua(UserIndex)) Then
-                    If FxFlag Then '¿FX?
+                    If FxFlag Then 'Â¿FX?
                         Call WarpUserChar(UserIndex, MapData(map, X, Y).TileExit.map, MapData(map, X, Y).TileExit.X, MapData(map, X, Y).TileExit.Y, True)
                     Else
                         Call WarpUserChar(UserIndex, MapData(map, X, Y).TileExit.map, MapData(map, X, Y).TileExit.X, MapData(map, X, Y).TileExit.Y)
@@ -133,11 +133,11 @@ If InMapBounds(map, X, Y) Then
                         Call WarpUserChar(UserIndex, nPos.map, nPos.X, nPos.Y)
                 End If
             End If
-        ElseIf UCase$(MapInfo(MapData(map, X, Y).TileExit.map).Restringir) = "CAOS" Then '¿Es mapa de Caos?
-            '¿El usuario es Caos?
+        ElseIf UCase$(MapInfo(MapData(map, X, Y).TileExit.map).Restringir) = "CAOS" Then 'Â¿Es mapa de Caos?
+            'Â¿El usuario es Caos?
             If esCaos(UserIndex) Or EsGM(UserIndex) Then
                 If LegalPos(MapData(map, X, Y).TileExit.map, MapData(map, X, Y).TileExit.X, MapData(map, X, Y).TileExit.Y, PuedeAtravesarAgua(UserIndex)) Then
-                    If FxFlag Then '¿FX?
+                    If FxFlag Then 'Â¿FX?
                         Call WarpUserChar(UserIndex, MapData(map, X, Y).TileExit.map, MapData(map, X, Y).TileExit.X, MapData(map, X, Y).TileExit.Y, True)
                     Else
                         Call WarpUserChar(UserIndex, MapData(map, X, Y).TileExit.map, MapData(map, X, Y).TileExit.X, MapData(map, X, Y).TileExit.Y)
@@ -160,11 +160,11 @@ If InMapBounds(map, X, Y) Then
                         Call WarpUserChar(UserIndex, nPos.map, nPos.X, nPos.Y)
                 End If
             End If
-        ElseIf UCase$(MapInfo(MapData(map, X, Y).TileExit.map).Restringir) = "FACCION" Then '¿Es mapa de faccionarios?
-            '¿El usuario es Armada o Caos?
+        ElseIf UCase$(MapInfo(MapData(map, X, Y).TileExit.map).Restringir) = "FACCION" Then 'Â¿Es mapa de faccionarios?
+            'Â¿El usuario es Armada o Caos?
             If esArmada(UserIndex) Or esCaos(UserIndex) Or EsGM(UserIndex) Then
                 If LegalPos(MapData(map, X, Y).TileExit.map, MapData(map, X, Y).TileExit.X, MapData(map, X, Y).TileExit.Y, PuedeAtravesarAgua(UserIndex)) Then
-                    If FxFlag Then '¿FX?
+                    If FxFlag Then 'Â¿FX?
                         Call WarpUserChar(UserIndex, MapData(map, X, Y).TileExit.map, MapData(map, X, Y).TileExit.X, MapData(map, X, Y).TileExit.Y, True)
                     Else
                         Call WarpUserChar(UserIndex, MapData(map, X, Y).TileExit.map, MapData(map, X, Y).TileExit.X, MapData(map, X, Y).TileExit.Y)
@@ -180,7 +180,7 @@ If InMapBounds(map, X, Y) Then
                     End If
                 End If
             Else 'No es Faccionario
-                Call WriteConsoleMsg(UserIndex, "Solo se permite entrar al Mapa si eres miembro de alguna Facción", FontTypeNames.FONTTYPE_INFO)
+                Call WriteConsoleMsg(UserIndex, "Solo se permite entrar al Mapa si eres miembro de alguna FacciÃ³n", FontTypeNames.FONTTYPE_INFO)
                 Call ClosestStablePos(UserList(UserIndex).Pos, nPos)
 
                 If nPos.X <> 0 And nPos.Y <> 0 Then
@@ -205,7 +205,7 @@ If InMapBounds(map, X, Y) Then
                 End If
             End If
         End If
-        'Te fusite del mapa. La criatura ya no es más tuya ni te reconoce como que vos la atacaste.
+        'Te fusite del mapa. La criatura ya no es mÃ¡s tuya ni te reconoce como que vos la atacaste.
         Dim aN As Integer
     
         aN = UserList(UserIndex).flags.AtacadoPorNpc
@@ -296,7 +296,7 @@ Do While Not LegalPos(Pos.map, nPos.X, nPos.Y, PuedeAgua, PuedeTierra)
             If LegalPos(nPos.map, tX, tY, PuedeAgua, PuedeTierra) Then
                 nPos.X = tX
                 nPos.Y = tY
-                '¿Hay objeto?
+                'Â¿Hay objeto?
                 
                 tX = Pos.X + LoopC
                 tY = Pos.Y + LoopC
@@ -341,7 +341,7 @@ Do While Not LegalPos(Pos.map, nPos.X, nPos.Y)
             If LegalPos(nPos.map, tX, tY) And MapData(nPos.map, tX, tY).TileExit.map = 0 Then
                 nPos.X = tX
                 nPos.Y = tY
-                '¿Hay objeto?
+                'Â¿Hay objeto?
                 
                 tX = Pos.X + LoopC
                 tY = Pos.Y + LoopC
@@ -365,7 +365,7 @@ End Sub
 Function NameIndex(ByVal name As String) As Integer
 
 Dim UserIndex As Integer
-'¿Nombre valido?
+'Â¿Nombre valido?
 If LenB(name) = 0 Then
     NameIndex = 0
     Exit Function
@@ -396,7 +396,7 @@ End Function
 Function IP_Index(ByVal inIP As String) As Integer
  
 Dim UserIndex As Integer
-'¿Nombre valido?
+'Â¿Nombre valido?
 If LenB(inIP) = 0 Then
     IP_Index = 0
     Exit Function
@@ -499,7 +499,7 @@ Function LegalPos(ByVal map As Integer, ByVal X As Integer, ByVal Y As Integer, 
 'Last Modification: 23/01/2007
 'Checks if the position is Legal.
 '***************************************************
-'¿Es un mapa valido?
+'Â¿Es un mapa valido?
 If (map <= 0 Or map > NumMaps) Or _
    (X < MinXBorder Or X > MaxXBorder Or Y < MinYBorder Or Y > MaxYBorder) Then
             LegalPos = False
@@ -579,17 +579,17 @@ Dim TempCharIndex As Integer
 Dim Stat As String
 Dim ft As FontTypeNames
 
-'¿Rango Visión? (ToxicWaste)
+'Â¿Rango VisiÃ³n? (ToxicWaste)
 If (Abs(UserList(UserIndex).Pos.Y - Y) > RANGO_VISION_Y) Or (Abs(UserList(UserIndex).Pos.X - X) > RANGO_VISION_X) Then
     Exit Sub
 End If
 
-'¿Posicion valida?
+'Â¿Posicion valida?
 If InMapBounds(map, X, Y) Then
     UserList(UserIndex).flags.TargetMap = map
     UserList(UserIndex).flags.TargetX = X
     UserList(UserIndex).flags.TargetY = Y
-    '¿Es un obj?
+    'Â¿Es un obj?
     If MapData(map, X, Y).ObjInfo.ObjIndex > 0 Then
         'Informa el nombre
         UserList(UserIndex).flags.TargetObjMap = map
@@ -631,7 +631,7 @@ If InMapBounds(map, X, Y) Then
         End If
     
     End If
-    '¿Es un personaje?
+    'Â¿Es un personaje?
     If Y + 1 <= YMaxMapSize Then
         If MapData(map, X, Y + 1).UserIndex > 0 Then
             TempCharIndex = MapData(map, X, Y + 1).UserIndex
@@ -642,7 +642,7 @@ If InMapBounds(map, X, Y) Then
             FoundChar = 2
         End If
     End If
-    '¿Es un personaje?
+    'Â¿Es un personaje?
     If FoundChar = 0 Then
         If MapData(map, X, Y).UserIndex > 0 Then
             TempCharIndex = MapData(map, X, Y).UserIndex
@@ -656,7 +656,7 @@ If InMapBounds(map, X, Y) Then
     
     
     'Reaccion al personaje
-    If FoundChar = 1 Then '  ¿Encontro un Usuario?
+    If FoundChar = 1 Then '  Â¿Encontro un Usuario?
             
        If UserList(TempCharIndex).flags.AdminInvisible = 0 Or UserList(UserIndex).flags.Privilegios And PlayerType.Dios Then
             
@@ -668,7 +668,7 @@ If InMapBounds(map, X, Y) Then
                 If UserList(TempCharIndex).Faccion.ArmadaReal = 1 Then
                     Stat = Stat & " <Ejercito real> " & "<" & TituloReal(TempCharIndex) & ">"
                 ElseIf UserList(TempCharIndex).Faccion.FuerzasCaos = 1 Then
-                    Stat = Stat & " <Legión oscura> " & "<" & TituloCaos(TempCharIndex) & ">"
+                    Stat = Stat & " <LegiÃ³n oscura> " & "<" & TituloCaos(TempCharIndex) & ">"
                 End If
                 
                 If UserList(TempCharIndex).guildIndex > 0 Then
@@ -716,7 +716,7 @@ If InMapBounds(map, X, Y) Then
        End If
 
     End If
-    If FoundChar = 2 Then '¿Encontro un NPC?
+    If FoundChar = 2 Then 'Â¿Encontro un NPC?
             Dim estatus As String
             
             If UserList(UserIndex).flags.Privilegios And (PlayerType.SemiDios Or PlayerType.Dios Or PlayerType.Admin) Then
@@ -776,7 +776,7 @@ If InMapBounds(map, X, Y) Then
             If Len(Npclist(TempCharIndex).desc) > 1 Then
                 Call WriteChatOverHead(UserIndex, Npclist(TempCharIndex).desc, Npclist(TempCharIndex).Char.CharIndex, vbWhite)
             ElseIf TempCharIndex = CentinelaNPCIndex Then
-                'Enviamos nuevamente el texto del centinela según quien pregunta
+                'Enviamos nuevamente el texto del centinela segÃºn quien pregunta
                 Call modCentinela.CentinelaSendClave(UserIndex)
             Else
                 If Npclist(TempCharIndex).MaestroUser > 0 Then
@@ -784,7 +784,7 @@ If InMapBounds(map, X, Y) Then
                 Else
                     Call WriteConsoleMsg(UserIndex, estatus & Npclist(TempCharIndex).name & ".", FontTypeNames.FONTTYPE_INFO)
                     If UserList(UserIndex).flags.Privilegios And (PlayerType.Dios Or PlayerType.Admin) Then
-                        Call WriteConsoleMsg(UserIndex, "Le pegó primero: " & Npclist(TempCharIndex).flags.AttackedFirstBy & ".", FontTypeNames.FONTTYPE_INFO)
+                        Call WriteConsoleMsg(UserIndex, "Le pegÃ³ primero: " & Npclist(TempCharIndex).flags.AttackedFirstBy & ".", FontTypeNames.FONTTYPE_INFO)
                     End If
                 End If
                 

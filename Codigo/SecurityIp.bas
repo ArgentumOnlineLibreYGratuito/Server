@@ -1,6 +1,6 @@
 Attribute VB_Name = "SecurityIp"
 'Argentum Online 0.11.6
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÃ¡rquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -22,23 +22,23 @@ Attribute VB_Name = "SecurityIp"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÃºmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÃ³digo Postal 1900
+'Pablo Ignacio MÃ¡rquez
 
 
 '**************************************************************
 ' General_IpSecurity.Bas - Maneja la seguridad de las IPs
 '
-' Escrito y diseñado por DuNga (ltourrilhes@gmail.com)
+' Escrito y diseÃ±ado por DuNga (ltourrilhes@gmail.com)
 '**************************************************************
 Option Explicit
 
 '*************************************************  *************
 ' General_IpSecurity.Bas - Maneja la seguridad de las IPs
 '
-' Escrito y diseñado por DuNga (ltourrilhes@gmail.com)
+' Escrito y diseÃ±ado por DuNga (ltourrilhes@gmail.com)
 '*************************************************  *************
 
 Private IpTables()      As Long 'USAMOS 2 LONGS: UNO DE LA IP, SEGUIDO DE UNO DE LA INFO
@@ -108,7 +108,7 @@ Dim IpTableIndex As Long
     IpTableIndex = FindTableIp(ip, IP_INTERVALOS)
     
     If IpTableIndex >= 0 Then
-        If IpTables(IpTableIndex + 1) + IntervaloEntreConexiones <= GetTickCount Then   'No está saturando de connects?
+        If IpTables(IpTableIndex + 1) + IntervaloEntreConexiones <= GetTickCount Then   'No estÃ¡ saturando de connects?
             IpTables(IpTableIndex + 1) = GetTickCount
             IpSecurityAceptarNuevaConexion = True
             Debug.Print "CONEXION ACEPTADA"
@@ -208,7 +208,7 @@ Private Sub AddNewIpLimiteConexiones(ByVal ip As Long, ByVal index As Long)
 '*************************************************    *************
 'Author: (EL OSO)
 'Last Modify Date: 16/2/2006
-'Modified by Juan Martín Sotuyo Dodero (Maraxus)
+'Modified by Juan MartÃ­n Sotuyo Dodero (Maraxus)
 '*************************************************    *************
     Debug.Print "agrega conexion a " & ip
     Debug.Print "(Declaraciones.MaxUsers - index) = " & (Declaraciones.MaxUsers - index)
@@ -226,23 +226,23 @@ Private Sub AddNewIpLimiteConexiones(ByVal ip As Long, ByVal index As Long)
 End Sub
 
 Public Sub IpRestarConexion(ByVal ip As Long)
-Dim Key As Long
+Dim key As Long
     Debug.Print "resta conexion a " & ip
     
-    Key = FindTableIp(ip, IP_LIMITECONEXIONES)
+    key = FindTableIp(ip, IP_LIMITECONEXIONES)
     
-    If Key >= 0 Then
-        If MaxConTables(Key + 1) > 0 Then
-            MaxConTables(Key + 1) = MaxConTables(Key + 1) - 1
+    If key >= 0 Then
+        If MaxConTables(key + 1) > 0 Then
+            MaxConTables(key + 1) = MaxConTables(key + 1) - 1
         End If
-        Call LogIP("restamos conexion a " & ip & " key=" & Key & ". Conexiones: " & MaxConTables(Key + 1))
-        If MaxConTables(Key + 1) <= 0 Then
+        Call LogIP("restamos conexion a " & ip & " key=" & key & ". Conexiones: " & MaxConTables(key + 1))
+        If MaxConTables(key + 1) <= 0 Then
             'la limpiamos
-            Call CopyMemory(MaxConTables(Key), MaxConTables(Key + 2), (MaxConTablesEntry - (Key \ 2) + 1) * 8)
+            Call CopyMemory(MaxConTables(key), MaxConTables(key + 2), (MaxConTablesEntry - (key \ 2) + 1) * 8)
             MaxConTablesEntry = MaxConTablesEntry - 1
         End If
     Else 'Key <= 0
-        Call LogIP("restamos conexion a " & ip & " key=" & Key & ". NEGATIVO!!")
+        Call LogIP("restamos conexion a " & ip & " key=" & key & ". NEGATIVO!!")
         'LogCriticEvent "SecurityIp.IpRestarconexion obtuvo un valor negativo en key"
     End If
 End Sub
@@ -260,7 +260,7 @@ Private Function FindTableIp(ByVal ip As Long, ByVal Tabla As e_SecurityIpTabla)
 '*************************************************  *************
 'Author: Lucio N. Tourrilhes (DuNga)
 'Last Modify Date: Unknow
-'Modified by Juan Martín Sotuyo Dodero (Maraxus) to use Binary Insertion
+'Modified by Juan MartÃ­n Sotuyo Dodero (Maraxus) to use Binary Insertion
 '*************************************************  *************
 Dim First As Long
 Dim Last As Long
@@ -308,10 +308,32 @@ End Function
 
 
 Public Function DumpTables()
-Dim i As Integer
+Dim I As Integer
 
-    For i = 0 To MaxConTablesEntry * 2 - 1 Step 2
-        Call LogCriticEvent(GetAscIP(MaxConTables(i)) & " > " & MaxConTables(i + 1))
-    Next i
+    For I = 0 To MaxConTablesEntry * 2 - 1 Step 2
+        'TODO Call LogCriticEvent(GetLongIp(MaxConTables(I)) & " > " & MaxConTables(I + 1))
+    Next I
 
+End Function
+
+Public Function GetLongIp(IPAddress As String) As Long
+    Dim arrTemp As Variant
+    Dim I       As Integer
+    Dim lngTemp As Double
+    
+    arrTemp = Split(IPAddress, ".")
+    
+    For I = 0 To UBound(arrTemp)
+        lngTemp = lngTemp + CLng(arrTemp(I)) * (256 ^ (3 - I))
+    Next
+
+    GetLongIp = UnsignedLongToSigned(lngTemp)
+End Function
+
+Public Function UnsignedLongToSigned(ByVal Value As Double) As Long
+    If Value <= 2147483647 Then
+        UnsignedLongToSigned = Value
+    Else
+        UnsignedLongToSigned = Value - 4294967296#
+    End If
 End Function

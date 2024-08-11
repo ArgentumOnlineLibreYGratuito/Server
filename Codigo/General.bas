@@ -1,6 +1,6 @@
 Attribute VB_Name = "General"
 'Argentum Online 0.11.6
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÃ¡rquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -22,10 +22,10 @@ Attribute VB_Name = "General"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÃºmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÃ³digo Postal 1900
+'Pablo Ignacio MÃ¡rquez
 
 Option Explicit
 
@@ -155,7 +155,7 @@ Call SecurityIp.IpSecurityMantenimientoLista
 Exit Sub
 
 Errhandler:
-    Call LogError("Error producido en el sub LimpiarMundo: " & Err.description)
+    Call LogError("Error producido en el sub LimpiarMundo: " & Err.Description)
 End Sub
 
 Sub EnviarSpawnList(ByVal UserIndex As Integer)
@@ -172,28 +172,12 @@ Call WriteSpawnList(UserIndex, npcNames())
 
 End Sub
 
-Sub ConfigListeningSocket(ByRef Obj As Object, ByVal Port As Integer)
-#If UsarQueSocket = 0 Then
-
-Obj.AddressFamily = AF_INET
-Obj.Protocol = IPPROTO_IP
-Obj.SocketType = SOCK_STREAM
-Obj.Binary = False
-Obj.Blocking = False
-Obj.BufferSize = 1024
-Obj.LocalPort = Port
-Obj.backlog = 5
-Obj.listen
-
-#End If
-End Sub
-
-
-
-
 Sub Main()
 On Error Resume Next
 Dim f As Date
+
+
+Call modEngine.Initialize
 
 ChDir App.Path
 ChDrive App.Path
@@ -288,7 +272,7 @@ ListaClases(eClass.Paladin) = "Paladin"
 ListaClases(eClass.Hunter) = "Cazador"
 ListaClases(eClass.Fisher) = "Pescador"
 ListaClases(eClass.Blacksmith) = "Herrero"
-ListaClases(eClass.Lumberjack) = "Leñador"
+ListaClases(eClass.Lumberjack) = "LeÃ±ador"
 ListaClases(eClass.Miner) = "Minero"
 ListaClases(eClass.Carpenter) = "Carpintero"
 ListaClases(eClass.Pirat) = "Pirata"
@@ -299,7 +283,7 @@ SkillsNames(eSkill.Robar) = "Robar"
 SkillsNames(eSkill.Tacticas) = "Tacticas de combate"
 SkillsNames(eSkill.Armas) = "Combate con armas"
 SkillsNames(eSkill.Meditar) = "Meditar"
-SkillsNames(eSkill.Apuñalar) = "Apuñalar"
+SkillsNames(eSkill.ApuÃ±alar) = "ApuÃ±alar"
 SkillsNames(eSkill.Ocultarse) = "Ocultarse"
 SkillsNames(eSkill.Supervivencia) = "Supervivencia"
 SkillsNames(eSkill.Talar) = "Talar arboles"
@@ -344,7 +328,7 @@ Call LoadGuildsDB
 
 Call CargarSpawnList
 Call CargarForbidenWords
-'¿?¿?¿?¿?¿?¿?¿?¿ CARGAMOS DATOS DESDE ARCHIVOS ¿??¿?¿?¿?¿?¿?¿?¿
+'Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿ CARGAMOS DATOS DESDE ARCHIVOS Â¿??Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
 frmCargando.Label1(2).Caption = "Cargando Server.ini"
 
 MaxUsers = 0
@@ -364,11 +348,11 @@ frmCargando.Label1(2).Caption = "Cargando Hechizos.Dat"
 Call CargarHechizos
     
     
-frmCargando.Label1(2).Caption = "Cargando Objetos de Herrería"
+frmCargando.Label1(2).Caption = "Cargando Objetos de HerrerÃ­a"
 Call LoadArmasHerreria
 Call LoadArmadurasHerreria
 
-frmCargando.Label1(2).Caption = "Cargando Objetos de Carpintería"
+frmCargando.Label1(2).Caption = "Cargando Objetos de CarpinterÃ­a"
 Call LoadObjCarpintero
 
 frmCargando.Label1(2).Caption = "Cargando Balance.Dat"
@@ -389,7 +373,7 @@ Call SonidosMapas.LoadSoundMapInfo
 
 'Comentado porque hay worldsave en ese mapa!
 'Call CrearClanPretoriano(MAPA_PRETORIANO, ALCOBA2_X, ALCOBA2_Y)
-'¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
 
 Dim LoopC As Integer
 
@@ -397,11 +381,9 @@ Dim LoopC As Integer
 For LoopC = 1 To MaxUsers
     UserList(LoopC).ConnID = -1
     UserList(LoopC).ConnIDValida = False
-    Set UserList(LoopC).incomingData = New clsByteQueue
-    Set UserList(LoopC).outgoingData = New clsByteQueue
 Next LoopC
 
-'¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
 
 With frmMain
     .AutoSave.Enabled = True
@@ -414,50 +396,17 @@ With frmMain
     .KillLog.Enabled = True
     .TIMER_AI.Enabled = True
     .npcataca.Enabled = True
-    
-#If SeguridadAlkon Then
-    .securityTimer.Enabled = True
-#End If
 End With
 
-'¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
 'Configuracion de los sockets
 
 Call SecurityIp.InitIpTables(1000)
 
-#If UsarQueSocket = 1 Then
-
-Call IniciaWsApi(frmMain.hWnd)
-SockListen = ListenForConnect(Puerto, hWndMsg, "")
-
-#ElseIf UsarQueSocket = 0 Then
-
-frmCargando.Label1(2).Caption = "Configurando Sockets"
-
-frmMain.Socket2(0).AddressFamily = AF_INET
-frmMain.Socket2(0).Protocol = IPPROTO_IP
-frmMain.Socket2(0).SocketType = SOCK_STREAM
-frmMain.Socket2(0).Binary = False
-frmMain.Socket2(0).Blocking = False
-frmMain.Socket2(0).BufferSize = 2048
-
-Call ConfigListeningSocket(frmMain.Socket1, Puerto)
-
-#ElseIf UsarQueSocket = 2 Then
-
-frmMain.Serv.Iniciar Puerto
-
-#ElseIf UsarQueSocket = 3 Then
-
-frmMain.TCPServ.Encolar True
-frmMain.TCPServ.IniciarTabla 1009
-frmMain.TCPServ.SetQueueLim 51200
-frmMain.TCPServ.Iniciar Puerto
-
-#End If
+Call modEngine.NetListen("0.0.0.0", Puerto)
 
 If frmMain.Visible Then frmMain.txStatus.Caption = "Escuchando conexiones entrantes ..."
-'¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
 
 
 
@@ -480,7 +429,13 @@ Else
 End If
 
 tInicioServer = GetTickCount() And &H7FFFFFFF
-Call InicializaEstadisticas
+
+
+While (True)
+    Call modEngine.Tick
+
+    DoEvents
+Wend
 
 End Sub
 
@@ -494,7 +449,7 @@ End Function
 Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As Byte) As String
 '*****************************************************************
 'Gets a field from a string
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Author: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modify Date: 11/15/2004
 'Gets a field from a delimited string
 '*****************************************************************
@@ -837,46 +792,20 @@ On Error Resume Next
 If frmMain.Visible Then frmMain.txStatus.Caption = "Reiniciando."
 
 Dim LoopC As Long
-  
-#If UsarQueSocket = 0 Then
 
-    frmMain.Socket1.Cleanup
-    frmMain.Socket1.Startup
-      
-    frmMain.Socket2(0).Cleanup
-    frmMain.Socket2(0).Startup
-
-#ElseIf UsarQueSocket = 1 Then
-
-    'Cierra el socket de escucha
-    If SockListen >= 0 Then Call apiclosesocket(SockListen)
     
-    'Inicia el socket de escucha
-    SockListen = ListenForConnect(Puerto, hWndMsg, "")
-
-#ElseIf UsarQueSocket = 2 Then
-
-#End If
-
-For LoopC = 1 To MaxUsers
-    Call CloseSocket(LoopC)
-Next
-
-'Initialize statistics!!
-Call Statistics.Initialize
-
-For LoopC = 1 To UBound(UserList())
-    Set UserList(LoopC).incomingData = Nothing
-    Set UserList(LoopC).outgoingData = Nothing
-Next LoopC
+    Call modEngine.NetListen("0.0.0.0", Puerto)
+    
+    
+    For LoopC = 1 To MaxUsers
+        Call CloseSocket(LoopC)
+    Next
 
 ReDim UserList(1 To MaxUsers) As User
 
 For LoopC = 1 To MaxUsers
     UserList(LoopC).ConnID = -1
     UserList(LoopC).ConnIDValida = False
-    Set UserList(LoopC).incomingData = New clsByteQueue
-    Set UserList(LoopC).outgoingData = New clsByteQueue
 Next LoopC
 
 LastUser = 0
@@ -891,32 +820,6 @@ Call LoadOBJData
 Call LoadMapData
 
 Call CargarHechizos
-
-#If UsarQueSocket = 0 Then
-
-'*****************Setup socket
-frmMain.Socket1.AddressFamily = AF_INET
-frmMain.Socket1.Protocol = IPPROTO_IP
-frmMain.Socket1.SocketType = SOCK_STREAM
-frmMain.Socket1.Binary = False
-frmMain.Socket1.Blocking = False
-frmMain.Socket1.BufferSize = 1024
-
-frmMain.Socket2(0).AddressFamily = AF_INET
-frmMain.Socket2(0).Protocol = IPPROTO_IP
-frmMain.Socket2(0).SocketType = SOCK_STREAM
-frmMain.Socket2(0).Blocking = False
-frmMain.Socket2(0).BufferSize = 2048
-
-'Escucha
-frmMain.Socket1.LocalPort = val(Puerto)
-frmMain.Socket1.listen
-
-#ElseIf UsarQueSocket = 1 Then
-
-#ElseIf UsarQueSocket = 2 Then
-
-#End If
 
 If frmMain.Visible Then frmMain.txStatus.Caption = "Escuchando conexiones entrantes ..."
 
@@ -960,7 +863,7 @@ If UserList(UserIndex).flags.UserLogged Then
                 Dim modifi As Long
                 modifi = Porcentaje(UserList(UserIndex).Stats.MaxSta, 3)
                 Call QuitarSta(UserIndex, modifi)
-                Call FlushBuffer(UserIndex)
+
     End If
 End If
 
@@ -991,12 +894,12 @@ Public Sub EfectoFrio(ByVal UserIndex As Integer)
         UserList(UserIndex).Counters.Frio = UserList(UserIndex).Counters.Frio + 1
     Else
         If MapInfo(UserList(UserIndex).Pos.map).Terreno = Nieve Then
-            Call WriteConsoleMsg(UserIndex, "¡¡Estas muriendo de frio, abrigate o moriras!!.", FontTypeNames.FONTTYPE_INFO)
+            Call WriteConsoleMsg(UserIndex, "Â¡Â¡Estas muriendo de frio, abrigate o moriras!!.", FontTypeNames.FONTTYPE_INFO)
             modifi = Porcentaje(UserList(UserIndex).Stats.MaxHP, 5)
             UserList(UserIndex).Stats.MinHP = UserList(UserIndex).Stats.MinHP - modifi
             
             If UserList(UserIndex).Stats.MinHP < 1 Then
-                Call WriteConsoleMsg(UserIndex, "¡¡Has muerto de frio!!.", FontTypeNames.FONTTYPE_INFO)
+                Call WriteConsoleMsg(UserIndex, "Â¡Â¡Has muerto de frio!!.", FontTypeNames.FONTTYPE_INFO)
                 UserList(UserIndex).Stats.MinHP = 0
                 Call UserDie(UserIndex)
             End If
@@ -1022,11 +925,11 @@ Public Sub EfectoLava(ByVal UserIndex As Integer)
         UserList(UserIndex).Counters.Lava = UserList(UserIndex).Counters.Lava + 1
     Else
         If HayLava(UserList(UserIndex).Pos.map, UserList(UserIndex).Pos.X, UserList(UserIndex).Pos.Y) Then
-            Call WriteConsoleMsg(UserIndex, "¡¡Quitate de la lava, te estás quemando!!.", FontTypeNames.FONTTYPE_INFO)
+            Call WriteConsoleMsg(UserIndex, "Â¡Â¡Quitate de la lava, te estÃ¡s quemando!!.", FontTypeNames.FONTTYPE_INFO)
             UserList(UserIndex).Stats.MinHP = UserList(UserIndex).Stats.MinHP - Porcentaje(UserList(UserIndex).Stats.MaxHP, 5)
             
             If UserList(UserIndex).Stats.MinHP < 1 Then
-                Call WriteConsoleMsg(UserIndex, "¡¡Has muerto quemado!!.", FontTypeNames.FONTTYPE_INFO)
+                Call WriteConsoleMsg(UserIndex, "Â¡Â¡Has muerto quemado!!.", FontTypeNames.FONTTYPE_INFO)
                 UserList(UserIndex).Stats.MinHP = 0
                 Call UserDie(UserIndex)
             End If
@@ -1176,7 +1079,7 @@ If UserList(UserIndex).Stats.MinSta < UserList(UserIndex).Stats.MaxSta Then
     Else
         EnviarStats = True
         UserList(UserIndex).Counters.STACounter = 0
-        If UserList(UserIndex).flags.Desnudo Then Exit Sub 'Desnudo no sube energía. (ToxicWaste)
+        If UserList(UserIndex).flags.Desnudo Then Exit Sub 'Desnudo no sube energÃ­a. (ToxicWaste)
        
         massta = RandomNumber(1, Porcentaje(UserList(UserIndex).Stats.MaxSta, 5))
         UserList(UserIndex).Stats.MinSta = UserList(UserIndex).Stats.MinSta + massta
@@ -1194,7 +1097,7 @@ Dim N As Integer
 If UserList(UserIndex).Counters.Veneno < IntervaloVeneno Then
   UserList(UserIndex).Counters.Veneno = UserList(UserIndex).Counters.Veneno + 1
 Else
-  Call WriteConsoleMsg(UserIndex, "Estás envenenado, si no te curas moriras.", FontTypeNames.FONTTYPE_VENENO)
+  Call WriteConsoleMsg(UserIndex, "EstÃ¡s envenenado, si no te curas moriras.", FontTypeNames.FONTTYPE_VENENO)
   UserList(UserIndex).Counters.Veneno = 0
   N = RandomNumber(1, 5)
   UserList(UserIndex).Stats.MinHP = UserList(UserIndex).Stats.MinHP - N
@@ -1306,7 +1209,7 @@ On Error GoTo Errhandler
                 If UserList(i).Counters.Salir <= 0 Then
                     Call WriteConsoleMsg(i, "Gracias por jugar Argentum Online", FontTypeNames.FONTTYPE_INFO)
                     Call WriteDisconnect(i)
-                    Call FlushBuffer(i)
+                    'TODO Call FlushBuffer(i)
                     
                     Call CloseSocket(i)
                 End If
@@ -1326,12 +1229,12 @@ On Error GoTo Errhandler
                     Call WriteShowMessageBox(i, "Fuiste expulsado por permanecer muerto sobre un item")
                     'Call SendData(SendTarget.ToAdmins, Z, 0, "|| " & UserList(Z).Name & " Fue encarcelado por empollar" & FONTTYPE_INFO)
                     UserList(i).EmpoCont = 0
-                    Call FlushBuffer(i)
+                    'TODO Call FlushBuffer(i)
                     
                     Call CloseSocket(i)
                 ElseIf UserList(i).EmpoCont = 15 Then
-                    Call WriteConsoleMsg(i, "LLevas 15 segundos bloqueando el item, muévete o serás desconectado.", FontTypeNames.FONTTYPE_WARNING)
-                    Call FlushBuffer(i)
+                    Call WriteConsoleMsg(i, "LLevas 15 segundos bloqueando el item, muÃ©vete o serÃ¡s desconectado.", FontTypeNames.FONTTYPE_WARNING)
+                    'TODO Call FlushBuffer(i)
                 End If
              End If
         End If
@@ -1339,7 +1242,7 @@ On Error GoTo Errhandler
 Exit Sub
 
 Errhandler:
-    Call LogError("Error en PasarSegundo. Err: " & Err.description & " - " & Err.Number & " - UserIndex: " & i)
+    Call LogError("Error en PasarSegundo. Err: " & Err.Description & " - " & Err.Number & " - UserIndex: " & i)
     Resume Next
 End Sub
  
@@ -1387,21 +1290,9 @@ Sub GuardarUsuarios()
 End Sub
 
 
-Sub InicializaEstadisticas()
-Dim Ta As Long
-Ta = GetTickCount() And &H7FFFFFFF
-
-Call EstadisticasWeb.Inicializa(frmMain.hWnd)
-Call EstadisticasWeb.Informar(CANTIDAD_MAPAS, NumMaps)
-Call EstadisticasWeb.Informar(CANTIDAD_ONLINE, NumUsers)
-Call EstadisticasWeb.Informar(UPTIME_SERVER, (Ta - tInicioServer) / 1000)
-Call EstadisticasWeb.Informar(RECORD_USUARIOS, recordusuarios)
-
-End Sub
-
 Public Sub FreeNPCs()
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Autor: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
 'Releases all NPC Indexes
 '***************************************************
@@ -1415,7 +1306,7 @@ End Sub
 
 Public Sub FreeCharIndexes()
 '***************************************************
-'Autor: Juan Martín Sotuyo Dodero (Maraxus)
+'Autor: Juan MartÃ­n Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
 'Releases all char indexes
 '***************************************************

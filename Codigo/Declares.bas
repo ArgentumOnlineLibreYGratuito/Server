@@ -1,6 +1,6 @@
 Attribute VB_Name = "Declaraciones"
 'Argentum Online 0.11.6
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÃ¡rquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -22,12 +22,17 @@ Attribute VB_Name = "Declaraciones"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÃºmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÃ³digo Postal 1900
+'Pablo Ignacio MÃ¡rquez
 
 Option Explicit
+
+''
+'When we have a list of strings, we use this to separate them and prevent
+'having too many string lengths in the queue. Yes, each string is NULL-terminated :P
+Public Const SEPARATOR As String * 1 = vbNullChar
 
 ''
 ' Modulo de declaraciones. Aca hay de todo.
@@ -40,10 +45,6 @@ Type tEstadisticasDiarias
 End Type
     
 Public DayStats As tEstadisticasDiarias
-
-#If SeguridadAlkon Then
-Public aDos As New clsAntiDoS
-#End If
 
 Public aClon As New clsAntiMassClon
 Public TrashCollector As New Collection
@@ -104,20 +105,21 @@ Public Enum PlayerType
     RoyalCouncil = &H80
 End Enum
 
+
 Public Enum eClass
     Mage = 1       'Mago
-    Cleric      'Clérigo
+    Cleric      'ClÃ©rigo
     Warrior     'Guerrero
     Assasin     'Asesino
-    Thief       'Ladrón
+    Thief       'LadrÃ³n
     Bard        'Bardo
     Druid       'Druida
     Bandit      'Bandido
-    Paladin     'Paladín
+    Paladin     'PaladÃ­n
     Hunter      'Cazador
     Fisher      'Pescador
     Blacksmith  'Herrero
-    Lumberjack  'Leñador
+    Lumberjack  'LeÃ±ador
     Miner       'Minero
     Carpenter   'Carpintero
     Pirat       'Pirata
@@ -255,7 +257,7 @@ Public Const MAXUSERHECHIZOS As Byte = 35
 
 ' TODO: Y ESTO ? LO CONOCE GD ?
 Public Const EsfuerzoTalarGeneral As Byte = 4
-Public Const EsfuerzoTalarLeñador As Byte = 2
+Public Const EsfuerzoTalarLeÃ±ador As Byte = 2
 
 Public Const EsfuerzoPescarPescador As Byte = 1
 Public Const EsfuerzoPescarGeneral As Byte = 3
@@ -265,7 +267,7 @@ Public Const EsfuerzoExcavarGeneral As Byte = 5
 
 Public Const FX_TELEPORT_INDEX As Integer = 1
 
-' La utilidad de esto es casi nula, sólo se revisa si fue a la cabeza...
+' La utilidad de esto es casi nula, sÃ³lo se revisa si fue a la cabeza...
 Public Enum PartesCuerpo
     bCabeza = 1
     bPiernaIzquierda = 2
@@ -289,13 +291,13 @@ Public Const MINATRIBUTOS As Byte = 6
 Public Const LingoteHierro As Integer = 386
 Public Const LingotePlata As Integer = 387
 Public Const LingoteOro As Integer = 388
-Public Const Leña As Integer = 58
+Public Const LeÃ±a As Integer = 58
 
 
 Public Const MAXNPCS As Integer = 10000
 Public Const MAXCHARS As Integer = 10000
 
-Public Const HACHA_LEÑADOR As Integer = 127
+Public Const HACHA_LEÃ‘ADOR As Integer = 127
 Public Const PIQUETE_MINERO As Integer = 187
 
 Public Const DAGA As Integer = 15
@@ -308,7 +310,7 @@ Public Const MARTILLO_HERRERO As Integer = 389
 Public Const SERRUCHO_CARPINTERO As Integer = 198
 Public Const ObjArboles As Integer = 4
 Public Const RED_PESCA As Integer = 543
-Public Const CAÑA_PESCA As Integer = 138
+Public Const CAÃ‘A_PESCA As Integer = 138
 
 Public Enum eNPCType
     Comun = 0
@@ -323,7 +325,7 @@ Public Enum eNPCType
     ResucitadorNewbie = 9
 End Enum
 
-Public Const MIN_APUÑALAR As Byte = 10
+Public Const MIN_APUÃ‘ALAR As Byte = 10
 
 '********** CONSTANTANTES ***********
 
@@ -398,7 +400,7 @@ Public Enum eSkill
     Tacticas = 4
     Armas = 5
     Meditar = 6
-    Apuñalar = 7
+    ApuÃ±alar = 7
     Ocultarse = 8
     Supervivencia = 9
     Talar = 10
@@ -431,21 +433,21 @@ Public Const AdicionalHPCazador As Byte = 1 'HP adicionales cuando sube de nivel
 Public Const AumentoSTDef As Byte = 15
 Public Const AumentoSTLadron As Byte = AumentoSTDef + 3
 Public Const AumentoSTMago As Byte = AumentoSTDef - 1
-Public Const AumentoSTLeñador As Byte = AumentoSTDef + 23
+Public Const AumentoSTLeÃ±ador As Byte = AumentoSTDef + 23
 Public Const AumentoSTPescador As Byte = AumentoSTDef + 20
 Public Const AumentoSTMinero As Byte = AumentoSTDef + 25
 
-'Tamaño del mapa
+'TamaÃ±o del mapa
 Public Const XMaxMapSize As Byte = 100
 Public Const XMinMapSize As Byte = 1
 Public Const YMaxMapSize As Byte = 100
 Public Const YMinMapSize As Byte = 1
 
-'Tamaño del tileset
+'TamaÃ±o del tileset
 Public Const TileSizeX As Byte = 32
 Public Const TileSizeY As Byte = 32
 
-'Tamaño en Tiles de la pantalla de visualizacion
+'TamaÃ±o en Tiles de la pantalla de visualizacion
 Public Const XWindow As Byte = 17
 Public Const YWindow As Byte = 13
 
@@ -461,7 +463,7 @@ Public Const SND_NIVEL As Byte = 6
 Public Const SND_USERMUERTE As Byte = 11
 Public Const SND_IMPACTO As Byte = 10
 Public Const SND_IMPACTO2 As Byte = 12
-Public Const SND_LEÑADOR As Byte = 13
+Public Const SND_LEÃ‘ADOR As Byte = 13
 Public Const SND_FOGATA As Byte = 14
 Public Const SND_AVE As Byte = 21
 Public Const SND_AVE2 As Byte = 22
@@ -501,7 +503,7 @@ Public Enum eOBJType
     otForos = 10
     otPociones = 11
     otBebidas = 13
-    otLeña = 14
+    otLeÃ±a = 14
     otFogata = 15
     otESCUDO = 16
     otCASCO = 17
@@ -721,7 +723,7 @@ Public Type ObjData
     'Solo contenedores
     MaxItems As Integer
     Conte As Inventario
-    Apuñala As Byte
+    ApuÃ±ala As Byte
     
     HechizoIndex As Integer
     
@@ -834,9 +836,9 @@ Public Type ModClase
     Evasion As Double
     AtaqueArmas As Double
     AtaqueProyectiles As Double
-    DañoArmas As Double
-    DañoProyectiles As Double
-    DañoWrestling As Double
+    DaÃ±oArmas As Double
+    DaÃ±oProyectiles As Double
+    DaÃ±oWrestling As Double
     Escudo As Double
 End Type
 
@@ -922,10 +924,10 @@ End Type
 'Flags
 Public Type UserFlags
     EstaEmpo As Byte    'Empollando (by yb)
-    Muerto As Byte '¿Esta muerto?
-    Escondido As Byte '¿Esta escondido?
-    Comerciando As Boolean '¿Esta comerciando?
-    UserLogged As Boolean '¿Esta online?
+    Muerto As Byte 'Â¿Esta muerto?
+    Escondido As Byte 'Â¿Esta escondido?
+    Comerciando As Boolean 'Â¿Esta comerciando?
+    UserLogged As Boolean 'Â¿Esta online?
     Meditando As Boolean
     ModoCombate As Boolean
     Descuento As String
@@ -955,16 +957,16 @@ Public Type UserFlags
     SeguroResu As Boolean
     
     DuracionEfecto As Long
-    TargetNPC As Integer ' Npc señalado por el usuario
-    TargetNpcTipo As eNPCType ' Tipo del npc señalado
+    TargetNPC As Integer ' Npc seÃ±alado por el usuario
+    TargetNpcTipo As eNPCType ' Tipo del npc seÃ±alado
     NpcInv As Integer
     
     Ban As Byte
     AdministrativeBan As Byte
     
-    TargetUser As Integer ' Usuario señalado
+    TargetUser As Integer ' Usuario seÃ±alado
     
-    TargetObj As Integer ' Obj señalado
+    TargetObj As Integer ' Obj seÃ±alado
     TargetObjMap As Integer
     TargetObjX As Integer
     TargetObjY As Integer
@@ -1130,10 +1132,6 @@ Public Type User
     Reputacion As tReputacion
     
     Faccion As tFacciones
-    
-#If SeguridadAlkon Then
-    Security As SecurityData
-#End If
 
 #If ConUpTime Then
     LogOnTime As Date
@@ -1159,9 +1157,8 @@ Public Type User
     
     AreasInfo As AreaInfo
     
-    'Outgoing and incoming messages
-    outgoingData As clsByteQueue
-    incomingData As clsByteQueue
+    Connection As Network_Client
+    
 End Type
 
 
@@ -1196,7 +1193,7 @@ Public Type NPCFlags
     GolpeExacto As Byte
     Domable As Integer
     Respawn As Byte
-    NPCActive As Boolean '¿Esta vivo?
+    NPCActive As Boolean 'Â¿Esta vivo?
     Follow As Boolean
     Faccion As Byte
     LanzaSpells As Byte

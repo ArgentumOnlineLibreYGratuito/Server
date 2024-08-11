@@ -1,6 +1,6 @@
 Attribute VB_Name = "NPCs"
 'Argentum Online 0.11.6
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÃ¡rquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -22,25 +22,25 @@ Attribute VB_Name = "NPCs"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÃºmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÃ³digo Postal 1900
+'Pablo Ignacio MÃ¡rquez
 
 
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
+'?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
+'?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
 '                        Modulo NPC
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
+'?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
+'?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
 'Contiene todas las rutinas necesarias para cotrolar los
 'NPCs meno la rutina de AI que se encuentra en el modulo
 'AI_NPCs para su mejor comprension.
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
-'?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
+'?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
+'?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
+'?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿?Â¿
 
 Option Explicit
 
@@ -68,7 +68,7 @@ Sub MuereNpc(ByVal NpcIndex As Integer, ByVal UserIndex As Integer)
 'Llamado cuando la vida de un NPC llega a cero.
 'Last Modify Date: 24/01/2007
 '22/06/06: (Nacho) Chequeamos si es pretoriano
-'24/01/2007: Pablo (ToxicWaste): Agrego para actualización de tag si cambia de status.
+'24/01/2007: Pablo (ToxicWaste): Agrego para actualizaciÃ³n de tag si cambia de status.
 '********************************************************
 On Error GoTo Errhandler
     Dim MiNPC As npc
@@ -197,7 +197,7 @@ On Error GoTo Errhandler
 Exit Sub
 
 Errhandler:
-    Call LogError("Error en MuereNpc - Error: " & Err.Number & " - Desc: " & Err.description)
+    Call LogError("Error en MuereNpc - Error: " & Err.Number & " - Desc: " & Err.Description)
 End Sub
 
 Sub ResetNpcFlags(ByVal NpcIndex As Integer)
@@ -428,7 +428,7 @@ Dim Y As Integer
             Call ClosestLegalPos(Pos, newpos, PuedeAgua, PuedeTierra)  'Nos devuelve la posicion valida mas cercana
             If newpos.X <> 0 And newpos.Y <> 0 Then
                 altpos.X = newpos.X
-                altpos.Y = newpos.Y     'posicion alternativa (para evitar el anti respawn, pero intentando qeu si tenía que ser en el agua, sea en el agua.)
+                altpos.Y = newpos.Y     'posicion alternativa (para evitar el anti respawn, pero intentando qeu si tenÃ­a que ser en el agua, sea en el agua.)
             Else
                 Call ClosestLegalPos(Pos, newpos, PuedeAgua)
                 If newpos.X <> 0 And newpos.Y <> 0 Then
@@ -505,7 +505,7 @@ Dim CharIndex As Integer
     
     If Not toMap Then
         Call WriteCharacterCreate(sndIndex, Npclist(NpcIndex).Char.body, Npclist(NpcIndex).Char.Head, Npclist(NpcIndex).Char.heading, Npclist(NpcIndex).Char.CharIndex, X, Y, 0, 0, 0, 0, 0, vbNullString, 0, 0)
-        Call FlushBuffer(sndIndex)
+    
     Else
         Call AgregarNpc(NpcIndex)
     End If
@@ -638,7 +638,7 @@ Dim N As Integer
 N = RandomNumber(1, 100)
 If N < 30 Then
     UserList(UserIndex).flags.Envenenado = 1
-    Call WriteConsoleMsg(UserIndex, "¡¡La criatura te ha envenenado!!", FontTypeNames.FONTTYPE_FIGHT)
+    Call WriteConsoleMsg(UserIndex, "Â¡Â¡La criatura te ha envenenado!!", FontTypeNames.FONTTYPE_FIGHT)
 End If
 
 End Sub
@@ -648,7 +648,7 @@ Function SpawnNpc(ByVal NpcIndex As Integer, Pos As WorldPos, ByVal FX As Boolea
 'Autor: Unknown (orginal version)
 'Last Modification: 06/15/2008
 '23/01/2007 -> Pablo (ToxicWaste): Creates an NPC of the type Npcindex
-'06/15/2008 -> Optimizé el codigo. (NicoNZ)
+'06/15/2008 -> OptimizÃ© el codigo. (NicoNZ)
 '***************************************************
 Dim newpos As WorldPos
 Dim altpos As WorldPos
@@ -743,7 +743,7 @@ Dim cont As Integer
 cont = 0
 For NpcIndex = 1 To LastNPC
 
-    '¿esta vivo?
+    'Â¿esta vivo?
     If Npclist(NpcIndex).flags.NPCActive _
        And Npclist(NpcIndex).Pos.map = map _
        And Npclist(NpcIndex).Hostile = 1 And _
@@ -761,7 +761,7 @@ End Function
 Sub NPCTirarOro(MiNPC As npc)
 
 'SI EL NPC TIENE ORO LO TIRAMOS
-'Pablo (ToxicWaste): Ahora se puede poner más de 10k de drop de oro en los NPC.
+'Pablo (ToxicWaste): Ahora se puede poner mÃ¡s de 10k de drop de oro en los NPC.
 If MiNPC.GiveGLD > 0 Then
     Dim MiObj As Obj
     Dim MiAux As Double
@@ -788,10 +788,10 @@ Function OpenNPC(ByVal NpcNumber As Integer, Optional ByVal Respawn = True) As I
 '#               ATENCION PELIGRO                  #
 '###################################################
 '
-'    ¡¡¡¡ NO USAR GetVar PARA LEER LOS NPCS !!!!
+'    Â¡Â¡Â¡Â¡ NO USAR GetVar PARA LEER LOS NPCS !!!!
 '
-'El que ose desafiar esta LEY, se las tendrá que ver
-'conmigo. Para leer los NPCS se deberá usar la
+'El que ose desafiar esta LEY, se las tendrÃ¡ que ver
+'conmigo. Para leer los NPCS se deberÃ¡ usar la
 'nueva clase clsIniReader.
 '
 'Alejo

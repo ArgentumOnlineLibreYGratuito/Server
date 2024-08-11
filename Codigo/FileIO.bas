@@ -1,6 +1,6 @@
 Attribute VB_Name = "ES"
 'Argentum Online 0.11.6
-'Copyright (C) 2002 Márquez Pablo Ignacio
+'Copyright (C) 2002 MÃ¡rquez Pablo Ignacio
 '
 'This program is free software; you can redistribute it and/or modify
 'it under the terms of the Affero General Public License;
@@ -22,10 +22,10 @@ Attribute VB_Name = "ES"
 'You can contact me at:
 'morgolock@speedy.com.ar
 'www.geocities.com/gmorgolock
-'Calle 3 número 983 piso 7 dto A
+'Calle 3 nÃºmero 983 piso 7 dto A
 'La Plata - Pcia, Buenos Aires - Republica Argentina
-'Código Postal 1900
-'Pablo Ignacio Márquez
+'CÃ³digo Postal 1900
+'Pablo Ignacio MÃ¡rquez
 
 Option Explicit
 
@@ -168,10 +168,10 @@ Public Sub CargarHechizos()
 '#               ATENCION PELIGRO                  #
 '###################################################
 '
-'  ¡¡¡¡ NO USAR GetVar PARA LEER Hechizos.dat !!!!
+'  Â¡Â¡Â¡Â¡ NO USAR GetVar PARA LEER Hechizos.dat !!!!
 '
-'El que ose desafiar esta LEY, se las tendrá que ver
-'con migo. Para leer Hechizos.dat se deberá usar
+'El que ose desafiar esta LEY, se las tendrÃ¡ que ver
+'con migo. Para leer Hechizos.dat se deberÃ¡ usar
 'la nueva clase clsLeerInis.
 '
 'Alejo
@@ -293,7 +293,7 @@ Set Leer = Nothing
 Exit Sub
 
 Errhandler:
- MsgBox "Error cargando hechizos.dat " & Err.Number & ": " & Err.description
+ MsgBox "Error cargando hechizos.dat " & Err.Number & ": " & Err.Description
  
 End Sub
 
@@ -340,8 +340,6 @@ Call ResetCentinelaInfo     'Reseteamos al centinela
 
 
 Call SendData(SendTarget.ToAll, 0, PrepareMessagePauseToggle())
-
-'Call EstadisticasWeb.Informar(EVENTO_NUEVO_CLAN, 0)
 
 haciendoBK = False
 
@@ -519,9 +517,9 @@ Sub LoadBalance()
         ModClase(i).Evasion = val(GetVar(DatPath & "Balance.dat", "MODEVASION", ListaClases(i)))
         ModClase(i).AtaqueArmas = val(GetVar(DatPath & "Balance.dat", "MODATAQUEARMAS", ListaClases(i)))
         ModClase(i).AtaqueProyectiles = val(GetVar(DatPath & "Balance.dat", "MODATAQUEPROYECTILES", ListaClases(i)))
-        ModClase(i).DañoArmas = val(GetVar(DatPath & "Balance.dat", "MODDAÑOARMAS", ListaClases(i)))
-        ModClase(i).DañoProyectiles = val(GetVar(DatPath & "Balance.dat", "MODDAÑOPROYECTILES", ListaClases(i)))
-        ModClase(i).DañoWrestling = val(GetVar(DatPath & "Balance.dat", "MODDAÑOWRESTLING", ListaClases(i)))
+        ModClase(i).DaÃ±oArmas = val(GetVar(DatPath & "Balance.dat", "MODDAÃ‘OARMAS", ListaClases(i)))
+        ModClase(i).DaÃ±oProyectiles = val(GetVar(DatPath & "Balance.dat", "MODDAÃ‘OPROYECTILES", ListaClases(i)))
+        ModClase(i).DaÃ±oWrestling = val(GetVar(DatPath & "Balance.dat", "MODDAÃ‘OWRESTLING", ListaClases(i)))
         ModClase(i).Escudo = val(GetVar(DatPath & "Balance.dat", "MODESCUDO", ListaClases(i)))
     Next i
     
@@ -539,7 +537,7 @@ Sub LoadBalance()
         ModVida(i) = val(GetVar(DatPath & "Balance.dat", "MODVIDA", ListaClases(i)))
     Next i
     
-    'Distribución de Vida
+    'DistribuciÃ³n de Vida
     For i = 1 To 5
         DistribucionEnteraVida(i) = val(GetVar(DatPath & "Balance.dat", "DISTRIBUCION", "E" + CStr(i)))
     Next i
@@ -576,10 +574,10 @@ Sub LoadOBJData()
 '#               ATENCION PELIGRO                  #
 '###################################################
 '
-'¡¡¡¡ NO USAR GetVar PARA LEER DESDE EL OBJ.DAT !!!!
+'Â¡Â¡Â¡Â¡ NO USAR GetVar PARA LEER DESDE EL OBJ.DAT !!!!
 '
-'El que ose desafiar esta LEY, se las tendrá que ver
-'con migo. Para leer desde el OBJ.DAT se deberá usar
+'El que ose desafiar esta LEY, se las tendrÃ¡ que ver
+'con migo. Para leer desde el OBJ.DAT se deberÃ¡ usar
 'la nueva clase clsLeerInis.
 '
 'Alejo
@@ -658,7 +656,7 @@ For Object = 1 To NumObjDatas
         
         Case eOBJType.otWeapon
             ObjData(Object).WeaponAnim = val(Leer.GetValue("OBJ" & Object, "Anim"))
-            ObjData(Object).Apuñala = val(Leer.GetValue("OBJ" & Object, "Apuñala"))
+            ObjData(Object).ApuÃ±ala = val(Leer.GetValue("OBJ" & Object, "ApuÃ±ala"))
             ObjData(Object).Envenena = val(Leer.GetValue("OBJ" & Object, "Envenena"))
             ObjData(Object).MaxHIT = val(Leer.GetValue("OBJ" & Object, "MaxHIT"))
             ObjData(Object).MinHIT = val(Leer.GetValue("OBJ" & Object, "MinHIT"))
@@ -796,7 +794,7 @@ Set Leer = Nothing
 Exit Sub
 
 Errhandler:
-    MsgBox "error cargando objetos " & Err.Number & ": " & Err.description
+    MsgBox "error cargando objetos " & Err.Number & ": " & Err.Description
 
 
 End Sub
@@ -1092,7 +1090,7 @@ Exit Sub
 
 man:
     MsgBox ("Error durante la carga de mapas, el mapa " & map & " contiene errores")
-    Call LogError(Date & " " & Err.description & " " & Err.HelpContext & " " & Err.HelpFile & " " & Err.source)
+    Call LogError(Date & " " & Err.Description & " " & Err.HelpContext & " " & Err.HelpFile & " " & Err.Source)
  
 End Sub
 
@@ -1133,7 +1131,7 @@ Exit Sub
 
 man:
     MsgBox ("Error durante la carga de mapas, el mapa " & map & " contiene errores")
-    Call LogError(Date & " " & Err.description & " " & Err.HelpContext & " " & Err.HelpFile & " " & Err.source)
+    Call LogError(Date & " " & Err.Description & " " & Err.HelpContext & " " & Err.HelpFile & " " & Err.Source)
 
 End Sub
 
@@ -1275,7 +1273,7 @@ On Error GoTo errh
 Exit Sub
 
 errh:
-    Call LogError("Error cargando mapa: " & map & " - Pos: " & X & "," & Y & "." & Err.description)
+    Call LogError("Error cargando mapa: " & map & " - Pos: " & X & "," & Y & "." & Err.Description)
 End Sub
 
 Sub LoadSini()
@@ -1285,14 +1283,6 @@ Dim Temporal As Long
 If frmMain.Visible Then frmMain.txStatus.Caption = "Cargando info de inicio del server."
 
 BootDelBackUp = val(GetVar(IniPath & "Server.ini", "INIT", "IniciarDesdeBackUp"))
-
-'Misc
-#If SeguridadAlkon Then
-
-Call Security.SetServerIp(GetVar(IniPath & "Server.ini", "INIT", "ServerIp"))
-
-#End If
-
 
 Puerto = val(GetVar(IniPath & "Server.ini", "INIT", "StartPort"))
 HideMe = val(GetVar(IniPath & "Server.ini", "INIT", "Hide"))
@@ -1433,11 +1423,10 @@ If MaxUsers = 0 Then
 End If
 
 '&&&&&&&&&&&&&&&&&&&&& BALANCE &&&&&&&&&&&&&&&&&&&&&&&
-'Se agregó en LoadBalance y en el Balance.dat
+'Se agregÃ³ en LoadBalance y en el Balance.dat
 'PorcentajeRecuperoMana = val(GetVar(IniPath & "Server.ini", "BALANCE", "PorcentajeRecuperoMana"))
 
 ''&&&&&&&&&&&&&&&&&&&&& FIN BALANCE &&&&&&&&&&&&&&&&&&&&&&&
-Call Statistics.Initialize
 
 Nix.map = GetVar(DatPath & "Ciudades.dat", "NIX", "Mapa")
 Nix.X = GetVar(DatPath & "Ciudades.dat", "NIX", "X")
@@ -1463,10 +1452,6 @@ Arghal.Y = GetVar(DatPath & "Ciudades.dat", "Arghal", "Y")
 Call MD5sCarga
 
 Call ConsultaPopular.LoadData
-
-#If SeguridadAlkon Then
-Encriptacion.StringValidacion = Encriptacion.ArmarStringValidacion
-#End If
 
 End Sub
 
@@ -1556,7 +1541,7 @@ Call WriteVar(UserFile, "FACCIONES", "MatadosIngreso", CStr(UserList(UserIndex).
 Call WriteVar(UserFile, "FACCIONES", "NextRecompensa", CStr(UserList(UserIndex).Faccion.NextRecompensa))
 
 
-'¿Fueron modificados los atributos del usuario?
+'Â¿Fueron modificados los atributos del usuario?
 If Not UserList(UserIndex).flags.TomoPocion Then
     For LoopC = 1 To UBound(UserList(UserIndex).Stats.UserAtributos)
         Call WriteVar(UserFile, "ATRIBUTOS", "AT" & LoopC, CStr(UserList(UserIndex).Stats.UserAtributos(LoopC)))

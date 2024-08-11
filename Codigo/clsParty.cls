@@ -353,7 +353,7 @@ If rv Then
                 End If
                 'aspirante caos en party ciuda
                 If esCaos And Not criminal(UI) Then
-                    razon = "Los miembros de la legión oscura no entran a una party con ciudadanos."
+                    razon = "Los miembros de la legiÃ³n oscura no entran a una party con ciudadanos."
                     rv = False
                 End If
                 'aspirante crimi en party armada
@@ -363,7 +363,7 @@ If rv Then
                 End If
                 'aspirante ciuda en party caos
                 If UserList(UI).Faccion.FuerzasCaos = 1 And Not criminal(UserIndex) Then
-                    razon = "Los miembros de la legión oscura no entran a una party con ciudadanos."
+                    razon = "Los miembros de la legiÃ³n oscura no entran a una party con ciudadanos."
                     rv = False
                 End If
             

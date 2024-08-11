@@ -579,7 +579,7 @@ Dim i               As Long
 
             If CantGanadores > 1 Then
                 'empate en la votacion
-                Call SetGuildNews("*Empate en la votación. " & Ganador & " con " & CantGanadores & " votos ganaron las elecciones del clan")
+                Call SetGuildNews("*Empate en la votaciÃ³n. " & Ganador & " con " & CantGanadores & " votos ganaron las elecciones del clan")
             ElseIf CantGanadores = 1 Then
                 list = Me.GetMemberList()
                 
@@ -588,14 +588,14 @@ Dim i               As Long
                 Next i
                 
                 If i <= UBound(list()) Then
-                    Call SetGuildNews("*" & Ganador & " ganó la elección del clan*")
+                    Call SetGuildNews("*" & Ganador & " ganÃ³ la elecciÃ³n del clan*")
                     Call Me.SetLeader(Ganador)
                     RevisarElecciones = True
                 Else
-                    Call SetGuildNews("*" & Ganador & " ganó la elección del clan pero abandonó las filas por lo que la votación queda desierta*")
+                    Call SetGuildNews("*" & Ganador & " ganÃ³ la elecciÃ³n del clan pero abandonÃ³ las filas por lo que la votaciÃ³n queda desierta*")
                 End If
             Else
-                Call SetGuildNews("*El período de votación se cerró sin votos*")
+                Call SetGuildNews("*El perÃ­odo de votaciÃ³n se cerrÃ³ sin votos*")
             End If
             
             Call CerrarElecciones
@@ -814,8 +814,8 @@ Private Sub ReplaceInvalidChars(ByRef S As String)
     If InStrB(S, Chr$(10)) <> 0 Then
         S = Replace(S, Chr$(10), vbNullString)
     End If
-    If InStrB(S, "¬") <> 0 Then
-        S = Replace(S, "¬", vbNullString)   'morgo usaba esto como "separador"
+    If InStrB(S, "Â¬") <> 0 Then
+        S = Replace(S, "Â¬", vbNullString)   'morgo usaba esto como "separador"
     End If
 End Sub
 
