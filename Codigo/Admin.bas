@@ -96,20 +96,6 @@ Public Lloviendo As Boolean
 Public DeNoche As Boolean
 
 Public IpList As New Collection
-Public ClientsCommandsQueue As Byte
-
-Public Type TCPESStats
-    BytesEnviados As Double
-    BytesRecibidos As Double
-    BytesEnviadosXSEG As Long
-    BytesRecibidosXSEG As Long
-    BytesEnviadosXSEGMax As Long
-    BytesRecibidosXSEGMax As Long
-    BytesEnviadosXSEGCuando As Date
-    BytesRecibidosXSEGCuando As Date
-End Type
-
-Public TCPESStats As TCPESStats
 
 'Public ResetThread As New clsThreading
 
@@ -117,19 +103,6 @@ Function VersionOK(ByVal Ver As String) As Boolean
 VersionOK = (Ver = ULTIMAVERSION)
 End Function
 
-Public Function VersionesActuales(ByVal v1 As Integer, ByVal v2 As Integer, ByVal v3 As Integer, ByVal v4 As Integer, ByVal v5 As Integer, ByVal v6 As Integer, ByVal v7 As Integer) As Boolean
-Dim rv As Boolean
-
-rv = val(GetVar(App.Path & "\AUTOUPDATER\VERSIONES.INI", "ACTUALES", "GRAFICOS")) = v1
-rv = rv And val(GetVar(App.Path & "\AUTOUPDATER\VERSIONES.INI", "ACTUALES", "WAVS")) = v2
-rv = rv And val(GetVar(App.Path & "\AUTOUPDATER\VERSIONES.INI", "ACTUALES", "MIDIS")) = v3
-rv = rv And val(GetVar(App.Path & "\AUTOUPDATER\VERSIONES.INI", "ACTUALES", "INIT")) = v4
-rv = rv And val(GetVar(App.Path & "\AUTOUPDATER\VERSIONES.INI", "ACTUALES", "MAPAS")) = v5
-rv = rv And val(GetVar(App.Path & "\AUTOUPDATER\VERSIONES.INI", "ACTUALES", "AOEXE")) = v6
-rv = rv And val(GetVar(App.Path & "\AUTOUPDATER\VERSIONES.INI", "ACTUALES", "EXTRAS")) = v7
-VersionesActuales = rv
-
-End Function
 
 Sub ReSpawnOrigPosNpcs()
 On Error Resume Next

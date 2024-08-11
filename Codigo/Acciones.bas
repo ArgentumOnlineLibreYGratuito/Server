@@ -126,10 +126,6 @@ If InMapBounds(map, X, Y) Then
             
             Case eOBJType.otPuertas 'Es una puerta
                 Call AccionParaPuerta(map, X, Y, UserIndex)
-            Case eOBJType.otCarteles 'Es un cartel
-                Call AccionParaCartel(map, X, Y, UserIndex)
-            Case eOBJType.otForos 'Foro
-                Call AccionParaForo(map, X, Y, UserIndex)
             Case eOBJType.otLeña    'Leña
                 If MapData(map, X, Y).ObjInfo.ObjIndex = FOGATA_APAG And UserList(UserIndex).flags.Muerto = 0 Then
                     Call AccionParaRamita(map, X, Y, UserIndex)
@@ -167,48 +163,6 @@ If InMapBounds(map, X, Y) Then
 End If
 
 End Sub
-
-Sub AccionParaForo(ByVal map As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal UserIndex As Integer)
-On Error Resume Next
-
-Dim Pos As WorldPos
-Pos.map = map
-Pos.X = X
-Pos.Y = Y
-
-If Distancia(Pos, UserList(UserIndex).Pos) > 2 Then
-    Call WriteConsoleMsg(UserIndex, "Estas demasiado lejos.", FontTypeNames.FONTTYPE_INFO)
-    Exit Sub
-End If
-
-'¿Hay mensajes?
-Dim f As String, tit As String, men As String, BASE As String, auxcad As String
-f = App.Path & "\foros\" & UCase$(ObjData(MapData(map, X, Y).ObjInfo.ObjIndex).ForoID) & ".for"
-If FileExist(f, vbNormal) Then
-    Dim num As Integer
-    num = val(GetVar(f, "INFO", "CantMSG"))
-    BASE = Left$(f, Len(f) - 4)
-    Dim i As Integer
-    Dim N As Integer
-    For i = 1 To num
-        N = FreeFile
-        f = BASE & i & ".for"
-        Open f For Input Shared As #N
-        Input #N, tit
-        men = vbNullString
-        auxcad = vbNullString
-        Do While Not EOF(N)
-            Input #N, auxcad
-            men = men & vbCrLf & auxcad
-        Loop
-        Close #N
-        Call WriteAddForumMsg(UserIndex, tit, men)
-        
-    Next
-End If
-Call WriteShowForumForm(UserIndex)
-End Sub
-
 
 Sub AccionParaPuerta(ByVal map As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal UserIndex As Integer)
 On Error Resume Next
@@ -263,22 +217,6 @@ If Not (Distance(UserList(UserIndex).Pos.X, UserList(UserIndex).Pos.Y, X, Y) > 2
     End If
 Else
     Call WriteConsoleMsg(UserIndex, "Estas demasiado lejos.", FontTypeNames.FONTTYPE_INFO)
-End If
-
-End Sub
-
-Sub AccionParaCartel(ByVal map As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal UserIndex As Integer)
-On Error Resume Next
-
-
-Dim MiObj As Obj
-
-If ObjData(MapData(map, X, Y).ObjInfo.ObjIndex).OBJType = 8 Then
-  
-  If Len(ObjData(MapData(map, X, Y).ObjInfo.ObjIndex).texto) > 0 Then
-    Call WriteShowSignal(UserIndex, MapData(map, X, Y).ObjInfo.ObjIndex)
-  End If
-  
 End If
 
 End Sub

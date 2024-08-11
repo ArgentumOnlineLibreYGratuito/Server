@@ -1011,8 +1011,6 @@ Public Type UserFlags
     UltimoMensaje As Byte
     '[/CDT]
     
-    NoActualizado As Boolean
-    
     Silenciado As Byte
     
     Mimetizado As Byte

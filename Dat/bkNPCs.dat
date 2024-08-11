@@ -1,6 +1,6 @@
 [NPC20]
 Name=Sastre
-Desc=¡Acérquese! Tengo pequeñas prendas que serán de su agrado...
+Desc=Â¡AcÃ©rquese! Tengo pequeÃ±as prendas que serÃ¡n de su agrado...
 Head=303
 Body=180
 Heading=3
@@ -45,7 +45,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC12]
 Name=Sastre
-Desc=¡Hola forastero! Soy el Sastre de Ullathorpe, Bienvenido!
+Desc=Â¡Hola forastero! Soy el Sastre de Ullathorpe, Bienvenido!
 Head=9
 Body=50
 Heading=3
@@ -90,7 +90,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC19]
 Name=Sastre
-Desc=¡Bienvenida Viajera! Tengo hermosas vestimentas para ofrecerte...
+Desc=Â¡Bienvenida Viajera! Tengo hermosas vestimentas para ofrecerte...
 Head=70
 Body=80
 Heading=3
@@ -225,7 +225,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC80]
 Name=Mercader
-Desc=¡¡Hola buen amigo, compro y vendo todo tipo de mercancías!!
+Desc=Â¡Â¡Hola buen amigo, compro y vendo todo tipo de mercancÃ­as!!
 Head=2
 Body=3
 Heading=3
@@ -315,7 +315,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC54]
 Name=Armaduras
-Desc=Acércate, tengo algunas armaduras que podrían protegerte.
+Desc=AcÃ©rcate, tengo algunas armaduras que podrÃ­an protegerte.
 Head=6
 Body=93
 Heading=4
@@ -360,7 +360,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC46]
 Name=Mago
-Desc=Bienvenido a mi pequeña tienda de Ullathorpe... Tengo algunos hechizos que podrían interesarte.
+Desc=Bienvenido a mi pequeÃ±a tienda de Ullathorpe... Tengo algunos hechizos que podrÃ­an interesarte.
 Head=110
 Body=46
 Heading=3
@@ -404,8 +404,8 @@ Obj18=0-0
 Obj19=0-0
 Obj20=0-0
 [NPC33]
-Name=Leñador
-Desc=¡Hola muchacho!, si deseas vender o comprar madera escribe /COMERCIAR.
+Name=LeÃ±ador
+Desc=Â¡Hola muchacho!, si deseas vender o comprar madera escribe /COMERCIAR.
 Head=4
 Body=1
 Heading=3
@@ -450,7 +450,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC34]
 Name=Cullighan
-Desc=Usted sabe que no hay persona noble o respetable en estas tierras que no tenga su propia vivienda. ¡acérquese y sea dueño de una de las exclusivas casas de Ullathorpe. ¡Será admirado por toda la población!
+Desc=Usted sabe que no hay persona noble o respetable en estas tierras que no tenga su propia vivienda. Â¡acÃ©rquese y sea dueÃ±o de una de las exclusivas casas de Ullathorpe. Â¡SerÃ¡ admirado por toda la poblaciÃ³n!
 Head=33
 Body=240
 Heading=3
@@ -495,7 +495,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC44]
 Name=Carpintero
-Desc=¡Hola muchacho!, bienvenido a mi humilde Carpintería.
+Desc=Â¡Hola muchacho!, bienvenido a mi humilde CarpinterÃ­a.
 Head=2
 Body=1
 Heading=3
@@ -540,7 +540,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC42]
 Name=Antogne
-Desc=¡Hola aventurero! Si estais hambriento habeis venido al lugar apropiador, tengo todo tipo de frutas.
+Desc=Â¡Hola aventurero! Si estais hambriento habeis venido al lugar apropiador, tengo todo tipo de frutas.
 Head=505
 Body=202
 Heading=3
@@ -585,7 +585,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC35]
 Name=Moraday
-Desc=¿Ha descubierto que la ciudad de Nix es la más hermosa de todo Argentum, verdad? ¡Pues qué mejor que ser un terrateniente de este paraíso! ¡Acércate que haremos negocios!
+Desc=Â¿Ha descubierto que la ciudad de Nix es la mÃ¡s hermosa de todo Argentum, verdad? Â¡Pues quÃ© mejor que ser un terrateniente de este paraÃ­so! Â¡AcÃ©rcate que haremos negocios!
 Head=35
 Body=239
 Heading=3
@@ -675,7 +675,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC15]
 Name=Thorkis
-Desc=¡Qué tal amigo! Entra, pues tengo las mejores provisiones de Nix!
+Desc=Â¡QuÃ© tal amigo! Entra, pues tengo las mejores provisiones de Nix!
 Head=504
 Body=202
 Heading=3
@@ -765,7 +765,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC47]
 Name=Mago
-Desc=Bienvenido a mi pequeña tienda de Nix... Tengo algunos hechizos que podrían interesarte.
+Desc=Bienvenido a mi pequeÃ±a tienda de Nix... Tengo algunos hechizos que podrÃ­an interesarte.
 Head=110
 Body=46
 Heading=3
@@ -810,7 +810,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC41]
 Name=Pescador
-Desc=¡Bienvenido al gremio de pescadores!       
+Desc=Â¡Bienvenido al gremio de pescadores!       
 Head=2
 Body=3
 Heading=3
@@ -855,7 +855,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC99]
 Name=Mago
-Desc=¿Estás buscando los hechizos más poderosos? A buen puerto has llegado...
+Desc=Â¿EstÃ¡s buscando los hechizos mÃ¡s poderosos? A buen puerto has llegado...
 Head=110
 Body=46
 Heading=3
@@ -900,7 +900,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC52]
 Name=Rantarisk
-Desc=De lejos pude ver vuestro blazón, seguro busca una del las moradas más lujosas de todo el Argentum. En la ciudad real de Banderbill es donde deben habitar la flor y la nata de la nobleza ¡Venga y hagamos negocios!
+Desc=De lejos pude ver vuestro blazÃ³n, seguro busca una del las moradas mÃ¡s lujosas de todo el Argentum. En la ciudad real de Banderbill es donde deben habitar la flor y la nata de la nobleza Â¡Venga y hagamos negocios!
 Head=32
 Body=241
 Heading=3
@@ -945,7 +945,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC50]
 Name=Tellez
-Desc=¡Hola! Bienvenido al "Mesón Hostigado", ¿Qué desea que le sirva?
+Desc=Â¡Hola! Bienvenido al "MesÃ³n Hostigado", Â¿QuÃ© desea que le sirva?
 Head=505
 Body=202
 Heading=3
@@ -990,7 +990,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC51]
 Name=Mago
-Desc=Bienvenido a mi pequeña Tienda de Banderbill... Tengo algunos hechizos que podrían interesarte.
+Desc=Bienvenido a mi pequeÃ±a Tienda de Banderbill... Tengo algunos hechizos que podrÃ­an interesarte.
 Head=110
 Body=46
 Heading=3
@@ -1035,7 +1035,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC38]
 Name=Herrero
-Desc=¡Ven, pasa, que he fabricado las más poderosas armas de Banderbill para tí!
+Desc=Â¡Ven, pasa, que he fabricado las mÃ¡s poderosas armas de Banderbill para tÃ­!
 Head=505
 Body=199
 Heading=3
@@ -1080,7 +1080,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC25]
 Name=Sastre
-Desc=¡Bienvenido a la Sastrería de Banderbill! ¿En qué lo puedo ayudar?
+Desc=Â¡Bienvenido a la SastrerÃ­a de Banderbill! Â¿En quÃ© lo puedo ayudar?
 Head=7
 Body=56
 Heading=3
@@ -1125,7 +1125,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC43]
 Name=Sorks
-Desc=¿¡Estáis sediento y hambriento!?
+Desc=Â¿Â¡EstÃ¡is sediento y hambriento!?
 Head=505
 Body=202
 Heading=3
@@ -1170,7 +1170,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC27]
 Name=Sastre
-Desc=¡Ven y mira estas prendas que he confeccionado para nuestra raza!
+Desc=Â¡Ven y mira estas prendas que he confeccionado para nuestra raza!
 Head=305
 Body=159
 Heading=3
@@ -1215,7 +1215,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC26]
 Name=Sastre
-Desc=¡Adelante hermosa niña! En mi tienda encontrarás vestidos hechos para tí!
+Desc=Â¡Adelante hermosa niÃ±a! En mi tienda encontrarÃ¡s vestidos hechos para tÃ­!
 Head=173
 Body=121
 Heading=3
@@ -1305,7 +1305,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC114]
 Name=SR
-Desc=Bienvenido a la Sastrería Real.
+Desc=Bienvenido a la SastrerÃ­a Real.
 Head=171
 Body=174
 Heading=3
@@ -1350,7 +1350,7 @@ Obj19=694-1000
 Obj20=0-0
 [NPC58]
 Name=Pescador
-Desc=¡Bienvenido al gremio de pescadores!
+Desc=Â¡Bienvenido al gremio de pescadores!
 Head=101
 Body=3
 Heading=3
@@ -1395,7 +1395,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC31]
 Name=Sastre
-Desc=¡Ven aquí! Te puedo ofrecer las mejores ropas de la isla...
+Desc=Â¡Ven aquÃ­! Te puedo ofrecer las mejores ropas de la isla...
 Head=7
 Body=46
 Heading=3
@@ -1440,7 +1440,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC32]
 Name=Sastre
-Desc=¡Ven y mira estas vestimentas, seguro te encantarán!
+Desc=Â¡Ven y mira estas vestimentas, seguro te encantarÃ¡n!
 Head=75
 Body=118
 Heading=3
@@ -1485,7 +1485,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC39]
 Name=Sastre
-Desc=¡Hola forastero! confeccionamos las mejores ropas de la zona.
+Desc=Â¡Hola forastero! confeccionamos las mejores ropas de la zona.
 Head=304
 Body=135
 Heading=3
@@ -1530,7 +1530,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC113]
 Name=Armaduras
-Desc=¡Tengo a la venta las mejores armaduras de la isla!
+Desc=Â¡Tengo a la venta las mejores armaduras de la isla!
 Head=6
 Body=93
 Heading=4
@@ -1575,7 +1575,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC56]
 Name=Herrero
-Desc=¡Ven, pasa, que he fabricado, aquí en Lindos, poderosas armas para tí!
+Desc=Â¡Ven, pasa, que he fabricado, aquÃ­ en Lindos, poderosas armas para tÃ­!
 Head=505
 Body=199
 Heading=3
@@ -1620,7 +1620,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC69]
 Name=Mago
-Desc=Ven por aquí joven, las artes mágicas superiores te están llamando...
+Desc=Ven por aquÃ­ joven, las artes mÃ¡gicas superiores te estÃ¡n llamando...
 Head=110
 Body=46
 Heading=3
@@ -1665,7 +1665,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC62]
 Name=Guldorf
-Desc=Si está buscando la paz y la tranquilidad en estas tierras ha llegado al lugar indicado... adquiera una de nuestras exclusivas residencias, y cambie su vida para siempre.
+Desc=Si estÃ¡ buscando la paz y la tranquilidad en estas tierras ha llegado al lugar indicado... adquiera una de nuestras exclusivas residencias, y cambie su vida para siempre.
 Head=36
 Body=234
 Heading=3
@@ -1710,7 +1710,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC109]
 Name=Sastre
-Desc=¡Bienvenidos a la Gran Sastrería de la Isla Esperanza! Aquí encontrarán las ropas más exóticas del mundo...
+Desc=Â¡Bienvenidos a la Gran SastrerÃ­a de la Isla Esperanza! AquÃ­ encontrarÃ¡n las ropas mÃ¡s exÃ³ticas del mundo...
 Head=406
 Body=130
 Heading=3
@@ -1755,7 +1755,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC110]
 Name=Sastre
-Desc=¡Entra! Jamás verás prendas más bellas que las que tengo para ofrecerte...
+Desc=Â¡Entra! JamÃ¡s verÃ¡s prendas mÃ¡s bellas que las que tengo para ofrecerte...
 Head=474
 Body=124
 Heading=3
@@ -1800,7 +1800,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC117]
 Name=Sastre
-Desc=¡Aquí en Esperanza encontrarán las mejores ropas pequeñas de todo el mundo!
+Desc=Â¡AquÃ­ en Esperanza encontrarÃ¡n las mejores ropas pequeÃ±as de todo el mundo!
 Head=402
 Body=136
 Heading=3
@@ -1845,7 +1845,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC116]
 Name=Armaduras
-Desc=Si estás buscando las mejores armaduras de estas tierras, has llegado al lugar correcto...
+Desc=Si estÃ¡s buscando las mejores armaduras de estas tierras, has llegado al lugar correcto...
 Head=6
 Body=93
 Heading=4
@@ -1935,7 +1935,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC61]
 Name=Mago
-Desc=Bienvenido a mi pequeña tienda de Arkhein... Tengo algunos hechizos que podrían interesarte.
+Desc=Bienvenido a mi pequeÃ±a tienda de Arkhein... Tengo algunos hechizos que podrÃ­an interesarte.
 Head=110
 Body=46
 Heading=3
@@ -1980,7 +1980,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC40]
 Name=Tolloz
-Desc=¡Hola! Bienvenido a la Taberna de Arkhein, ¿Qué desea que le sirva?
+Desc=Â¡Hola! Bienvenido a la Taberna de Arkhein, Â¿QuÃ© desea que le sirva?
 Head=505
 Body=202
 Heading=3
@@ -2025,7 +2025,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC55]
 Name=Herrero
-Desc=¡Ven, pasa, que he fabricado las más poderosas armas de Arkhein para tí!
+Desc=Â¡Ven, pasa, que he fabricado las mÃ¡s poderosas armas de Arkhein para tÃ­!
 Head=505
 Body=199
 Heading=3
@@ -2070,7 +2070,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC28]
 Name=Sastre
-Desc=¡Entrad Valiente Viajero! En la Sastrería de Arkhein están las mejores ropas del continente.
+Desc=Â¡Entrad Valiente Viajero! En la SastrerÃ­a de Arkhein estÃ¡n las mejores ropas del continente.
 Head=15
 Body=56
 Heading=3
@@ -2115,7 +2115,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC29]
 Name=Sastre
-Desc=¡Ven y mira estas vestimentas, seguro te encantarán!
+Desc=Â¡Ven y mira estas vestimentas, seguro te encantarÃ¡n!
 Head=173
 Body=80
 Heading=3
@@ -2160,7 +2160,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC30]
 Name=Sastre
-Desc=Aquí encontrarás las mejores prendas para enanos ¡Y a muy buen precio!
+Desc=AquÃ­ encontrarÃ¡s las mejores prendas para enanos Â¡Y a muy buen precio!
 Head=404
 Body=159
 Heading=3
@@ -2205,7 +2205,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC101]
 Name=Vendedor de propiedades.
-Desc=En estas tierras demoníacas están las mejores residencias para los miembros de la Legión Oscura... Si no eres legionario puedes también vivir acá, ¡pero os aseguro que los augura un infierno! jajaja!
+Desc=En estas tierras demonÃ­acas estÃ¡n las mejores residencias para los miembros de la LegiÃ³n Oscura... Si no eres legionario puedes tambiÃ©n vivir acÃ¡, Â¡pero os aseguro que los augura un infierno! jajaja!
 Head=34
 Body=170
 Heading=3
@@ -2250,7 +2250,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC115]
 Name=SC
-Desc=¡AQUÍ OBTENDRÁS TU ARMADURA LEGIONARIA!
+Desc=Â¡AQUÃ OBTENDRÃS TU ARMADURA LEGIONARIA!
 Head=0
 Body=69
 Heading=3
@@ -2295,7 +2295,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC9]
 Name=Ralph
-Desc=¡Hola, pequeño aventurero, tengo aquí unas mercaderías para saciar tu hambre y sed!.
+Desc=Â¡Hola, pequeÃ±o aventurero, tengo aquÃ­ unas mercaderÃ­as para saciar tu hambre y sed!.
 Head=504
 Body=202
 Heading=3
@@ -2340,7 +2340,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC103]
 Name=Carahuel
-Desc=¡Hola, pequeño amigo! ¿Estás buscando algo para llenar tu estómago? Creo que puedo ayudarte...
+Desc=Â¡Hola, pequeÃ±o amigo! Â¿EstÃ¡s buscando algo para llenar tu estÃ³mago? Creo que puedo ayudarte...
 Head=474
 Body=309
 Heading=3
@@ -2385,7 +2385,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC57]
 Name=Bhoemond
-Desc= ¡Sea bienvenido a la famosa Taberna de Arghal!, Aquí podrá saciarse con la mejor comida y la mejor bebida de toda la zona.
+Desc= Â¡Sea bienvenido a la famosa Taberna de Arghal!, AquÃ­ podrÃ¡ saciarse con la mejor comida y la mejor bebida de toda la zona.
 Head=17
 Body=100
 Heading=3
@@ -2430,7 +2430,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC68]
 Name=Odkon
-Desc=¡Acérquese pequeño vistante de Arghal... Tengo prendas a su medida.
+Desc=Â¡AcÃ©rquese pequeÃ±o vistante de Arghal... Tengo prendas a su medida.
 Head=404
 Body=371
 Heading=3
@@ -2475,7 +2475,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC64]
 Name=Virgin
-Desc=¡Bienvenida jovencita! Soy quien hace los mejores atuendos femeninos de todo Arghal, ven y prueba mi mercadería.
+Desc=Â¡Bienvenida jovencita! Soy quien hace los mejores atuendos femeninos de todo Arghal, ven y prueba mi mercaderÃ­a.
 Head=70
 Body=80
 Heading=3
@@ -2520,7 +2520,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC112]
 Name=Herrero
-Desc=Con estas manos he construído algunas armas que te podrán servir en tus aventuras... ¡paga por ellas y serán tuyas!
+Desc=Con estas manos he construÃ­do algunas armas que te podrÃ¡n servir en tus aventuras... Â¡paga por ellas y serÃ¡n tuyas!
 Head=16
 Body=199
 Heading=3
@@ -2565,7 +2565,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC73]
 Name=Armaduras
-Desc=Si tienes agallas como para abandonar la ciudad y enfrentar el peligro de los bosques, deberás comprar una de las armaduras que he fabricado.
+Desc=Si tienes agallas como para abandonar la ciudad y enfrentar el peligro de los bosques, deberÃ¡s comprar una de las armaduras que he fabricado.
 Head=39
 Body=93
 Heading=3
@@ -2610,7 +2610,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC63]
 Name=Steve
-Desc=Ven, acércate, que tengo para ofrecerte las mejores prendas masculinas de todo Arghal...
+Desc=Ven, acÃ©rcate, que tengo para ofrecerte las mejores prendas masculinas de todo Arghal...
 Head=22
 Body=342
 Heading=3
@@ -2655,7 +2655,7 @@ Obj19=0-0
 Obj20=0-0
 [NPC59]
 Name=Mago
-Desc=Bienvenido, neófito a ésta, a mi pequeña escuela de Magia, ubicada en el corazón mismo de la ciudad de Arghal.
+Desc=Bienvenido, neÃ³fito a Ã©sta, a mi pequeÃ±a escuela de Magia, ubicada en el corazÃ³n mismo de la ciudad de Arghal.
 Head=20
 Body=34
 Heading=3

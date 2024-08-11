@@ -859,10 +859,6 @@ Call WriteLoggedMessage(UserIndex)
 
 Call modGuilds.SendGuildNews(UserIndex)
 
-If UserList(UserIndex).flags.NoActualizado Then
-    Call WriteUpdateNeeded(UserIndex)
-End If
-
 If Lloviendo Then
     Call WriteRainToggle(UserIndex)
 End If
