@@ -1,0 +1,20 @@
+[C INTERIOR]
+Name=Nuevo Mapa
+MusicNum=0
+MagiaSinefecto=0
+NoEncriptarMP=0
+Terreno=BOSQUE
+Zona=CAMPO
+Restringir=No
+BackUp= 0
+Pk=0
+[MAPA281]
+Name=Mausoleo
+MusicNum=59
+MagiaSinefecto=0
+NoEncriptarMP=0
+Terreno=BOSQUE
+Zona=DUNGEON
+Restringir=No
+BackUp= 1
+Pk=0

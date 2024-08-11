@@ -1,0 +1,12 @@
+[MAPA274]
+Name=Mapa de GMs. (Partenón de los Dioses / Biblioteca)
+MusicNum=10
+MagiaSinefecto=0
+InviSinEfecto=0
+ResuSinEfecto=0
+Terreno=DESIERTO
+Zona=DUNGEON
+Restringir=No
+BackUp= 1
+Pk=1
+NoEncriptarMP=0

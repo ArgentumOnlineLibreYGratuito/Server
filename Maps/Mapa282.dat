@@ -1,0 +1,25 @@
+[TUMBAKIKO]
+Name=Isla Otto Wallace
+MusicNum=0
+MagiaSinefecto=0
+NoEncriptarMP=0
+Terreno=BOSQUE
+Zona=CAMPO
+Restringir=No
+BackUp= 1
+Pk=0
+[MAPA282]
+Name=Isla Otto
+MusicNum=56
+MagiaSinefecto=0
+NoEncriptarMP=0
+Terreno=BOSQUE
+Zona=CAMPO
+Restringir=No
+BackUp= 1
+Pk=0
+[MAPA283]
+MagiaSinefecto=0
+NoEncriptarMP=0
+BackUp= 0
+Pk=0
