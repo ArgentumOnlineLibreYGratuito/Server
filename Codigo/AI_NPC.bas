@@ -42,7 +42,6 @@ End Enum
 
 Public Const ELEMENTALFUEGO As Integer = 93
 Public Const ELEMENTALTIERRA As Integer = 94
-Public Const ELEMENTALAGUA As Integer = 92
 
 'Damos a los NPCs el mismo rango de visión que un PJ
 Public Const RANGO_VISION_X As Byte = 8

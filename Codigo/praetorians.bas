@@ -66,10 +66,6 @@ Public pretorianosVivos As Integer
 Public Function esPretoriano(ByVal NpcIndex As Integer) As Integer
 On Error GoTo errorh
 
-    Dim N As Integer
-    Dim i As Integer
-    N = Npclist(NpcIndex).Numero
-    i = Npclist(NpcIndex).Char.CharIndex
 '    Call SendData(SendTarget.ToNPCArea, NpcIndex, Npclist(NpcIndex).Pos.Map, "||" & vbGreen & "° Soy Pretoriano °" & Str(ind))
     Select Case Npclist(NpcIndex).Numero
     Case PRCLER_NPC
@@ -184,10 +180,7 @@ On Error GoTo errorh
     Dim NPCPosY As Integer
     Dim NPCPosM As Integer
     Dim BestTarget As Integer
-    Dim NPCAlInd As Integer
     Dim PJEnInd  As Integer
-    
-    Dim PJBestTarget As Boolean
     Dim BTx As Integer
     Dim BTy As Integer
     Dim Xc As Integer
@@ -202,7 +195,6 @@ On Error GoTo errorh
     NPCPosY = Npclist(npcind).Pos.Y
     NPCPosM = Npclist(npcind).Pos.map
     
-    PJBestTarget = False
     X = 0
     Y = 0
     quehacer = 0
@@ -223,14 +215,12 @@ On Error GoTo errorh
     
     For X = NPCPosX + (azar * 8) To NPCPosX + (azar * -8) Step -azar
         For Y = NPCPosY + (azar2 * 7) To NPCPosY + (azar2 * -7) Step -azar2
-            NPCAlInd = MapData(NPCPosM, X, Y).NpcIndex  ''por si implementamos algo contra NPCs
-            PJEnInd = MapData(NPCPosM, X, Y).UserIndex
+             PJEnInd = MapData(NPCPosM, X, Y).UserIndex
             If (PJEnInd > 0) And (Npclist(npcind).CanAttack = 1) Then
                 If (UserList(PJEnInd).flags.invisible = 0 Or UserList(PJEnInd).flags.Oculto = 0) And Not (UserList(PJEnInd).flags.Muerto = 1) And Not UserList(PJEnInd).flags.AdminInvisible = 1 And UserList(PJEnInd).flags.AdminPerseguible Then
                 'ToDo: Borrar los GMs
                     If (EsMagoOClerigo(PJEnInd)) Then
                         ''say no more, atacar a este
-                        PJBestTarget = True
                         BestTarget = PJEnInd
                         quehacer = 1
                         'Call NpcLanzaSpellSobreUser(npcind, PJEnInd, Npclist(npcind).Spells(1)) ''flecha pasa como spell
@@ -242,12 +232,10 @@ On Error GoTo errorh
                             ''ver el mas cercano a mi
                             If Sqr((X - NPCPosX) ^ 2 + (Y - NPCPosY) ^ 2) < Sqr((NPCPosX - UserList(BestTarget).Pos.X) ^ 2 + (NPCPosY - UserList(BestTarget).Pos.Y) ^ 2) Then
                                 ''el nuevo esta mas cerca
-                                PJBestTarget = True
                                 BestTarget = PJEnInd
                                 quehacer = 1
                             End If
                         Else
-                            PJBestTarget = True
                             BestTarget = PJEnInd
                             quehacer = 1
                         End If
@@ -358,9 +346,7 @@ On Error GoTo errorh
     Dim NPCPosY As Integer
     Dim NPCPosM As Integer
     Dim BestTarget As Integer
-    Dim NPCAlInd As Integer
     Dim PJEnInd As Integer
-    Dim PJBestTarget As Boolean
     Dim bs As Byte
     Dim azar As Integer
     Dim azar2 As Integer
@@ -374,7 +360,6 @@ On Error GoTo errorh
     NPCPosY = Npclist(npcind).Pos.Y   ''for direct access
     NPCPosM = Npclist(npcind).Pos.map
     
-    PJBestTarget = False
     BestTarget = 0
     quehacer = 0
     X = 0
@@ -409,7 +394,6 @@ On Error GoTo errorh
         
         For X = NPCPosX + (azar * 8) To NPCPosX + (azar * -8) Step -azar
             For Y = NPCPosY + (azar2 * 7) To NPCPosY + (azar2 * -7) Step -azar2
-                NPCAlInd = MapData(NPCPosM, X, Y).NpcIndex  ''por si implementamos algo contra NPCs
                 PJEnInd = MapData(NPCPosM, X, Y).UserIndex
                 
                 If (PJEnInd > 0) And (Npclist(npcind).CanAttack = 1) Then
@@ -426,7 +410,6 @@ On Error GoTo errorh
                             If UserList(PJEnInd).flags.Paralizado = 1 Then
                                 ''los usuarios invisibles y paralizados son un buen target!
                                 BestTarget = PJEnInd
-                                PJBestTarget = True
                                 quehacer = 2
                             End If
                         ElseIf (UserList(PJEnInd).flags.Paralizado = 1) Then
@@ -434,18 +417,15 @@ On Error GoTo errorh
                                 If Not (UserList(BestTarget).flags.invisible = 1 Or UserList(PJEnInd).flags.Oculto = 1) Then
                                 ''encontre un paralizado visible, y no hay un besttarget invisible (paralizado invisible)
                                 BestTarget = PJEnInd
-                                PJBestTarget = True
                                 quehacer = 2
                                 End If
                             Else
                                 BestTarget = PJEnInd
-                                PJBestTarget = True
                                 quehacer = 2
                             End If
                         ElseIf BestTarget = 0 Then
                             ''movil visible
                             BestTarget = PJEnInd
-                            PJBestTarget = True
                             quehacer = 2
                         End If  ''
                     End If  ''endif:    not muerto
@@ -545,18 +525,12 @@ On Error GoTo errorh
     'REPRESENTAN LA UBICACION DE LOS SPELLS EN NPC_HOSTILES.DAT y si se los puede cambiar en ese archivo
     '1- CURAR_LEVES 'NO MODIFICABLE
     '2- REMOVER PARALISIS 'NO MODIFICABLE
-    '3- CEUGERA - 'NO MODIFICABLE
-    '4- ESTUPIDEZ - 'NO MODIFICABLE
     '5- CURARVENENO - 'NO MODIFICABLE
     Dim DAT_CURARLEVES As Integer
     Dim DAT_REMUEVEPARALISIS As Integer
-    Dim DAT_CEGUERA As Integer
-    Dim DAT_ESTUPIDEZ As Integer
     Dim DAT_CURARVENENO As Integer
     DAT_CURARLEVES = 1
     DAT_REMUEVEPARALISIS = 2
-    DAT_CEGUERA = 3
-    DAT_ESTUPIDEZ = 4
     DAT_CURARVENENO = 5
     
     
@@ -634,7 +608,7 @@ On Error GoTo errorh
                 End If
 
                 If PJEnInd > 0 And Not hayPretorianos Then
-                    If Not (UserList(PJEnInd).flags.Muerto = 1 Or UserList(PJEnInd).flags.invisible = 1 Or UserList(PJEnInd).flags.Oculto = 1 Or UserList(PJEnInd).flags.Ceguera = 1) And UserList(PJEnInd).flags.AdminPerseguible Then
+                    If Not (UserList(PJEnInd).flags.Muerto = 1 Or UserList(PJEnInd).flags.invisible = 1 Or UserList(PJEnInd).flags.Oculto = 1) And UserList(PJEnInd).flags.AdminPerseguible Then
                         ''si no esta muerto o invisible o ciego... o tiene el /ignorando
                         dist = Sqr((UserList(PJEnInd).Pos.X - NPCPosX) ^ 2 + (UserList(PJEnInd).Pos.Y - NPCPosY) ^ 2)
                         If (dist < distBestTarget Or BestTarget = 0) Then
@@ -655,10 +629,6 @@ On Error GoTo errorh
             If EsAlcanzable(npcind, BestTarget) Then
                 Call GreedyWalkTo(npcind, UserList(BestTarget).Pos.map, UserList(BestTarget).Pos.X, UserList(BestTarget).Pos.Y)
                 'GreedyWalkTo npcind, UserList(BestTarget).Pos.Map, UserList(BestTarget).Pos.X, UserList(BestTarget).Pos.Y
-            Else
-                ''el chabon es piola y ataca desde lejos entonces lo castigamos!
-                Call NPCLanzaEstupidezPJ(npcind, BestTarget, DAT_ESTUPIDEZ)
-                Call NPCLanzaCegueraPJ(npcind, BestTarget, DAT_CEGUERA)
             End If
             
             ''heading loop de ataque
@@ -710,7 +680,6 @@ On Error GoTo errorh
     Dim NPCPosX As Integer
     Dim NPCPosY As Integer
     Dim NPCPosM As Integer
-    Dim NPCAlInd As Integer
     Dim UI As Integer
     Dim PJEnInd As Integer
     Dim BestTarget As Integer
@@ -1122,57 +1091,6 @@ Exit Sub
 errorh:
     LogError ("Error en NPCAI.NPCcuraNPC? ")
 
-End Sub
-
-Sub NPCLanzaCegueraPJ(ByVal npcind As Integer, ByVal PJEnInd As Integer, ByVal indice As Integer)
-On Error GoTo errorh
-    Dim indireccion As Integer
-    
-    indireccion = Npclist(npcind).Spells(indice)
-    '' Envia las palabras magicas, fx y wav del indice-esimo hechizo del npc-hostiles.dat
-    Call SendData(SendTarget.ToNPCArea, npcind, PrepareMessageChatOverHead(Hechizos(indireccion).PalabrasMagicas, Npclist(npcind).Char.CharIndex, vbCyan))
-    Call SendData(SendTarget.ToNPCArea, PJEnInd, PrepareMessagePlayWave(Hechizos(indireccion).WAV, UserList(PJEnInd).Pos.X, UserList(PJEnInd).Pos.Y))
-    Call SendData(SendTarget.ToPCArea, PJEnInd, PrepareMessageCreateFX(UserList(PJEnInd).Char.CharIndex, Hechizos(indireccion).FXgrh, Hechizos(indireccion).loops))
-    
-    UserList(PJEnInd).flags.Ceguera = 1
-    UserList(PJEnInd).Counters.Ceguera = IntervaloInvisible
-    ''Envia ceguera
-    Call WriteBlind(PJEnInd)
-    ''bardea si es el rey
-    If Npclist(npcind).name = "Rey Pretoriano" Then
-        Call WriteConsoleMsg(PJEnInd, "El rey pretoriano te ha vuelto ciego ", FontTypeNames.FONTTYPE_FIGHT)
-        Call WriteConsoleMsg(PJEnInd, "A la distancia escuchas las siguientes palabras: ¡Cobarde, no eres digno de luchar conmigo si escapas! ", FontTypeNames.FONTTYPE_VENENO)
-    End If
-
-Exit Sub
-
-errorh:
-    LogError ("Error en NPCAI.NPCLanzaCegueraPJ? ")
-End Sub
-
-Sub NPCLanzaEstupidezPJ(ByVal npcind As Integer, ByVal PJEnInd As Integer, ByVal indice As Integer)
-On Error GoTo errorh
-    Dim indireccion As Integer
-    
-
-    indireccion = Npclist(npcind).Spells(indice)
-    '' Envia las palabras magicas, fx y wav del indice-esimo hechizo del npc-hostiles.dat
-    Call SendData(SendTarget.ToNPCArea, npcind, PrepareMessageChatOverHead(Hechizos(indireccion).PalabrasMagicas, Npclist(npcind).Char.CharIndex, vbCyan))
-    Call SendData(SendTarget.ToNPCArea, PJEnInd, PrepareMessagePlayWave(Hechizos(indireccion).WAV, UserList(PJEnInd).Pos.X, UserList(PJEnInd).Pos.Y))
-    Call SendData(SendTarget.ToPCArea, PJEnInd, PrepareMessageCreateFX(UserList(PJEnInd).Char.CharIndex, Hechizos(indireccion).FXgrh, Hechizos(indireccion).loops))
-    UserList(PJEnInd).flags.Estupidez = 1
-    UserList(PJEnInd).Counters.Estupidez = IntervaloInvisible
-    'manda estupidez
-    Call WriteDumb(PJEnInd)
-
-    'bardea si es el rey
-    If Npclist(npcind).name = "Rey Pretoriano" Then
-        Call WriteConsoleMsg(PJEnInd, "El rey pretoriano te ha vuelto estúpido ", FontTypeNames.FONTTYPE_FIGHT)
-    End If
-Exit Sub
-
-errorh:
-    LogError ("Error en NPCAI.NPCLanzaEstupidezPJ? ")
 End Sub
 
 Sub NPCRemueveInvisibilidad(ByVal npcind As Integer, ByVal PJEnInd As Integer, ByVal indice As Integer)
@@ -1729,10 +1647,8 @@ Sub VolverAlCentro(ByVal npcind As Integer)
 On Error GoTo errorh
     
     Dim NPCPosX As Integer
-    Dim NPCPosY As Integer
     Dim NpcMap As Integer
     NPCPosX = Npclist(npcind).Pos.X
-    NPCPosY = Npclist(npcind).Pos.Y
     NpcMap = Npclist(npcind).Pos.map
     
     If NpcMap = MAPA_PRETORIANO Then
@@ -1780,36 +1696,6 @@ errorh:
 
 End Function
 
-Function EstoyLejos(ByVal npcind) As Boolean
-On Error GoTo errorh
-
-    ''35,25 y 67,25 son las posiciones del rey
-    ''esta fction me indica si estoy lejos del rango de vision
-    
-    
-    Dim retvalue As Boolean
-    
-    If Npclist(npcind).Pos.X < 50 Then
-        retvalue = Npclist(npcind).Pos.X < 43 And Npclist(npcind).Pos.X > 27
-    Else
-        retvalue = Npclist(npcind).Pos.X < 75 And Npclist(npcind).Pos.X > 59
-    End If
-    
-    retvalue = retvalue And Npclist(npcind).Pos.Y > 19 And Npclist(npcind).Pos.Y < 31
-    
-    If Not Npclist(npcind).Pos.map = MAPA_PRETORIANO Then
-        EstoyLejos = False
-    Else
-        EstoyLejos = Not retvalue
-    End If
-
-Exit Function
-
-errorh:
-    LogError ("Error en NPCAI.EstoyLejos")
-
-End Function
-
 Function EsAlcanzable(ByVal npcind As Integer, ByVal PJEnInd As Integer) As Boolean
 On Error GoTo errorh
     
@@ -1829,12 +1715,10 @@ On Error GoTo errorh
     Dim PJPosX As Integer
     Dim PJPosY As Integer
     Dim NPCPosX As Integer
-    Dim NPCPosY As Integer
     
     PJPosX = UserList(PJEnInd).Pos.X
     PJPosY = UserList(PJEnInd).Pos.Y
     NPCPosX = Npclist(npcind).Pos.X
-    NPCPosY = Npclist(npcind).Pos.Y
     
     If (Npclist(npcind).Pos.map = MAPA_PRETORIANO) And (UserList(PJEnInd).Pos.map = MAPA_PRETORIANO) Then
         ''los bounds del mapa pretoriano son fijos.
@@ -2034,3 +1918,4 @@ Exit Sub
 errorh:
 Call LogError("Error en CambiarAlcoba " & Err.description)
 End Sub
+

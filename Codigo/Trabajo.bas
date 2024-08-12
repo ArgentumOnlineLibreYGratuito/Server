@@ -441,8 +441,6 @@ Public Sub DoLingotes(ByVal UserIndex As Integer)
         UserList(UserIndex).Invent.Object(Slot).amount = 0
         UserList(UserIndex).Invent.Object(Slot).ObjIndex = 0
     End If
-    
-    Dim nPos As WorldPos
     Dim MiObj As Obj
     MiObj.amount = 1
     MiObj.ObjIndex = ObjData(UserList(UserIndex).flags.TargetObjInvIndex).LingoteIndex
@@ -503,19 +501,6 @@ Select Case clase
         ModHerreriA = 4
 End Select
 
-End Function
-
-Function ModDomar(ByVal clase As eClass) As Integer
-    Select Case clase
-        Case eClass.Druid
-            ModDomar = 6
-        Case eClass.Hunter
-            ModDomar = 6
-        Case eClass.Cleric
-            ModDomar = 7
-        Case Else
-            ModDomar = 10
-    End Select
 End Function
 
 Function FreeMascotaIndex(ByVal UserIndex As Integer) As Integer
@@ -724,7 +709,6 @@ Suerte = Int(-0.00125 * Skill * Skill - 0.3 * Skill + 49)
 res = RandomNumber(1, Suerte)
 
 If res < 6 Then
-    Dim nPos As WorldPos
     Dim MiObj As Obj
     
     If UserList(UserIndex).clase = eClass.Fisher Then
@@ -790,7 +774,6 @@ If Suerte > 0 Then
     res = RandomNumber(1, Suerte)
     
     If res < 6 Then
-        Dim nPos As WorldPos
         Dim MiObj As Obj
         Dim PecesPosibles(1 To 4) As Integer
         
@@ -1150,7 +1133,6 @@ Suerte = Int(-0.00125 * Skill * Skill - 0.3 * Skill + 49)
 res = RandomNumber(1, Suerte)
 
 If res < 6 Then
-    Dim nPos As WorldPos
     Dim MiObj As Obj
     
     If UserList(UserIndex).clase = eClass.Lumberjack Then
@@ -1198,8 +1180,6 @@ On Error GoTo Errhandler
 
 Dim Suerte As Integer
 Dim res As Integer
-Dim metal As Integer
-
 If UserList(UserIndex).clase = eClass.Miner Then
     Call QuitarSta(UserIndex, EsfuerzoExcavarMinero)
 Else
@@ -1214,8 +1194,7 @@ res = RandomNumber(1, Suerte)
 
 If res <= 5 Then
     Dim MiObj As Obj
-    Dim nPos As WorldPos
-    
+
     If UserList(UserIndex).flags.TargetObj = 0 Then Exit Sub
     
     MiObj.ObjIndex = ObjData(UserList(UserIndex).flags.TargetObj).MineralIndex
@@ -1447,4 +1426,5 @@ If res <= 2 Then
         End If
     End If
 End Sub
+
 

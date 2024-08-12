@@ -878,50 +878,6 @@ Next
 Call WriteConsoleMsg(sendIndex, " SkillLibres:" & UserList(UserIndex).Stats.SkillPts, FontTypeNames.FONTTYPE_INFO)
 End Sub
 
-Function DameUserindex(SocketId As Integer) As Integer
-
-Dim LoopC As Integer
-  
-LoopC = 1
-  
-Do Until UserList(LoopC).ConnID = SocketId
-
-    LoopC = LoopC + 1
-    
-    If LoopC > MaxUsers Then
-        DameUserindex = 0
-        Exit Function
-    End If
-    
-Loop
-  
-DameUserindex = LoopC
-
-End Function
-
-Function DameUserIndexConNombre(ByVal Nombre As String) As Integer
-
-Dim LoopC As Integer
-  
-LoopC = 1
-  
-Nombre = UCase$(Nombre)
-
-Do Until UCase$(UserList(LoopC).name) = Nombre
-
-    LoopC = LoopC + 1
-    
-    If LoopC > MaxUsers Then
-        DameUserIndexConNombre = 0
-        Exit Function
-    End If
-    
-Loop
-  
-DameUserIndexConNombre = LoopC
-
-End Function
-
 
 Function EsMascotaCiudadano(ByVal NpcIndex As Integer, ByVal UserIndex As Integer) As Boolean
 
@@ -1130,13 +1086,7 @@ On Error GoTo ErrorHandler
         UserList(UserIndex).flags.Paralizado = 0
         Call WriteParalizeOK(UserIndex)
     End If
-    
-    '<<< Estupidez >>>
-    If UserList(UserIndex).flags.Estupidez = 1 Then
-        UserList(UserIndex).flags.Estupidez = 0
-        Call WriteDumbNoMore(UserIndex)
-    End If
-    
+
     '<<<< Descansando >>>>
     If UserList(UserIndex).flags.Descansar Then
         UserList(UserIndex).flags.Descansar = False
@@ -1334,18 +1284,14 @@ End Sub
 
 Sub WarpUserChar(ByVal UserIndex As Integer, ByVal map As Integer, ByVal X As Integer, ByVal Y As Integer, Optional ByVal FX As Boolean = False)
     Dim OldMap As Integer
-    Dim OldX As Integer
-    Dim OldY As Integer
     
-    'Quitar el dialogo
+    'TODO Is this comment still valid? => Quitar el dialogo
     Call SendData(SendTarget.ToPCArea, UserIndex, PrepareMessageRemoveCharDialog(UserList(UserIndex).Char.CharIndex))
     
     Call WriteRemoveAllDialogs(UserIndex)
     
     OldMap = UserList(UserIndex).Pos.map
-    OldX = UserList(UserIndex).Pos.X
-    OldY = UserList(UserIndex).Pos.Y
-    
+
     Call EraseUserChar(UserIndex)
     
     If OldMap <> map Then
@@ -1455,19 +1401,6 @@ InvocadosMatados = 0
 
 End Sub
 
-
-Sub RepararMascotas(ByVal UserIndex As Integer)
-Dim i As Integer
-Dim MascotasReales As Integer
-
-    For i = 1 To MAXMASCOTAS
-      If UserList(UserIndex).MascotasType(i) > 0 Then MascotasReales = MascotasReales + 1
-    Next i
-    
-    If MascotasReales <> UserList(UserIndex).NroMascotas Then UserList(UserIndex).NroMascotas = 0
-
-End Sub
-
 ''
 ' Se inicia la salida de un usuario.
 '
@@ -1523,26 +1456,6 @@ Public Sub CancelExit(ByVal UserIndex As Integer)
     End If
 End Sub
 
-'CambiarNick: Cambia el Nick de un slot.
-'
-'UserIndex: Quien ejecutó la orden
-'UserIndexDestino: SLot del usuario destino, a quien cambiarle el nick
-'NuevoNick: Nuevo nick de UserIndexDestino
-Public Sub CambiarNick(ByVal UserIndex As Integer, ByVal UserIndexDestino As Integer, ByVal NuevoNick As String)
-Dim ViejoNick As String
-Dim ViejoCharBackup As String
-
-If UserList(UserIndexDestino).flags.UserLogged = False Then Exit Sub
-ViejoNick = UserList(UserIndexDestino).name
-
-If FileExist(CharPath & ViejoNick & ".chr", vbNormal) Then
-    'hace un backup del char
-    ViejoCharBackup = CharPath & ViejoNick & ".chr.old-"
-    Name CharPath & ViejoNick & ".chr" As ViejoCharBackup
-End If
-
-End Sub
-
 Public Sub Empollando(ByVal UserIndex As Integer)
 If MapData(UserList(UserIndex).Pos.map, UserList(UserIndex).Pos.X, UserList(UserIndex).Pos.Y).ObjInfo.ObjIndex > 0 Then
     UserList(UserIndex).flags.EstaEmpo = 1
@@ -1581,10 +1494,7 @@ End Sub
 
 Sub SendUserOROTxtFromChar(ByVal sendIndex As Integer, ByVal charName As String)
 On Error Resume Next
-Dim j As Integer
-Dim CharFile As String, Tmp As String
-Dim ObjInd As Long, ObjCant As Long
-
+Dim CharFile As String
 CharFile = CharPath & charName & ".chr"
 
 If FileExist(CharFile, vbNormal) Then
@@ -1657,3 +1567,4 @@ Public Function BodyIsBoat(ByVal body As Integer) As Boolean
         BodyIsBoat = True
     End If
 End Function
+

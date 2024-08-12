@@ -44,15 +44,6 @@ Public Type tAPuestas
 End Type
 Public Apuestas As tAPuestas
 
-Public NPCs As Long
-Public DebugSocket As Boolean
-
-Public Horas As Long
-Public Dias As Long
-Public MinsRunning As Long
-
-Public ReiniciarServer As Long
-
 Public tInicioServer As Long
 
 'INTERVALOS
@@ -67,9 +58,6 @@ Public IntervaloParalizado As Integer
 Public IntervaloInvisible As Integer
 Public IntervaloFrio As Integer
 Public IntervaloWavFx As Integer
-Public IntervaloLanzaHechizo As Integer
-Public IntervaloNPCPuedeAtacar As Integer
-Public IntervaloNPCAI As Integer
 Public IntervaloInvocacion As Integer
 Public IntervaloOculto As Integer '[Nacho]
 Public IntervaloUserPuedeAtacar As Long
@@ -89,15 +77,8 @@ Public PorcentajeRecuperoMana As Integer
 Public MinutosWs As Long
 Public Puerto As Integer
 
-Public MAXPASOS As Long
-
 Public BootDelBackUp As Byte
 Public Lloviendo As Boolean
-Public DeNoche As Boolean
-
-Public IpList As New Collection
-
-'Public ResetThread As New clsThreading
 
 Function VersionOK(ByVal Ver As String) As Boolean
 VersionOK = (Ver = ULTIMAVERSION)
@@ -135,7 +116,6 @@ On Error Resume Next
 'Call LogTarea("Sub WorldSave")
 
 Dim loopX As Integer
-Dim Porc As Long
 
 Call SendData(SendTarget.ToAll, 0, PrepareMessageConsoleMsg("Servidor> Iniciando WorldSave", FontTypeNames.FONTTYPE_SERVER))
 
@@ -240,38 +220,6 @@ Call WriteVar(App.Path & "\charfile\" & name & ".chr", "FLAGS", "Ban", "0")
 Call WriteVar(App.Path & "\logs\" & "BanDetail.dat", name, "BannedBy", "NOBODY")
 Call WriteVar(App.Path & "\logs\" & "BanDetail.dat", name, "Reason", "NO REASON")
 End Function
-
-Public Function MD5ok(ByVal md5formateado As String) As Boolean
-Dim i As Integer
-
-If MD5ClientesActivado = 1 Then
-    For i = 0 To UBound(MD5s)
-        If (md5formateado = MD5s(i)) Then
-            MD5ok = True
-            Exit Function
-        End If
-    Next i
-    MD5ok = False
-Else
-    MD5ok = True
-End If
-
-End Function
-
-Public Sub MD5sCarga()
-Dim LoopC As Integer
-
-MD5ClientesActivado = val(GetVar(IniPath & "Server.ini", "MD5Hush", "Activado"))
-
-If MD5ClientesActivado = 1 Then
-    ReDim MD5s(val(GetVar(IniPath & "Server.ini", "MD5Hush", "MD5Aceptados")))
-    For LoopC = 0 To UBound(MD5s)
-        MD5s(LoopC) = GetVar(IniPath & "Server.ini", "MD5Hush", "MD5Aceptado" & (LoopC + 1))
-        MD5s(LoopC) = txtOffset(hexMd52Asc(MD5s(LoopC)), 55)
-    Next LoopC
-End If
-
-End Sub
 
 Public Sub BanIpAgrega(ByVal ip As String)
     BanIps.Add ip

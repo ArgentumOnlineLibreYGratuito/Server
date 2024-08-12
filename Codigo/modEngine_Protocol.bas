@@ -123,8 +123,6 @@ Private Enum ServerPacketID
     CarpenterObjects                             ' OBR
     RestOK                                       ' DOK
     ErrorMsg                                     ' ERR
-    Blind                                        ' CEGU
-    Dumb                                         ' DUMB
     ChangeNPCInventorySlot                       ' NPCI
     UpdateHungerAndThirst                        ' EHYS
     Fame                                         ' FAMA
@@ -133,8 +131,6 @@ Private Enum ServerPacketID
     SetInvisible                                 ' NOVER
     DiceRoll                                     ' DADOS
     MeditateToggle                               ' MEDOK
-    BlindNoMore                                  ' NSEGUE
-    DumbNoMore                                   ' NESTUP
     SendSkills                                   ' SKILLS
     TrainerCreatureList                          ' LSTCRI
     guildNews                                    ' GUILDNE
@@ -252,7 +248,6 @@ Private Enum ClientPacketID
     PartyLeave                                   '/SALIRPARTY
     PartyCreate                                  '/CREARPARTY
     PartyJoin                                    '/PARTY
-    Inquiry                                      '/ENCUESTA ( params )
     GuildMessage                                 '/CMSG
     PartyMessage                                 '/PMSG
     GuildOnline                                  '/ONLINECLAN
@@ -265,7 +260,6 @@ Private Enum ClientPacketID
     Punishments                                  '/PENAS
     ChangePassword                               '/CONTRASEÑA
     Gamble                                       '/APOSTAR
-    InquiryVote                                  '/ENCUESTA ( with parameters )
     LeaveFaction                                 '/RETIRAR ( with no arguments )
     BankExtractGold                              '/RETIRAR ( with arguments )
     BankDepositGold                              '/DEPOSITAR
@@ -340,9 +334,6 @@ Private Enum ClientPacketID
     AcceptRoyalCouncilMember                     '/ACEPTCONSE
     AcceptChaosCouncilMember                     '/ACEPTCONSECAOS
     ItemsInTheFloor                              '/PISO
-    MakeDumb                                     '/ESTUPIDO
-    MakeDumbNoMore                               '/NOESTUPIDO
-    DumpIPTables                                 '/DUMPSECURITY
     CouncilKick                                  '/KICKCONSE
     SetTrigger                                   '/TRIGGER
     AskTrigger                                   '/TRIGGER with no arguments
@@ -368,8 +359,6 @@ Private Enum ClientPacketID
     SystemMessage                                '/SMSG
     CreateNPC                                    '/ACC
     CreateNPCWithRespawn                         '/RACC
-    ImperialArmour                               '/AI1 - 4
-    ChaosArmour                                  '/AC1 - 4
     NavigateToggle                               '/NAVE
     ServerOpenToUsersToggle                      '/HABILITAR
     TurnOffServer                                '/APAGAR
@@ -767,9 +756,6 @@ Public Sub Handle(ByVal Connection As Network_Client, ByVal Message As BinaryRea
         Case ClientPacketID.Heal                    '/CURAR
             Call HandleHeal(Message, UserIndex)
         
-        Case ClientPacketID.Help                    '/AYUDA
-            Call HandleHelp(Message, UserIndex)
-        
         Case ClientPacketID.RequestStats            '/EST
             Call HandleRequestStats(Message, UserIndex)
         
@@ -802,10 +788,7 @@ Public Sub Handle(ByVal Connection As Network_Client, ByVal Message As BinaryRea
         
         Case ClientPacketID.PartyJoin               '/PARTY
             Call HandlePartyJoin(Message, UserIndex)
-        
-        Case ClientPacketID.Inquiry                 '/ENCUESTA ( with no params )
-            Call HandleInquiry(Message, UserIndex)
-        
+
         Case ClientPacketID.GuildMessage            '/CMSG
             Call HandleGuildMessage(Message, UserIndex)
         
@@ -841,10 +824,7 @@ Public Sub Handle(ByVal Connection As Network_Client, ByVal Message As BinaryRea
         
         Case ClientPacketID.Gamble                  '/APOSTAR
             Call HandleGamble(Message, UserIndex)
-        
-        Case ClientPacketID.InquiryVote             '/ENCUESTA ( with parameters )
-            Call HandleInquiryVote(Message, UserIndex)
-        
+  
         Case ClientPacketID.LeaveFaction            '/RETIRAR ( with no arguments )
             Call HandleLeaveFaction(Message, UserIndex)
         
@@ -1066,15 +1046,6 @@ Public Sub Handle(ByVal Connection As Network_Client, ByVal Message As BinaryRea
         Case ClientPacketID.ItemsInTheFloor         '/PISO
             Call HandleItemsInTheFloor(Message, UserIndex)
             
-        Case ClientPacketID.MakeDumb                '/ESTUPIDO
-            Call HandleMakeDumb(Message, UserIndex)
-            
-        Case ClientPacketID.MakeDumbNoMore          '/NOESTUPIDO
-            Call HandleMakeDumbNoMore(Message, UserIndex)
-            
-        Case ClientPacketID.DumpIPTables            '/DUMPSECURITY"
-            Call HandleDumpIPTables(Message, UserIndex)
-            
         Case ClientPacketID.CouncilKick             '/KICKCONSE
             Call HandleCouncilKick(Message, UserIndex)
         
@@ -1146,13 +1117,7 @@ Public Sub Handle(ByVal Connection As Network_Client, ByVal Message As BinaryRea
         
         Case ClientPacketID.CreateNPCWithRespawn    '/RACC
             Call HandleCreateNPCWithRespawn(Message, UserIndex)
-        
-        Case ClientPacketID.ImperialArmour          '/AI1 - 4
-            Call HandleImperialArmour(Message, UserIndex)
-        
-        Case ClientPacketID.ChaosArmour             '/AC1 - 4
-            Call HandleChaosArmour(Message, UserIndex)
-        
+
         Case ClientPacketID.NavigateToggle          '/NAVE
             Call HandleNavigateToggle(Message, UserIndex)
         
@@ -3715,7 +3680,6 @@ End Sub
 Private Sub HandleQuit(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
 
     Dim tUser As Integer
-    Dim isNotVisible As Boolean
     
     With UserList(UserIndex)
 
@@ -4122,18 +4086,6 @@ Private Sub HandleRequestStats(ByVal Message As BinaryReader, ByVal UserIndex As
 End Sub
 
 ''
-' Handles the "Help" message.
-'
-' @param    userIndex The index of the user sending the message.
-
-Private Sub HandleHelp(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-
-    
-    Call SendHelp(UserIndex)
-End Sub
-
-''
 ' Handles the "CommerceStart" message.
 '
 ' @param    userIndex The index of the user sending the message.
@@ -4410,9 +4362,9 @@ Private Sub HandleUpTime(ByVal Message As BinaryReader, ByVal UserIndex As Integ
     time = time \ 24
     
     If time = 1 Then
-        UpTimeStr = time & " día, " & UpTimeStr
+        UpTimeStr = Time & " día, " & UpTimeStr
     Else
-        UpTimeStr = time & " días, " & UpTimeStr
+        UpTimeStr = Time & " días, " & UpTimeStr
     End If
     
     Call WriteConsoleMsg(UserIndex, "Server Online: " & UpTimeStr, FontTypeNames.FONTTYPE_INFO)
@@ -4454,18 +4406,6 @@ Private Sub HandlePartyJoin(ByVal Message As BinaryReader, ByVal UserIndex As In
 
     
     Call mdParty.SolicitarIngresoAParty(UserIndex)
-End Sub
-
-''
-' Handles the "Inquiry" message.
-'
-' @param    userIndex The index of the user sending the message.
-
-Private Sub HandleInquiry(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-
-    
-    ConsultaPopular.SendInfoEncuesta (UserIndex)
 End Sub
 
 ''
@@ -4829,26 +4769,6 @@ Private Sub HandleGamble(ByVal Message As BinaryReader, ByVal UserIndex As Integ
             
             Call WriteUpdateGold(UserIndex)
         End If
-    End With
-End Sub
-
-''
-' Handles the "InquiryVote" message.
-'
-' @param    userIndex The index of the user sending the message.
-
-Private Sub HandleInquiryVote(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-
-    
-    With UserList(UserIndex)
-
-        
-        Dim opt As Byte
-        
-        opt = Message.ReadInt()
-        
-        Call WriteConsoleMsg(UserIndex, ConsultaPopular.doVotar(UserIndex, opt), FontTypeNames.FONTTYPE_GUILD)
     End With
 End Sub
 
@@ -6046,7 +5966,6 @@ Private Sub HandleEditChar(ByVal Message As BinaryReader, ByVal UserIndex As Int
         Dim valido As Boolean
         Dim LoopC As Byte
         Dim commandString As String
-        Dim N As Byte
         
         UserName = Replace(Message.ReadString16(), "+", " ")
         
@@ -6565,7 +6484,6 @@ Private Sub HandleReviveChar(ByVal Message As BinaryReader, ByVal UserIndex As I
         
         Dim UserName As String
         Dim tUser As Integer
-        Dim LoopC As Byte
         
         UserName = Message.ReadString16()
         
@@ -7563,7 +7481,6 @@ Private Sub HandleAcceptRoyalCouncilMember(ByVal Message As BinaryReader, ByVal 
         
         Dim UserName As String
         Dim tUser As Integer
-        Dim LoopC As Byte
         
         UserName = Message.ReadString16()
         
@@ -7601,7 +7518,6 @@ Private Sub HandleAcceptChaosCouncilMember(ByVal Message As BinaryReader, ByVal 
         
         Dim UserName As String
         Dim tUser As Integer
-        Dim LoopC As Byte
         
         UserName = Message.ReadString16()
         
@@ -7639,7 +7555,6 @@ Private Sub HandleItemsInTheFloor(ByVal Message As BinaryReader, ByVal UserIndex
         If .flags.Privilegios And (PlayerType.User Or PlayerType.Consejero Or PlayerType.SemiDios) Then Exit Sub
         
         Dim tObj As Integer
-        Dim lista As String
         Dim X As Long
         Dim Y As Long
         
@@ -7653,86 +7568,6 @@ Private Sub HandleItemsInTheFloor(ByVal Message As BinaryReader, ByVal UserIndex
                 End If
             Next Y
         Next X
-    End With
-End Sub
-
-''
-' Handles the "MakeDumb" message.
-'
-' @param    userIndex The index of the user sending the message.
-
-Private Sub HandleMakeDumb(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-
-
-    With UserList(UserIndex)
-
-        
-        Dim UserName As String
-        Dim tUser As Integer
-        
-        UserName = Message.ReadString16()
-        
-        If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
-            tUser = NameIndex(UserName)
-            'para deteccion de aoice
-            If tUser <= 0 Then
-                Call WriteConsoleMsg(UserIndex, "Offline", FontTypeNames.FONTTYPE_INFO)
-            Else
-                Call WriteDumb(tUser)
-            End If
-        End If
-
-    End With
-
-
-End Sub
-
-''
-' Handles the "MakeDumbNoMore" message.
-'
-' @param    userIndex The index of the user sending the message.
-
-Private Sub HandleMakeDumbNoMore(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-
-
-    With UserList(UserIndex)
-
-        
-        Dim UserName As String
-        Dim tUser As Integer
-        
-        UserName = Message.ReadString16()
-        
-        If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
-            tUser = NameIndex(UserName)
-            'para deteccion de aoice
-            If tUser <= 0 Then
-                Call WriteConsoleMsg(UserIndex, "Offline", FontTypeNames.FONTTYPE_INFO)
-            Else
-                Call WriteDumbNoMore(tUser)
-            End If
-        End If
-
-    End With
-
-
-End Sub
-
-''
-' Handles the "DumpIPTables" message.
-'
-' @param    userIndex The index of the user sending the message.
-
-Private Sub HandleDumpIPTables(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-    With UserList(UserIndex)
-
-        
-        If .flags.Privilegios And (PlayerType.User Or PlayerType.Consejero Or PlayerType.SemiDios) Then Exit Sub
-        
-        Call SecurityIp.DumpTables
     End With
 End Sub
 
@@ -9078,78 +8913,6 @@ Public Sub HandleCreateNPCWithRespawn(ByVal Message As BinaryReader, ByVal UserI
 End Sub
 
 ''
-' Handle the "ImperialArmour" message
-'
-' @param userIndex The index of the user sending the message
-
-Public Sub HandleImperialArmour(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-
-    
-    With UserList(UserIndex)
-
-        
-        Dim index As Byte
-        Dim ObjIndex As Integer
-        
-        index = Message.ReadInt()
-        ObjIndex = Message.ReadInt()
-        
-        If .flags.Privilegios And (PlayerType.User Or PlayerType.Consejero Or PlayerType.SemiDios Or PlayerType.RoleMaster) Then Exit Sub
-        
-        Select Case index
-            Case 1
-                ArmaduraImperial1 = ObjIndex
-            
-            Case 2
-                ArmaduraImperial2 = ObjIndex
-            
-            Case 3
-                ArmaduraImperial3 = ObjIndex
-            
-            Case 4
-                TunicaMagoImperial = ObjIndex
-        End Select
-    End With
-End Sub
-
-''
-' Handle the "ChaosArmour" message
-'
-' @param userIndex The index of the user sending the message
-
-Public Sub HandleChaosArmour(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-
-    
-    With UserList(UserIndex)
-
-        
-        Dim index As Byte
-        Dim ObjIndex As Integer
-        
-        index = Message.ReadInt()
-        ObjIndex = Message.ReadInt()
-        
-        If .flags.Privilegios And (PlayerType.User Or PlayerType.Consejero Or PlayerType.SemiDios Or PlayerType.RoleMaster) Then Exit Sub
-        
-        Select Case index
-            Case 1
-                ArmaduraCaos1 = ObjIndex
-            
-            Case 2
-                ArmaduraCaos2 = ObjIndex
-            
-            Case 3
-                ArmaduraCaos3 = ObjIndex
-            
-            Case 4
-                TunicaMagoCaos = ObjIndex
-        End Select
-    End With
-End Sub
-
-''
 ' Handle the "NavigateToggle" message
 '
 ' @param userIndex The index of the user sending the message
@@ -9455,11 +9218,11 @@ End Sub
 
 Public Sub HandlePing(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
 
-    With UserList(UserIndex)
-
-        
-        Call WritePong(UserIndex)
-    End With
+    Dim Time As Long
+    Time = Message.ReadInt
+    
+    Call WritePong(UserIndex, Time)
+    
 End Sub
 
 
@@ -9470,8 +9233,6 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteLoggedMessage(ByVal UserIndex As Integer)
-
-
 
 
     Call Writer_.WriteInt(ServerPacketID.Logged)
@@ -9495,18 +9256,6 @@ Public Sub WriteRemoveAllDialogs(ByVal UserIndex As Integer)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
-End Sub
-
-''
-' Writes the "RemoveCharDialog" message to the given user's outgoing data buffer.
-'
-' @param    UserIndex User to which the message is intended.
-' @param    CharIndex Character whose dialog will be removed.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteRemoveCharDialog(ByVal UserIndex As Integer, ByVal CharIndex As Integer)
-
-    Call modSendData.SendData(ToUser, UserIndex, PrepareMessageRemoveCharDialog(CharIndex))
 End Sub
 
 ''
@@ -9849,23 +9598,6 @@ Public Sub WriteNobilityLost(ByVal UserIndex As Integer)
 End Sub
 
 ''
-' Writes the "CantUseWhileMeditating" message to the given user's outgoing data buffer.
-'
-' @param    UserIndex User to which the message is intended.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteCantUseWhileMeditating(ByVal UserIndex As Integer)
-
-
-
-
-    Call Writer_.WriteInt(ServerPacketID.CantUseWhileMeditating)
-
-
-    Call modSendData.SendData(ToUser, UserIndex, Writer_)
-End Sub
-
-''
 ' Writes the "UpdateSta" message to the given user's outgoing data buffer.
 '
 ' @param    UserIndex User to which the message is intended.
@@ -10169,58 +9901,6 @@ Public Sub WriteCharacterCreate(ByVal UserIndex As Integer, ByVal body As Intege
 End Sub
 
 ''
-' Writes the "CharacterRemove" message to the given user's outgoing data buffer.
-'
-' @param    UserIndex User to which the message is intended.
-' @param    CharIndex Character to be removed.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteCharacterRemove(ByVal UserIndex As Integer, ByVal CharIndex As Integer)
-
-
-    Call modSendData.SendData(ToUser, UserIndex, PrepareMessageCharacterRemove(CharIndex))
-End Sub
-
-''
-' Writes the "CharacterMove" message to the given user's outgoing data buffer.
-'
-' @param    UserIndex User to which the message is intended.
-' @param    CharIndex Character which is moving.
-' @param    X X coord of the character's new position.
-' @param    Y Y coord of the character's new position.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteCharacterMove(ByVal UserIndex As Integer, ByVal CharIndex As Integer, ByVal X As Byte, ByVal Y As Byte)
-
-    Call modSendData.SendData(ToUser, UserIndex, PrepareMessageCharacterMove(CharIndex, X, Y))
-End Sub
-
-''
-' Writes the "CharacterChange" message to the given user's outgoing data buffer.
-'
-' @param    UserIndex User to which the message is intended.
-' @param    body Body index of the new character.
-' @param    head Head index of the new character.
-' @param    heading Heading in which the new character is looking.
-' @param    CharIndex The index of the new character.
-' @param    weapon Weapon index of the new character.
-' @param    shield Shield index of the new character.
-' @param    FX FX index to be displayed over the new character.
-' @param    FXLoops Number of times the FX should be rendered.
-' @param    helmet Helmet index of the new character.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteCharacterChange(ByVal UserIndex As Integer, ByVal body As Integer, ByVal Head As Integer, ByVal heading As eHeading, _
-                                ByVal CharIndex As Integer, ByVal weapon As Integer, ByVal shield As Integer, _
-                                ByVal FX As Integer, ByVal FXLoops As Integer, ByVal helmet As Integer)
-
-
-
-    Call modSendData.SendData(ToUser, UserIndex, PrepareMessageCharacterChange(body, Head, heading, CharIndex, weapon, shield, FX, FXLoops, helmet))
-
-End Sub
-
-''
 ' Writes the "ObjectCreate" message to the given user's outgoing data buffer.
 '
 ' @param    UserIndex User to which the message is intended.
@@ -10232,19 +9912,6 @@ End Sub
 Public Sub WriteObjectCreate(ByVal UserIndex As Integer, ByVal GrhIndex As Integer, ByVal X As Byte, ByVal Y As Byte)
 
     Call modSendData.SendData(ToUser, UserIndex, PrepareMessageObjectCreate(GrhIndex, X, Y))
-End Sub
-
-''
-' Writes the "ObjectDelete" message to the given user's outgoing data buffer.
-'
-' @param    UserIndex User to which the message is intended.
-' @param    X X coord of the character's new position.
-' @param    Y Y coord of the character's new position.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteObjectDelete(ByVal UserIndex As Integer, ByVal X As Byte, ByVal Y As Byte)
-
-    Call modSendData.SendData(ToUser, UserIndex, PrepareMessageObjectDelete(X, Y))
 End Sub
 
 ''
@@ -10277,20 +9944,6 @@ End Sub
 Public Sub WritePlayMidi(ByVal UserIndex As Integer, ByVal midi As Byte)
 
     Call modSendData.SendData(ToUser, UserIndex, PrepareMessagePlayMidi(midi))
-End Sub
-
-''
-' Writes the "PlayWave" message to the given user's outgoing data buffer.
-'
-' @param    UserIndex User to which the message is intended.
-' @param    wave The wave to be played.
-' @param    X The X position in map coordinates from where the sound comes.
-' @param    Y The Y position in map coordinates from where the sound comes.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WritePlayWave(ByVal UserIndex As Integer, ByVal wave As Byte, ByVal X As Byte, ByVal Y As Byte)
-
-    Call modSendData.SendData(ToUser, UserIndex, PrepareMessagePlayWave(wave, X, Y))
 End Sub
 
 ''
@@ -10358,20 +10011,6 @@ End Sub
 Public Sub WriteRainToggle(ByVal UserIndex As Integer)
 
     Call modSendData.SendData(ToUser, UserIndex, PrepareMessageRainToggle())
-End Sub
-
-''
-' Writes the "CreateFX" message to the given user's outgoing data buffer.
-'
-' @param    UserIndex User to which the message is intended.
-' @param    CharIndex Character upon which the FX will be created.
-' @param    FX FX index to be displayed over the new character.
-' @param    FXLoops Number of times the FX should be rendered.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteCreateFX(ByVal UserIndex As Integer, ByVal CharIndex As Integer, ByVal FX As Integer, ByVal FXLoops As Integer)
-
-    Call modSendData.SendData(ToUser, UserIndex, PrepareMessageCreateFX(CharIndex, FX, FXLoops))
 End Sub
 
 ''
@@ -10676,40 +10315,6 @@ Public Sub WriteErrorMsg(ByVal UserIndex As Integer, ByVal Message As String)
 End Sub
 
 ''
-' Writes the "Blind" message to the given user's outgoing data buffer.
-'
-' @param    UserIndex User to which the message is intended.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteBlind(ByVal UserIndex As Integer)
-
-
-
-
-    Call Writer_.WriteInt(ServerPacketID.Blind)
-
-
-    Call modSendData.SendData(ToUser, UserIndex, Writer_)
-End Sub
-
-''
-' Writes the "Dumb" message to the given user's outgoing data buffer.
-'
-' @param    UserIndex User to which the message is intended.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteDumb(ByVal UserIndex As Integer)
-
-
-
-
-    Call Writer_.WriteInt(ServerPacketID.Dumb)
-
-
-    Call modSendData.SendData(ToUser, UserIndex, Writer_)
-End Sub
-
-''
 ' Writes the "ChangeNPCInventorySlot" message to the given user's outgoing data buffer.
 '
 ' @param    UserIndex   User to which the message is intended.
@@ -10873,40 +10478,6 @@ Public Sub WriteMeditateToggle(ByVal UserIndex As Integer)
 End Sub
 
 ''
-' Writes the "BlindNoMore" message to the given user's outgoing data buffer.
-'
-' @param    UserIndex User to which the message is intended.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteBlindNoMore(ByVal UserIndex As Integer)
-
-
-
-
-    Call Writer_.WriteInt(ServerPacketID.BlindNoMore)
-
-
-    Call modSendData.SendData(ToUser, UserIndex, Writer_)
-End Sub
-
-''
-' Writes the "DumbNoMore" message to the given user's outgoing data buffer.
-'
-' @param    UserIndex User to which the message is intended.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteDumbNoMore(ByVal UserIndex As Integer)
-
-
-
-
-    Call Writer_.WriteInt(ServerPacketID.DumbNoMore)
-
-
-    Call modSendData.SendData(ToUser, UserIndex, Writer_)
-End Sub
-
-''
 ' Writes the "SendSkills" message to the given user's outgoing data buffer.
 '
 ' @param    UserIndex User to which the message is intended.
@@ -11014,7 +10585,6 @@ Public Sub WriteOfferDetails(ByVal UserIndex As Integer, ByVal details As String
 
 
 
-    Dim i As Long
         Call Writer_.WriteInt(ServerPacketID.OfferDetails)
         
         Call Writer_.WriteString16(details)
@@ -11484,12 +11054,14 @@ End Sub
 ' @param    UserIndex User to which the message is intended.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WritePong(ByVal UserIndex As Integer)
+Public Sub WritePong(ByVal UserIndex As Integer, ByVal Time As Long)
 
 
 
 
     Call Writer_.WriteInt(ServerPacketID.Pong)
+    Call Writer_.WriteInt(Time)
+
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -11961,4 +11533,5 @@ Public Function PrepareMessageErrorMsg(ByVal Message As String) As BinaryWriter
 
     Set PrepareMessageErrorMsg = Writer_
 End Function
+
 

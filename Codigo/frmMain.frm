@@ -90,7 +90,7 @@ Begin VB.Form frmMain
       Enabled         =   0   'False
       Interval        =   4000
       Left            =   1920
-      Top             =   1020
+      Top             =   960
    End
    Begin VB.Timer KillLog 
       Enabled         =   0   'False
@@ -260,8 +260,6 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Public ESCUCHADAS As Long
-
 Private Type NOTIFYICONDATA
     cbSize As Long
     hWnd As Long
@@ -345,27 +343,6 @@ On Error GoTo Errhandler
 'fired every minute
 Static Minutos As Long
 Static MinutosLatsClean As Long
-Static MinsPjesSave As Long
-
-Dim i As Integer
-Dim num As Long
-
-MinsRunning = MinsRunning + 1
-
-If MinsRunning = 60 Then
-    Horas = Horas + 1
-    If Horas = 24 Then
-        Call SaveDayStats
-        DayStats.MaxUsuarios = 0
-        DayStats.Segundos = 0
-        DayStats.Promedio = 0
-        
-        Horas = 0
-        
-    End If
-    MinsRunning = 0
-End If
-
     
 Minutos = Minutos + 1
 
@@ -463,13 +440,12 @@ End Sub
 Private Sub QuitarIconoSystray()
 On Error Resume Next
 
-'Borramos el icono del systray
-Dim i As Integer
+'TODO Is this comment still valid? => Borramos el icono del systray
 Dim nid As NOTIFYICONDATA
 
 nid = setNOTIFYICONDATA(frmMain.hWnd, vbNull, NIF_MESSAGE Or NIF_ICON Or NIF_TIP, vbNull, frmMain.Icon, "")
 
-i = Shell_NotifyIconA(NIM_DELETE, nid)
+Call Shell_NotifyIconA(NIM_DELETE, nid)
     
 
 End Sub
@@ -527,15 +503,12 @@ On Error GoTo hayerror
                     '[Alejo-18-5]
                     bEnviarStats = False
                     bEnviarAyS = False
-                    
-                    .NumeroPaquetesPorMiliSec = 0
-                    
+ 
                     Call DoTileEvents(iUserIndex, .Pos.map, .Pos.X, .Pos.Y)
                     
                     
                     If .flags.Paralizado = 1 Then Call EfectoParalisisUser(iUserIndex)
-                    If .flags.Ceguera = 1 Or .flags.Estupidez Then Call EfectoCegueEstu(iUserIndex)
-                    
+
                     
                     If .flags.Muerto = 0 Then
                         
@@ -665,10 +638,6 @@ End If
 
 End Sub
 
-Private Sub mnusalir_Click()
-    Call mnuCerrar_Click
-End Sub
-
 Public Sub mnuMostrar_Click()
 On Error Resume Next
     WindowState = vbNormal
@@ -694,13 +663,12 @@ End Sub
 
 Private Sub mnuSystray_Click()
 
-Dim i As Integer
 Dim S As String
 Dim nid As NOTIFYICONDATA
 
 S = "ARGENTUM-ONLINE"
 nid = setNOTIFYICONDATA(frmMain.hWnd, vbNull, NIF_MESSAGE Or NIF_ICON Or NIF_TIP, WM_MOUSEMOVE, frmMain.Icon, S)
-i = Shell_NotifyIconA(NIM_ADD, nid)
+Call Shell_NotifyIconA(NIM_ADD, nid)
     
 If WindowState <> vbMinimized Then WindowState = vbMinimized
 Visible = False
@@ -723,9 +691,6 @@ Private Sub TIMER_AI_Timer()
 
 On Error GoTo ErrorHandler
 Dim NpcIndex As Long
-Dim X As Integer
-Dim Y As Integer
-Dim UseAI As Integer
 Dim mapa As Integer
 Dim e_p As Integer
 
@@ -850,7 +815,7 @@ For i = 1 To LastUser
     If UserList(i).flags.UserLogged Then
         If MapData(UserList(i).Pos.map, UserList(i).Pos.X, UserList(i).Pos.Y).trigger = eTrigger.ANTIPIQUETE Then
             UserList(i).Counters.PiqueteC = UserList(i).Counters.PiqueteC + 1
-            Call WriteConsoleMsg(i, "Estás obstruyendo la via pública, muévete o serás encarcelado!!!", FontTypeNames.FONTTYPE_INFO)
+            Call WriteConsoleMsg(I, "Estás obstruyendo la via pública, muévete o serás encarcelado!!!", FontTypeNames.FONTTYPE_INFO)
             
             If UserList(i).Counters.PiqueteC > 23 Then
                 UserList(i).Counters.PiqueteC = 0
@@ -870,7 +835,7 @@ For i = 1 To LastUser
             NuevaA = False
             NuevoL = False
             If Not modGuilds.m_ValidarPermanencia(i, True, NuevaA, NuevoL) Then
-                Call WriteConsoleMsg(i, "Has sido expulsado del clan. ¡El clan ha sumado un punto de antifacción!", FontTypeNames.FONTTYPE_GUILD)
+                Call WriteConsoleMsg(I, "Has sido expulsado del clan. ¡El clan ha sumado un punto de antifacción!", FontTypeNames.FONTTYPE_GUILD)
             End If
             If NuevaA Then
                 Call SendData(SendTarget.ToGuildMembers, GI, PrepareMessageConsoleMsg("¡El clan ha pasado a tener alineación neutral!", FontTypeNames.FONTTYPE_GUILD))

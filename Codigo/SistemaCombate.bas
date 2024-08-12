@@ -440,13 +440,12 @@ End Sub
 Public Sub NpcDaño(ByVal NpcIndex As Integer, ByVal UserIndex As Integer)
 
 Dim daño As Integer, Lugar As Integer, absorbido As Integer
-Dim antdaño As Integer, defbarco As Integer
+Dim defbarco As Integer
 Dim Obj As ObjData
 
 
 
 daño = RandomNumber(Npclist(NpcIndex).Stats.MinHIT, Npclist(NpcIndex).Stats.MaxHIT)
-antdaño = daño
 
 If UserList(UserIndex).flags.Navegando = 1 And UserList(UserIndex).Invent.BarcoObjIndex > 0 Then
     Obj = ObjData(UserList(UserIndex).Invent.BarcoObjIndex)
@@ -917,14 +916,13 @@ If UserList(AtacanteIndex).clase = eClass.Thief Then Call Desarmar(AtacanteIndex
 End Sub
 
 Public Sub UserDañoUser(ByVal AtacanteIndex As Integer, ByVal VictimaIndex As Integer)
-Dim daño As Long, antdaño As Integer
+Dim daño As Long
 Dim Lugar As Integer, absorbido As Long
 Dim defbarco As Integer
 
 Dim Obj As ObjData
 
 daño = CalcularDaño(AtacanteIndex)
-antdaño = daño
 
 Call UserEnvenena(AtacanteIndex, VictimaIndex)
 
@@ -1469,4 +1467,5 @@ If ArmaObjInd > 0 Then
     End If
 End If
 End Sub
+
 

@@ -51,11 +51,7 @@ End If
 
 '¿Posicion valida?
 If InMapBounds(map, X, Y) Then
-   
-    Dim FoundChar As Byte
-    Dim FoundSomething As Byte
-    Dim TempCharIndex As Integer
-       
+
     If MapData(map, X, Y).NpcIndex > 0 Then     'Acciones NPCs
         'Set the target NPC
         UserList(UserIndex).flags.TargetNPC = MapData(map, X, Y).NpcIndex
@@ -167,9 +163,6 @@ End Sub
 Sub AccionParaPuerta(ByVal map As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal UserIndex As Integer)
 On Error Resume Next
 
-Dim MiObj As Obj
-Dim wp As WorldPos
-
 If Not (Distance(UserList(UserIndex).Pos.X, UserList(UserIndex).Pos.Y, X, Y) > 2) Then
     If ObjData(MapData(map, X, Y).ObjInfo.ObjIndex).Llave = 0 Then
         If ObjData(MapData(map, X, Y).ObjInfo.ObjIndex).Cerrada = 1 Then
@@ -227,7 +220,6 @@ On Error Resume Next
 Dim Suerte As Byte
 Dim exito As Byte
 Dim Obj As Obj
-Dim raise As Integer
 
 Dim Pos As WorldPos
 Pos.map = map
@@ -255,7 +247,7 @@ End If
 exito = RandomNumber(1, Suerte)
 
 If exito = 1 Then
-    If MapInfo(UserList(UserIndex).Pos.map).Zona <> Ciudad Then
+    If MapInfo(UserList(UserIndex).Pos.map).Zona <> "CIUDAD" Then
         Obj.ObjIndex = FOGATA
         Obj.amount = 1
         

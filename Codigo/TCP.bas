@@ -103,41 +103,6 @@ AsciiValidos = True
 
 End Function
 
-Function Numeric(ByVal cad As String) As Boolean
-Dim car As Byte
-Dim i As Integer
-
-cad = LCase$(cad)
-
-For i = 1 To Len(cad)
-    car = Asc(mid$(cad, i, 1))
-    
-    If (car < 48 Or car > 57) Then
-        Numeric = False
-        Exit Function
-    End If
-    
-Next i
-
-Numeric = True
-
-End Function
-
-
-Function NombrePermitido(ByVal Nombre As String) As Boolean
-Dim i As Integer
-
-For i = 1 To UBound(ForbidenNames)
-    If InStr(Nombre, ForbidenNames(i)) Then
-            NombrePermitido = False
-            Exit Function
-    End If
-Next i
-
-NombrePermitido = True
-
-End Function
-
 Function ValidateSkills(ByVal UserIndex As Integer) As Boolean
 
 Dim LoopC As Integer
@@ -391,14 +356,13 @@ On Error GoTo Errhandler
     
     UserList(UserIndex).ConnID = -1
     UserList(UserIndex).ConnIDValida = False
-    UserList(UserIndex).NumeroPaquetesPorMiliSec = 0
-    
+
 Exit Sub
 
 Errhandler:
     UserList(UserIndex).ConnID = -1
     UserList(UserIndex).ConnIDValida = False
-    UserList(UserIndex).NumeroPaquetesPorMiliSec = 0
+
     Call ResetUserSlot(UserIndex)
 
     Call LogError("CloseSocket - Error = " & Err.Number & " - Descripción = " & Err.Description & " - UserIndex = " & UserIndex)
@@ -615,12 +579,6 @@ If UserList(UserIndex).flags.Paralizado Then
     Call WriteParalizeOK(UserIndex)
 End If
 
-''
-'TODO : Feo, esto tiene que ser parche cliente
-If UserList(UserIndex).flags.Estupidez = 0 Then
-    Call WriteDumbNoMore(UserIndex)
-End If
-
 'Posicion de comienzo
 If UserList(UserIndex).Pos.map = 0 Then
     Select Case UserList(UserIndex).Hogar
@@ -780,13 +738,6 @@ If EnPausa Then
     Call WriteConsoleMsg(UserIndex, "Servidor> Lo sentimos mucho pero el servidor se encuentra actualmente detenido. Intenta ingresar más tarde.", FontTypeNames.FONTTYPE_SERVER)
 End If
 
-If EnTesting And UserList(UserIndex).Stats.ELV >= 18 Then
-    Call WriteErrorMsg(UserIndex, "Servidor en Testing por unos minutos, conectese con PJs de nivel menor a 18. No se conecte con Pjs que puedan resultar importantes por ahora pues pueden arruinarse.")
-    'TODO Call FlushBuffer(UserIndex)
-    Call CloseSocket(UserIndex)
-    Exit Sub
-End If
-
 'Actualiza el Num de usuarios
 'DE ACA EN ADELANTE GRABA EL CHARFILE, OJO!
 NumUsers = NumUsers + 1
@@ -802,8 +753,6 @@ If UserList(UserIndex).Stats.SkillPts > 0 Then
     Call WriteSendSkills(UserIndex)
     Call WriteLevelUp(UserIndex, UserList(UserIndex).Stats.SkillPts)
 End If
-
-If NumUsers > DayStats.MaxUsuarios Then DayStats.MaxUsuarios = NumUsers
 
 If NumUsers > recordusuarios Then
     Call SendData(SendTarget.ToAll, 0, PrepareMessageConsoleMsg("Record de usuarios conectados simultaniamente." & "Hay " & NumUsers & " usuarios.", FontTypeNames.FONTTYPE_INFO))
@@ -925,9 +874,7 @@ Sub ResetContadores(ByVal UserIndex As Integer)
     With UserList(UserIndex).Counters
         .AGUACounter = 0
         .AttackCounter = 0
-        .Ceguera = 0
         .COMCounter = 0
-        .Estupidez = 0
         .Frio = 0
         .HPCounter = 0
         .IdleCount = 0
@@ -1185,7 +1132,6 @@ Sub CloseUser(ByVal UserIndex As Integer)
 On Error GoTo Errhandler
 
 Dim N As Integer
-Dim LoopC As Integer
 Dim map As Integer
 Dim name As String
 Dim i As Integer
@@ -1271,7 +1217,7 @@ Call MostrarNumUsers
 
 N = FreeFile(1)
 Open App.Path & "\logs\Connect.log" For Append Shared As #N
-Print #N, name & " há dejado el juego. " & "User Index:" & UserIndex & " " & time & " " & Date
+Print #N, name & " há dejado el juego. " & "User Index:" & UserIndex & " " & Time & " " & Date
 Close #N
 
 Exit Sub
@@ -1293,3 +1239,4 @@ For LoopC = 1 To LastUser
 Next LoopC
 
 End Sub
+

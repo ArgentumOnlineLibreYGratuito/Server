@@ -29,8 +29,6 @@ Attribute VB_Name = "modHechizos"
 
 Option Explicit
 
-Public Const HELEMENTAL_FUEGO As Integer = 26
-Public Const HELEMENTAL_TIERRA As Integer = 28
 Public Const SUPERANILLO As Integer = 700
 
 Sub NpcLanzaSpellSobreUser(ByVal NpcIndex As Integer, ByVal UserIndex As Integer, ByVal Spell As Integer)
@@ -782,35 +780,6 @@ If Hechizos(H).RemoverParalisis = 1 Then
     End If
 End If
 
-If Hechizos(H).RemoverEstupidez = 1 Then
-    If UserList(tU).flags.Estupidez = 1 Then
-        'Para poder tirar remo estu a un pk en el ring
-        If (TriggerZonaPelea(UserIndex, tU) <> TRIGGER6_PERMITE) Then
-            If criminal(tU) And Not criminal(UserIndex) Then
-                If esArmada(UserIndex) Then
-                    Call WriteConsoleMsg(UserIndex, "Los Armadas no pueden ayudar a los Criminales", FontTypeNames.FONTTYPE_INFO)
-                    b = False
-                    Exit Sub
-                End If
-                If UserList(UserIndex).flags.Seguro Then
-                    Call WriteConsoleMsg(UserIndex, "Para ayudar criminales debes sacarte el seguro ya que te volverás criminal como ellos", FontTypeNames.FONTTYPE_INFO)
-                    b = False
-                    Exit Sub
-                Else
-                    Call DisNobAuBan(UserIndex, UserList(UserIndex).Reputacion.NobleRep * 0.5, 10000)
-                End If
-            End If
-        End If
-    
-        UserList(tU).flags.Estupidez = 0
-        'no need to crypt this
-        Call WriteDumbNoMore(tU)
-        Call InfoHechizo(UserIndex)
-        b = True
-    End If
-End If
-
-
 If Hechizos(H).Revivir = 1 Then
     If UserList(tU).flags.Muerto = 1 Then
         
@@ -922,43 +891,6 @@ If Hechizos(H).Revivir = 1 Then
         b = False
     End If
 
-End If
-
-If Hechizos(H).Ceguera = 1 Then
-    If UserIndex = tU Then
-        Call WriteConsoleMsg(UserIndex, "No puedes atacarte a vos mismo.", FontTypeNames.FONTTYPE_FIGHT)
-        Exit Sub
-    End If
-    
-        If Not PuedeAtacar(UserIndex, tU) Then Exit Sub
-        If UserIndex <> tU Then
-            Call UsuarioAtacadoPorUsuario(UserIndex, tU)
-        End If
-        UserList(tU).flags.Ceguera = 1
-        UserList(tU).Counters.Ceguera = IntervaloParalizado / 3
-
-        Call WriteBlind(tU)
-        Call InfoHechizo(UserIndex)
-        b = True
-End If
-
-If Hechizos(H).Estupidez = 1 Then
-    If UserIndex = tU Then
-        Call WriteConsoleMsg(UserIndex, "No puedes atacarte a vos mismo.", FontTypeNames.FONTTYPE_FIGHT)
-        Exit Sub
-    End If
-        If Not PuedeAtacar(UserIndex, tU) Then Exit Sub
-        If UserIndex <> tU Then
-            Call UsuarioAtacadoPorUsuario(UserIndex, tU)
-        End If
-        If UserList(tU).flags.Estupidez = 0 Then
-            UserList(tU).flags.Estupidez = 1
-            UserList(tU).Counters.Ceguera = IntervaloParalizado
-        End If
-        Call WriteDumb(tU)
-
-        Call InfoHechizo(UserIndex)
-        b = True
 End If
 
 End Sub

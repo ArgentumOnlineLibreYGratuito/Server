@@ -175,11 +175,6 @@ Next i
  
 End Sub
 
-Public Sub QuitarIndex(ByVal index As Integer)
-On Error Resume Next
-If IndexValido(index) Then Call Cola.Remove(index)
-End Sub
-
 
 Private Sub Class_Terminate()
 'Destruimos el objeto Cola

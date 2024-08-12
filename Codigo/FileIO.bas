@@ -135,7 +135,8 @@ End Function
 
 
 Public Function TxtDimension(ByVal name As String) As Long
-Dim N As Integer, cad As String, Tam As Long
+Dim N As Integer, Tam As Long
+Dim cad As String
 N = FreeFile(1)
 Open name For Input As #N
 Tam = 0
@@ -252,7 +253,6 @@ For Hechizo = 1 To NumeroHechizos
     Hechizos(Hechizo).Paraliza = val(Leer.GetValue("Hechizo" & Hechizo, "Paraliza"))
     Hechizos(Hechizo).Inmoviliza = val(Leer.GetValue("Hechizo" & Hechizo, "Inmoviliza"))
     Hechizos(Hechizo).RemoverParalisis = val(Leer.GetValue("Hechizo" & Hechizo, "RemoverParalisis"))
-    Hechizos(Hechizo).RemoverEstupidez = val(Leer.GetValue("Hechizo" & Hechizo, "RemoverEstupidez"))
     Hechizos(Hechizo).RemueveInvisibilidadParcial = val(Leer.GetValue("Hechizo" & Hechizo, "RemueveInvisibilidadParcial"))
     
     
@@ -262,10 +262,7 @@ For Hechizo = 1 To NumeroHechizos
     Hechizos(Hechizo).RemoverMaldicion = val(Leer.GetValue("Hechizo" & Hechizo, "RemoverMaldicion"))
     Hechizos(Hechizo).Bendicion = val(Leer.GetValue("Hechizo" & Hechizo, "Bendicion"))
     Hechizos(Hechizo).Revivir = val(Leer.GetValue("Hechizo" & Hechizo, "Revivir"))
-    
-    Hechizos(Hechizo).Ceguera = val(Leer.GetValue("Hechizo" & Hechizo, "Ceguera"))
-    Hechizos(Hechizo).Estupidez = val(Leer.GetValue("Hechizo" & Hechizo, "Estupidez"))
-    
+
     Hechizos(Hechizo).Invoca = val(Leer.GetValue("Hechizo" & Hechizo, "Invoca"))
     Hechizos(Hechizo).NumNpc = val(Leer.GetValue("Hechizo" & Hechizo, "NumNpc"))
     Hechizos(Hechizo).cant = val(Leer.GetValue("Hechizo" & Hechizo, "Cant"))
@@ -313,20 +310,16 @@ End Sub
 Public Sub DoBackUp()
 'Call LogTarea("Sub DoBackUp")
 haciendoBK = True
-Dim i As Integer
-
-
-
-' Lo saco porque elimina elementales y mascotas - Maraxus
-''''''''''''''lo pongo aca x sugernecia del yind
-'For i = 1 To LastNPC
-'    If Npclist(i).flags.NPCActive Then
-'        If Npclist(i).Contadores.TiempoExistencia > 0 Then
-'            Call MuereNpc(i, 0)
-'        End If
-'    End If
-'Next i
-'''''''''''/'lo pongo aca x sugernecia del yind
+'TODO Is this comment still valid? =>  Lo saco porque elimina elementales y mascotas - Maraxus
+'TODO Is this comment still valid? => '''''''''''''lo pongo aca x sugernecia del yind
+'TODO Is this comment still valid? => For i = 1 To LastNPC
+'TODO Is this comment still valid? =>     If Npclist(i).flags.NPCActive Then
+'TODO Is this comment still valid? =>         If Npclist(i).Contadores.TiempoExistencia > 0 Then
+'TODO Is this comment still valid? =>             Call MuereNpc(i, 0)
+'TODO Is this comment still valid? =>         End If
+'TODO Is this comment still valid? =>     End If
+'TODO Is this comment still valid? => Next i
+'TODO Is this comment still valid? => ''''''''''/'lo pongo aca x sugernecia del yind
 
 
 
@@ -516,9 +509,9 @@ Sub LoadBalance()
         ModClase(i).Evasion = val(GetVar(DatPath & "Balance.dat", "MODEVASION", ListaClases(i)))
         ModClase(i).AtaqueArmas = val(GetVar(DatPath & "Balance.dat", "MODATAQUEARMAS", ListaClases(i)))
         ModClase(i).AtaqueProyectiles = val(GetVar(DatPath & "Balance.dat", "MODATAQUEPROYECTILES", ListaClases(i)))
-        ModClase(i).DañoArmas = val(GetVar(DatPath & "Balance.dat", "MODDAÑOARMAS", ListaClases(i)))
-        ModClase(i).DañoProyectiles = val(GetVar(DatPath & "Balance.dat", "MODDAÑOPROYECTILES", ListaClases(i)))
-        ModClase(i).DañoWrestling = val(GetVar(DatPath & "Balance.dat", "MODDAÑOWRESTLING", ListaClases(i)))
+        ModClase(I).DañoArmas = val(GetVar(DatPath & "Balance.dat", "MODDAÑOARMAS", ListaClases(I)))
+        ModClase(I).DañoProyectiles = val(GetVar(DatPath & "Balance.dat", "MODDAÑOPROYECTILES", ListaClases(I)))
+        ModClase(I).DañoWrestling = val(GetVar(DatPath & "Balance.dat", "MODDAÑOWRESTLING", ListaClases(I)))
         ModClase(i).Escudo = val(GetVar(DatPath & "Balance.dat", "MODESCUDO", ListaClases(i)))
     Next i
     
@@ -1017,7 +1010,6 @@ If UserList(UserIndex).Invent.AnilloEqpSlot > 0 Then
 End If
 
 UserList(UserIndex).NroMascotas = CInt(UserFile.GetValue("MASCOTAS", "NroMascotas"))
-Dim NpcIndex As Integer
 For LoopC = 1 To MAXMASCOTAS
     UserList(UserIndex).MascotasType(LoopC) = val(UserFile.GetValue("MASCOTAS", "MAS" & LoopC))
 Next LoopC
@@ -1053,10 +1045,7 @@ Sub CargarBackUp()
 If frmMain.Visible Then frmMain.txStatus.Caption = "Cargando backup."
 
 Dim map As Integer
-Dim TempInt As Integer
 Dim tFileName As String
-Dim npcfile As String
-
 On Error GoTo man
     
     NumMaps = val(GetVar(DatPath & "Map.dat", "INIT", "NumMaps"))
@@ -1098,10 +1087,7 @@ Sub LoadMapData()
 If frmMain.Visible Then frmMain.txStatus.Caption = "Cargando mapas..."
 
 Dim map As Integer
-Dim TempInt As Integer
 Dim tFileName As String
-Dim npcfile As String
-
 On Error GoTo man
     
     NumMaps = val(GetVar(DatPath & "Map.dat", "INIT", "NumMaps"))
@@ -1291,19 +1277,8 @@ IdleLimit = val(GetVar(IniPath & "Server.ini", "INIT", "IdleLimit"))
 ULTIMAVERSION = GetVar(IniPath & "Server.ini", "INIT", "Version")
 
 PuedeCrearPersonajes = val(GetVar(IniPath & "Server.ini", "INIT", "PuedeCrearPersonajes"))
-CamaraLenta = val(GetVar(IniPath & "Server.ini", "INIT", "CamaraLenta"))
 ServerSoloGMs = val(GetVar(IniPath & "Server.ini", "init", "ServerSoloGMs"))
 
-ArmaduraImperial1 = val(GetVar(IniPath & "Server.ini", "INIT", "ArmaduraImperial1"))
-ArmaduraImperial2 = val(GetVar(IniPath & "Server.ini", "INIT", "ArmaduraImperial2"))
-ArmaduraImperial3 = val(GetVar(IniPath & "Server.ini", "INIT", "ArmaduraImperial3"))
-TunicaMagoImperial = val(GetVar(IniPath & "Server.ini", "INIT", "TunicaMagoImperial"))
-TunicaMagoImperialEnanos = val(GetVar(IniPath & "Server.ini", "INIT", "TunicaMagoImperialEnanos"))
-ArmaduraCaos1 = val(GetVar(IniPath & "Server.ini", "INIT", "ArmaduraCaos1"))
-ArmaduraCaos2 = val(GetVar(IniPath & "Server.ini", "INIT", "ArmaduraCaos2"))
-ArmaduraCaos3 = val(GetVar(IniPath & "Server.ini", "INIT", "ArmaduraCaos3"))
-TunicaMagoCaos = val(GetVar(IniPath & "Server.ini", "INIT", "TunicaMagoCaos"))
-TunicaMagoCaosEnanos = val(GetVar(IniPath & "Server.ini", "INIT", "TunicaMagoCaosEnanos"))
 
 VestimentaImperialHumano = val(GetVar(IniPath & "Server.ini", "INIT", "VestimentaImperialHumano"))
 VestimentaImperialEnano = val(GetVar(IniPath & "Server.ini", "INIT", "VestimentaImperialEnano"))
@@ -1322,9 +1297,6 @@ TunicaEgregiaEnano = val(GetVar(IniPath & "Server.ini", "INIT", "TunicaEgregiaEn
 SacerdoteDemoniaco = val(GetVar(IniPath & "Server.ini", "INIT", "SacerdoteDemoniaco"))
 
 MAPA_PRETORIANO = val(GetVar(IniPath & "Server.ini", "INIT", "MapaPretoriano"))
-
-EnTesting = val(GetVar(IniPath & "Server.ini", "INIT", "Testing"))
-EncriptarProtocolosCriticos = val(GetVar(IniPath & "Server.ini", "INIT", "Encriptar"))
 
 'Start pos
 StartPos.map = val(ReadField(1, GetVar(IniPath & "Server.ini", "INIT", "StartPos"), 45))
@@ -1447,11 +1419,6 @@ Arghal.map = GetVar(DatPath & "Ciudades.dat", "Arghal", "Mapa")
 Arghal.X = GetVar(DatPath & "Ciudades.dat", "Arghal", "X")
 Arghal.Y = GetVar(DatPath & "Ciudades.dat", "Arghal", "Y")
 
-
-Call MD5sCarga
-
-Call ConsultaPopular.LoadData
-
 End Sub
 
 Sub WriteVar(ByVal file As String, ByVal Main As String, ByVal Var As String, ByVal value As String)
@@ -1473,11 +1440,8 @@ Sub SaveUser(ByVal UserIndex As Integer, ByVal UserFile As String)
 
 On Error GoTo Errhandler
 
-Dim OldUserHead As Long
-
-
-'ESTO TIENE QUE EVITAR ESE BUGAZO QUE NO SE POR QUE GRABA USUARIOS NULOS
-'clase=0 es el error, porq el enum empieza de 1!!
+'TODO Is this comment still valid? => ESTO TIENE QUE EVITAR ESE BUGAZO QUE NO SE POR QUE GRABA USUARIOS NULOS
+'TODO Is this comment still valid? => clase=0 es el error, porq el enum empieza de 1!!
 If UserList(UserIndex).clase = 0 Or UserList(UserIndex).Stats.ELV = 0 Then
     Call LogCriticEvent("Estoy intentantdo guardar un usuario nulo de nombre: " & UserList(UserIndex).name)
     Exit Sub
@@ -1498,7 +1462,6 @@ End If
 
 If FileExist(UserFile, vbNormal) Then
     If UserList(UserIndex).flags.Muerto = 1 Then
-        OldUserHead = UserList(UserIndex).Char.Head
         UserList(UserIndex).Char.Head = GetVar(UserFile, "INIT", "Head")
     End If
 '       Kill UserFile
@@ -1805,80 +1768,6 @@ End If
 End Sub
 
 
-
-Sub CargarNpcBackUp(NpcIndex As Integer, ByVal NpcNumber As Integer)
-
-'Status
-If frmMain.Visible Then frmMain.txStatus.Caption = "Cargando backup Npc"
-
-Dim npcfile As String
-
-'If NpcNumber > 499 Then
-'    npcfile = DatPath & "bkNPCs-HOSTILES.dat"
-'Else
-    npcfile = DatPath & "bkNPCs.dat"
-'End If
-
-Npclist(NpcIndex).Numero = NpcNumber
-Npclist(NpcIndex).name = GetVar(npcfile, "NPC" & NpcNumber, "Name")
-Npclist(NpcIndex).desc = GetVar(npcfile, "NPC" & NpcNumber, "Desc")
-Npclist(NpcIndex).Movement = val(GetVar(npcfile, "NPC" & NpcNumber, "Movement"))
-Npclist(NpcIndex).NPCtype = val(GetVar(npcfile, "NPC" & NpcNumber, "NpcType"))
-
-Npclist(NpcIndex).Char.body = val(GetVar(npcfile, "NPC" & NpcNumber, "Body"))
-Npclist(NpcIndex).Char.Head = val(GetVar(npcfile, "NPC" & NpcNumber, "Head"))
-Npclist(NpcIndex).Char.heading = val(GetVar(npcfile, "NPC" & NpcNumber, "Heading"))
-
-Npclist(NpcIndex).Attackable = val(GetVar(npcfile, "NPC" & NpcNumber, "Attackable"))
-Npclist(NpcIndex).Comercia = val(GetVar(npcfile, "NPC" & NpcNumber, "Comercia"))
-Npclist(NpcIndex).Hostile = val(GetVar(npcfile, "NPC" & NpcNumber, "Hostile"))
-Npclist(NpcIndex).GiveEXP = val(GetVar(npcfile, "NPC" & NpcNumber, "GiveEXP"))
-
-
-Npclist(NpcIndex).GiveGLD = val(GetVar(npcfile, "NPC" & NpcNumber, "GiveGLD"))
-
-Npclist(NpcIndex).InvReSpawn = val(GetVar(npcfile, "NPC" & NpcNumber, "InvReSpawn"))
-
-Npclist(NpcIndex).Stats.MaxHP = val(GetVar(npcfile, "NPC" & NpcNumber, "MaxHP"))
-Npclist(NpcIndex).Stats.MinHP = val(GetVar(npcfile, "NPC" & NpcNumber, "MinHP"))
-Npclist(NpcIndex).Stats.MaxHIT = val(GetVar(npcfile, "NPC" & NpcNumber, "MaxHIT"))
-Npclist(NpcIndex).Stats.MinHIT = val(GetVar(npcfile, "NPC" & NpcNumber, "MinHIT"))
-Npclist(NpcIndex).Stats.def = val(GetVar(npcfile, "NPC" & NpcNumber, "DEF"))
-Npclist(NpcIndex).Stats.Alineacion = val(GetVar(npcfile, "NPC" & NpcNumber, "Alineacion"))
-
-
-Dim LoopC As Integer
-Dim ln As String
-Npclist(NpcIndex).Invent.NroItems = val(GetVar(npcfile, "NPC" & NpcNumber, "NROITEMS"))
-If Npclist(NpcIndex).Invent.NroItems > 0 Then
-    For LoopC = 1 To MAX_INVENTORY_SLOTS
-        ln = GetVar(npcfile, "NPC" & NpcNumber, "Obj" & LoopC)
-        Npclist(NpcIndex).Invent.Object(LoopC).ObjIndex = val(ReadField(1, ln, 45))
-        Npclist(NpcIndex).Invent.Object(LoopC).amount = val(ReadField(2, ln, 45))
-       
-    Next LoopC
-Else
-    For LoopC = 1 To MAX_INVENTORY_SLOTS
-        Npclist(NpcIndex).Invent.Object(LoopC).ObjIndex = 0
-        Npclist(NpcIndex).Invent.Object(LoopC).amount = 0
-    Next LoopC
-End If
-
-
-
-Npclist(NpcIndex).flags.NPCActive = True
-Npclist(NpcIndex).flags.UseAINow = False
-Npclist(NpcIndex).flags.Respawn = val(GetVar(npcfile, "NPC" & NpcNumber, "ReSpawn"))
-Npclist(NpcIndex).flags.BackUp = val(GetVar(npcfile, "NPC" & NpcNumber, "BackUp"))
-Npclist(NpcIndex).flags.Domable = val(GetVar(npcfile, "NPC" & NpcNumber, "Domable"))
-Npclist(NpcIndex).flags.RespawnOrigPos = val(GetVar(npcfile, "NPC" & NpcNumber, "OrigPos"))
-
-'Tipo de items con los que comercia
-Npclist(NpcIndex).TipoItems = val(GetVar(npcfile, "NPC" & NpcNumber, "TipoItems"))
-
-End Sub
-
-
 Sub LogBan(ByVal BannedIndex As Integer, ByVal UserIndex As Integer, ByVal motivo As String)
 
 Call WriteVar(App.Path & "\logs\" & "BanDetail.log", UserList(BannedIndex).name, "BannedBy", UserList(UserIndex).name)
@@ -1931,3 +1820,4 @@ Public Sub CargaApuestas()
     Apuestas.Jugadas = val(GetVar(DatPath & "apuestas.dat", "Main", "Jugadas"))
 
 End Sub
+

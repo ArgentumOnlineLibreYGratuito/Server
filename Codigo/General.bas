@@ -174,13 +174,7 @@ End Sub
 
 Sub Main()
 On Error Resume Next
-Dim f As Date
-
-
 Call modEngine.Initialize
-
-ChDir App.Path
-ChDrive App.Path
 
 Call LoadMotd
 Call BanIpCargar
@@ -192,10 +186,6 @@ Prision.X = 75
 Prision.Y = 47
 Libertad.X = 75
 Libertad.Y = 65
-
-
-LastBackup = Format(Now, "Short Time")
-Minutos = Format(Now, "Short Time")
 
 IniPath = App.Path & "\"
 DatPath = App.Path & "\Dat\"
@@ -528,23 +518,6 @@ Errhandler:
 
 End Sub
 
-
-Public Sub LogIndex(ByVal index As Integer, ByVal desc As String)
-On Error GoTo Errhandler
-
-Dim nfile As Integer
-nfile = FreeFile ' obtenemos un canal
-Open App.Path & "\logs\" & index & ".log" For Append Shared As #nfile
-Print #nfile, Date & " " & time & " " & desc
-Close #nfile
-
-Exit Sub
-
-Errhandler:
-
-End Sub
-
-
 Public Sub LogError(desc As String)
 On Error GoTo Errhandler
 
@@ -559,38 +532,6 @@ Exit Sub
 Errhandler:
 
 End Sub
-
-Public Sub LogStatic(desc As String)
-On Error GoTo Errhandler
-
-Dim nfile As Integer
-nfile = FreeFile ' obtenemos un canal
-Open App.Path & "\logs\Stats.log" For Append Shared As #nfile
-Print #nfile, Date & " " & time & " " & desc
-Close #nfile
-
-Exit Sub
-
-Errhandler:
-
-End Sub
-
-Public Sub LogTarea(desc As String)
-On Error GoTo Errhandler
-
-Dim nfile As Integer
-nfile = FreeFile(1) ' obtenemos un canal
-Open App.Path & "\logs\haciendo.log" For Append Shared As #nfile
-Print #nfile, Date & " " & time & " " & desc
-Close #nfile
-
-Exit Sub
-
-Errhandler:
-
-
-End Sub
-
 
 Public Sub LogClanes(ByVal str As String)
 
@@ -641,31 +582,6 @@ Errhandler:
 
 End Sub
 
-Public Sub SaveDayStats()
-''On Error GoTo errhandler
-''
-''Dim nfile As Integer
-''nfile = FreeFile ' obtenemos un canal
-''Open App.Path & "\logs\" & Replace(Date, "/", "-") & ".log" For Append Shared As #nfile
-''
-''Print #nfile, "<stats>"
-''Print #nfile, "<ao>"
-''Print #nfile, "<dia>" & Date & "</dia>"
-''Print #nfile, "<hora>" & Time & "</hora>"
-''Print #nfile, "<segundos_total>" & DayStats.Segundos & "</segundos_total>"
-''Print #nfile, "<max_user>" & DayStats.MaxUsuarios & "</max_user>"
-''Print #nfile, "</ao>"
-''Print #nfile, "</stats>"
-''
-''
-''Close #nfile
-Exit Sub
-
-Errhandler:
-
-End Sub
-
-
 Public Sub LogAsesinato(texto As String)
 On Error GoTo Errhandler
 Dim nfile As Integer
@@ -681,24 +597,7 @@ Exit Sub
 Errhandler:
 
 End Sub
-Public Sub logVentaCasa(ByVal texto As String)
-On Error GoTo Errhandler
 
-Dim nfile As Integer
-nfile = FreeFile ' obtenemos un canal
-
-Open App.Path & "\logs\propiedades.log" For Append Shared As #nfile
-Print #nfile, "----------------------------------------------------------"
-Print #nfile, Date & " " & time & " " & texto
-Print #nfile, "----------------------------------------------------------"
-Close #nfile
-
-Exit Sub
-
-Errhandler:
-
-
-End Sub
 Public Sub LogHackAttemp(texto As String)
 On Error GoTo Errhandler
 
@@ -730,58 +629,6 @@ Exit Sub
 Errhandler:
 
 End Sub
-
-
-Public Sub LogCriticalHackAttemp(texto As String)
-On Error GoTo Errhandler
-
-Dim nfile As Integer
-nfile = FreeFile ' obtenemos un canal
-Open App.Path & "\logs\CriticalHackAttemps.log" For Append Shared As #nfile
-Print #nfile, "----------------------------------------------------------"
-Print #nfile, Date & " " & time & " " & texto
-Print #nfile, "----------------------------------------------------------"
-Close #nfile
-
-Exit Sub
-
-Errhandler:
-
-End Sub
-
-Public Sub LogAntiCheat(texto As String)
-On Error GoTo Errhandler
-
-Dim nfile As Integer
-nfile = FreeFile ' obtenemos un canal
-Open App.Path & "\logs\AntiCheat.log" For Append Shared As #nfile
-Print #nfile, Date & " " & time & " " & texto
-Print #nfile, ""
-Close #nfile
-
-Exit Sub
-
-Errhandler:
-
-End Sub
-
-Function ValidInputNP(ByVal cad As String) As Boolean
-Dim Arg As String
-Dim i As Integer
-
-
-For i = 1 To 33
-
-Arg = ReadField(i, cad, 44)
-
-If LenB(Arg) = 0 Then Exit Function
-
-Next i
-
-ValidInputNP = True
-
-End Function
-
 
 Sub Restart()
 
@@ -893,7 +740,7 @@ Public Sub EfectoFrio(ByVal UserIndex As Integer)
     If UserList(UserIndex).Counters.Frio < IntervaloFrio Then
         UserList(UserIndex).Counters.Frio = UserList(UserIndex).Counters.Frio + 1
     Else
-        If MapInfo(UserList(UserIndex).Pos.map).Terreno = Nieve Then
+        If MapInfo(UserList(UserIndex).Pos.map).Terreno = "NIEVE" Then
             Call WriteConsoleMsg(UserIndex, "¡¡Estas muriendo de frio, abrigate o moriras!!.", FontTypeNames.FONTTYPE_INFO)
             modifi = Porcentaje(UserList(UserIndex).Stats.MaxHP, 5)
             UserList(UserIndex).Stats.MinHP = UserList(UserIndex).Stats.MinHP - modifi
@@ -1031,26 +878,6 @@ Else
 End If
 
 End Sub
-
-Public Sub EfectoCegueEstu(ByVal UserIndex As Integer)
-
-If UserList(UserIndex).Counters.Ceguera > 0 Then
-    UserList(UserIndex).Counters.Ceguera = UserList(UserIndex).Counters.Ceguera - 1
-Else
-    If UserList(UserIndex).flags.Ceguera = 1 Then
-        UserList(UserIndex).flags.Ceguera = 0
-        Call WriteBlindNoMore(UserIndex)
-    End If
-    If UserList(UserIndex).flags.Estupidez = 1 Then
-        UserList(UserIndex).flags.Estupidez = 0
-        Call WriteDumbNoMore(UserIndex)
-    End If
-
-End If
-
-
-End Sub
-
 
 Public Sub EfectoParalisisUser(ByVal UserIndex As Integer)
 
@@ -1233,7 +1060,7 @@ On Error GoTo Errhandler
                     
                     Call CloseSocket(i)
                 ElseIf UserList(i).EmpoCont = 15 Then
-                    Call WriteConsoleMsg(i, "LLevas 15 segundos bloqueando el item, muévete o serás desconectado.", FontTypeNames.FONTTYPE_WARNING)
+                    Call WriteConsoleMsg(I, "LLevas 15 segundos bloqueando el item, muévete o serás desconectado.", FontTypeNames.FONTTYPE_WARNING)
                     'TODO Call FlushBuffer(i)
                 End If
              End If
@@ -1245,30 +1072,6 @@ Errhandler:
     Call LogError("Error en PasarSegundo. Err: " & Err.Description & " - " & Err.Number & " - UserIndex: " & i)
     Resume Next
 End Sub
- 
-Public Function ReiniciarAutoUpdate() As Double
-
-    ReiniciarAutoUpdate = Shell(App.Path & "\autoupdater\aoau.exe", vbMinimizedNoFocus)
-
-End Function
- 
-Public Sub ReiniciarServidor(Optional ByVal EjecutarLauncher As Boolean = True)
-    'WorldSave
-    Call DoBackUp
-
-    'commit experiencias
-    Call mdParty.ActualizaExperiencias
-
-    'Guardar Pjs
-    Call GuardarUsuarios
-    
-    If EjecutarLauncher Then Shell (App.Path & "\launcher.exe")
-
-    'Chauuu
-    Unload frmMain
-
-End Sub
-
  
 Sub GuardarUsuarios()
     haciendoBK = True
@@ -1313,3 +1116,4 @@ Public Sub FreeCharIndexes()
     ' Free all char indexes (set them all to 0)
     Call ZeroMemory(CharList(1), MAXCHARS * Len(CharList(1)))
 End Sub
+

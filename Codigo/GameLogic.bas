@@ -247,19 +247,6 @@ InRangoVision = False
 
 End Function
 
-Function InRangoVisionNPC(ByVal NpcIndex As Integer, X As Integer, Y As Integer) As Boolean
-
-If X > Npclist(NpcIndex).Pos.X - MinXBorder And X < Npclist(NpcIndex).Pos.X + MinXBorder Then
-    If Y > Npclist(NpcIndex).Pos.Y - MinYBorder And Y < Npclist(NpcIndex).Pos.Y + MinYBorder Then
-        InRangoVisionNPC = True
-        Exit Function
-    End If
-End If
-InRangoVisionNPC = False
-
-End Function
-
-
 Function InMapBounds(ByVal map As Integer, ByVal X As Integer, ByVal Y As Integer) As Boolean
             
 If (map <= 0 Or map > NumMaps) Or X < MinXBorder Or X > MaxXBorder Or Y < MinYBorder Or Y > MaxYBorder Then
@@ -391,36 +378,6 @@ NameIndex = UserIndex
  
 End Function
 
-
-
-Function IP_Index(ByVal inIP As String) As Integer
- 
-Dim UserIndex As Integer
-'¿Nombre valido?
-If LenB(inIP) = 0 Then
-    IP_Index = 0
-    Exit Function
-End If
-  
-UserIndex = 1
-Do Until UserList(UserIndex).ip = inIP
-    
-    UserIndex = UserIndex + 1
-    
-    If UserIndex > MaxUsers Then
-        IP_Index = 0
-        Exit Function
-    End If
-    
-Loop
- 
-IP_Index = UserIndex
-
-Exit Function
-
-End Function
-
-
 Function CheckForSameIP(ByVal UserIndex As Integer, ByVal UserIP As String) As Boolean
 Dim LoopC As Integer
 For LoopC = 1 To MaxUsers
@@ -549,18 +506,6 @@ End If
 
 
 End Function
-
-Sub SendHelp(ByVal index As Integer)
-Dim NumHelpLines As Integer
-Dim LoopC As Integer
-
-NumHelpLines = val(GetVar(DatPath & "Help.dat", "INIT", "NumLines"))
-
-For LoopC = 1 To NumHelpLines
-    Call WriteConsoleMsg(index, GetVar(DatPath & "Help.dat", "Help", "Line" & LoopC), FontTypeNames.FONTTYPE_INFO)
-Next LoopC
-
-End Sub
 
 Public Sub Expresar(ByVal NpcIndex As Integer, ByVal UserIndex As Integer)
     If Npclist(NpcIndex).NroExpresiones > 0 Then

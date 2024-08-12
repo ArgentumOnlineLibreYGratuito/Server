@@ -733,31 +733,6 @@ If (MiNPC.flags.Respawn = 0) Then Call CrearNPC(MiNPC.Numero, MiNPC.Pos.map, MiN
 
 End Sub
 
-'Devuelve el nro de enemigos que hay en el Mapa Map
-Function NPCHostiles(ByVal map As Integer) As Integer
-
-Dim NpcIndex As Integer
-Dim cont As Integer
-
-'Contador
-cont = 0
-For NpcIndex = 1 To LastNPC
-
-    '¿esta vivo?
-    If Npclist(NpcIndex).flags.NPCActive _
-       And Npclist(NpcIndex).Pos.map = map _
-       And Npclist(NpcIndex).Hostile = 1 And _
-       Npclist(NpcIndex).Stats.Alineacion = 2 Then
-            cont = cont + 1
-           
-    End If
-    
-Next NpcIndex
-
-NPCHostiles = cont
-
-End Function
-
 Sub NPCTirarOro(MiNPC As npc)
 
 'SI EL NPC TIENE ORO LO TIRAMOS

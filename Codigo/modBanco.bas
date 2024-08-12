@@ -164,9 +164,6 @@ Sub QuitarBancoInvItem(ByVal UserIndex As Integer, ByVal Slot As Byte, ByVal Can
 
 
 
-Dim ObjIndex As Integer
-ObjIndex = UserList(UserIndex).BancoInvent.Object(Slot).ObjIndex
-
     'Quita un Obj
 
        UserList(UserIndex).BancoInvent.Object(Slot).amount = UserList(UserIndex).BancoInvent.Object(Slot).amount - Cantidad
@@ -293,4 +290,5 @@ Else
 End If
 
 End Sub
+
 

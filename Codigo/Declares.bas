@@ -38,14 +38,6 @@ Public Const SEPARATOR As String * 1 = vbNullChar
 ' Modulo de declaraciones. Aca hay de todo.
 '
 
-Type tEstadisticasDiarias
-    Segundos As Double
-    MaxUsuarios As Integer
-    Promedio As Integer
-End Type
-    
-Public DayStats As tEstadisticasDiarias
-
 Public aClon As New clsAntiMassClon
 Public TrashCollector As New Collection
 
@@ -87,12 +79,6 @@ Public Enum iMinerales
     LingoteDePlata = 387
     LingoteDeOro = 388
 End Enum
-
-
-Public Type tLlamadaGM
-    Usuario As String * 255
-    desc As String * 255
-End Type
 
 Public Enum PlayerType
     User = &H1
@@ -226,14 +212,6 @@ Public Enum eTrigger6
     TRIGGER6_AUSENTE = 3
 End Enum
 
-'TODO : Reemplazar por un enum
-Public Const Bosque = "BOSQUE"
-Public Const Nieve = "NIEVE"
-Public Const Desierto = "DESIERTO"
-Public Const Ciudad = "CIUDAD"
-Public Const Campo = "CAMPO"
-Public Const Dungeon = "DUNGEON"
-
 ' <<<<<< Targets >>>>>>
 Public Enum TargetType
     uUsuarios = 1
@@ -250,8 +228,6 @@ Public Enum TipoHechizo
     uInvocacion = 4
 End Enum
 
-Public Const MAX_MENSAJES_FORO As Byte = 35
-
 Public Const MAXUSERHECHIZOS As Byte = 35
 
 
@@ -264,8 +240,6 @@ Public Const EsfuerzoPescarGeneral As Byte = 3
 
 Public Const EsfuerzoExcavarMinero As Byte = 2
 Public Const EsfuerzoExcavarGeneral As Byte = 5
-
-Public Const FX_TELEPORT_INDEX As Integer = 1
 
 ' La utilidad de esto es casi nula, sólo se revisa si fue a la cabeza...
 Public Enum PartesCuerpo
@@ -303,12 +277,8 @@ Public Const PIQUETE_MINERO As Integer = 187
 Public Const DAGA As Integer = 15
 Public Const FOGATA_APAG As Integer = 136
 Public Const FOGATA As Integer = 63
-Public Const ORO_MINA As Integer = 194
-Public Const PLATA_MINA As Integer = 193
-Public Const HIERRO_MINA As Integer = 192
 Public Const MARTILLO_HERRERO As Integer = 389
 Public Const SERRUCHO_CARPINTERO As Integer = 198
-Public Const ObjArboles As Integer = 4
 Public Const RED_PESCA As Integer = 543
 Public Const CAÑA_PESCA As Integer = 138
 
@@ -427,9 +397,6 @@ Public Enum eAtributos
     Constitucion = 5
 End Enum
 
-Public Const AdicionalHPGuerrero As Byte = 2 'HP adicionales cuando sube de nivel
-Public Const AdicionalHPCazador As Byte = 1 'HP adicionales cuando sube de nivel
-
 Public Const AumentoSTDef As Byte = 15
 Public Const AumentoSTLadron As Byte = AumentoSTDef + 3
 Public Const AumentoSTMago As Byte = AumentoSTDef - 1
@@ -443,10 +410,6 @@ Public Const XMinMapSize As Byte = 1
 Public Const YMaxMapSize As Byte = 100
 Public Const YMinMapSize As Byte = 1
 
-'Tamaño del tileset
-Public Const TileSizeX As Byte = 32
-Public Const TileSizeY As Byte = 32
-
 'Tamaño en Tiles de la pantalla de visualizacion
 Public Const XWindow As Byte = 17
 Public Const YWindow As Byte = 13
@@ -455,21 +418,13 @@ Public Const YWindow As Byte = 13
 Public Const SND_SWING As Byte = 2
 Public Const SND_TALAR As Byte = 13
 Public Const SND_PESCAR As Byte = 14
-Public Const SND_MINERO As Byte = 15
+
 Public Const SND_WARP As Byte = 3
 Public Const SND_PUERTA As Byte = 5
 Public Const SND_NIVEL As Byte = 6
 
-Public Const SND_USERMUERTE As Byte = 11
 Public Const SND_IMPACTO As Byte = 10
 Public Const SND_IMPACTO2 As Byte = 12
-Public Const SND_LEÑADOR As Byte = 13
-Public Const SND_FOGATA As Byte = 14
-Public Const SND_AVE As Byte = 21
-Public Const SND_AVE2 As Byte = 22
-Public Const SND_AVE3 As Byte = 34
-Public Const SND_GRILLO As Byte = 28
-Public Const SND_GRILLO2 As Byte = 29
 Public Const SND_SACARARMA As Byte = 25
 Public Const SND_ESCUDO As Byte = 37
 Public Const MARTILLOHERRERO As Byte = 41
@@ -523,23 +478,6 @@ Public Enum eOBJType
     otCualquiera = 1000
 End Enum
 
-'Texto
-Public Const FONTTYPE_TALK As String = "~255~255~255~0~0"
-Public Const FONTTYPE_FIGHT As String = "~255~0~0~1~0"
-Public Const FONTTYPE_WARNING As String = "~32~51~223~1~1"
-Public Const FONTTYPE_INFO As String = "~65~190~156~0~0"
-Public Const FONTTYPE_INFOBOLD As String = "~65~190~156~1~0"
-Public Const FONTTYPE_EJECUCION As String = "~130~130~130~1~0"
-Public Const FONTTYPE_PARTY As String = "~255~180~255~0~0"
-Public Const FONTTYPE_VENENO As String = "~0~255~0~0~0"
-Public Const FONTTYPE_GUILD As String = "~255~255~255~1~0"
-Public Const FONTTYPE_SERVER As String = "~0~185~0~0~0"
-Public Const FONTTYPE_GUILDMSG As String = "~228~199~27~0~0"
-Public Const FONTTYPE_CONSEJO As String = "~130~130~255~1~0"
-Public Const FONTTYPE_CONSEJOCAOS As String = "~255~60~00~1~0"
-Public Const FONTTYPE_CONSEJOVesA As String = "~0~200~255~1~0"
-Public Const FONTTYPE_CONSEJOCAOSVesA As String = "~255~50~0~1~0"
-
 'Estadisticas
 Public Const STAT_MAXELV As Byte = 255
 Public Const STAT_MAXHP As Integer = 999
@@ -547,7 +485,6 @@ Public Const STAT_MAXSTA As Integer = 999
 Public Const STAT_MAXMAN As Integer = 9999
 Public Const STAT_MAXHIT_UNDER36 As Byte = 99
 Public Const STAT_MAXHIT_OVER36 As Integer = 999
-Public Const STAT_MAXDEF As Byte = 99
 
 
 
@@ -610,16 +547,12 @@ Public Type tHechizo
     Paraliza As Byte
     Inmoviliza As Byte
     RemoverParalisis As Byte
-    RemoverEstupidez As Byte
     CuraVeneno As Byte
     Envenena As Byte
     Maldicion As Byte
     RemoverMaldicion As Byte
     Bendicion As Byte
-    Estupidez As Byte
-    Ceguera As Byte
     Revivir As Byte
-    Morph As Byte
     Mimetiza As Byte
     RemueveInvisibilidadParcial As Byte
     
@@ -671,12 +604,6 @@ Public Type Inventario
     NroItems As Integer
 End Type
 
-Public Type tPartyData
-    PIndex As Integer
-    RemXP As Double 'La exp. en el server se cuenta con Doubles
-    TargetUser As Integer 'Para las invitaciones
-End Type
-
 Public Type Position
     X As Integer
     Y As Integer
@@ -686,12 +613,6 @@ Public Type WorldPos
     map As Integer
     X As Integer
     Y As Integer
-End Type
-
-Public Type FXdata
-    Nombre As String
-    GrhIndex As Integer
-    Delay As Integer
 End Type
 
 'Datos de user o npc
@@ -938,8 +859,6 @@ Public Type UserFlags
     Envenenado As Byte
     Paralizado As Byte
     Inmovilizado As Byte
-    Estupidez As Byte
-    Ceguera As Byte
     invisible As Byte
     Maldicion As Byte
     Bendicion As Byte
@@ -995,11 +914,7 @@ Public Type UserFlags
     AdminPerseguible As Boolean
     
     ChatColor As Long
-    
-    '[el oso]
-    MD5Reportado As String
-    '[/el oso]
-    
+
     '[Barrin 30-11-03]
     TimesWalk As Long
     StartWalk As Long
@@ -1027,9 +942,7 @@ Public Type UserCounters
     AGUACounter As Integer
     Veneno As Integer
     Paralisis As Integer
-    Ceguera As Integer
-    Estupidez As Integer
-    
+
     Invisibilidad As Integer
     TiempoOculto As Integer
     
@@ -1121,10 +1034,7 @@ Public Type User
     
     Stats As UserStats
     flags As UserFlags
-    NumeroPaquetesPorMiliSec As Long
-    BytesTransmitidosUser As Long
-    BytesTransmitidosSvr As Long
-    
+
     Reputacion As tReputacion
     
     Faccion As tFacciones
@@ -1148,9 +1058,7 @@ Public Type User
     
     PartyIndex As Integer   'index a la party q es miembro
     PartySolicitud As Integer   'index a la party q solicito
-    
-    KeyCrypt As Integer
-    
+
     AreasInfo As AreaInfo
     
     Connection As Network_Client
@@ -1358,10 +1266,7 @@ End Type
 
 '********** V A R I A B L E S     P U B L I C A S ***********
 
-Public SERVERONLINE As Boolean
 Public ULTIMAVERSION As String
-Public BackUp As Boolean ' TODO: Se usa esta variable ?
-
 Public ListaRazas(1 To NUMRAZAS) As String
 Public SkillsNames(1 To NUMSKILLS) As String
 Public ListaClases(1 To NUMCLASES) As String
@@ -1411,7 +1316,6 @@ Public LastChar As Integer
 Public NumChars As Integer
 Public LastNPC As Integer
 Public NumNPCs As Integer
-Public NumFX As Integer
 Public NumMaps As Integer
 Public NumObjDatas As Integer
 Public NumeroHechizos As Integer
@@ -1419,24 +1323,11 @@ Public AllowMultiLogins As Byte
 Public IdleLimit As Integer
 Public MaxUsers As Integer
 Public HideMe As Byte
-Public LastBackup As String
-Public Minutos As String
 Public haciendoBK As Boolean
-Public Oscuridad As Integer
-Public NocheDia As Integer
 Public PuedeCrearPersonajes As Integer
-Public CamaraLenta As Integer
 Public ServerSoloGMs As Integer
 
-''
-'Esta activada la verificacion MD5 ?
-Public MD5ClientesActivado As Byte
-
-
 Public EnPausa As Boolean
-Public EnTesting As Boolean
-Public EncriptarProtocolosCriticos As Boolean
-
 
 '*****************ARRAYS PUBLICOS*************************
 Public UserList() As User 'USUARIOS
@@ -1446,14 +1337,12 @@ Public MapInfo() As MapInfo
 Public Hechizos() As tHechizo
 Public CharList(1 To MAXCHARS) As Integer
 Public ObjData() As ObjData
-Public FX() As FXdata
 Public SpawnList() As tCriaturasEntrenador
 Public LevelSkill(1 To 50) As LevelSkill
 Public ForbidenNames() As String
 Public ArmasHerrero() As Integer
 Public ArmadurasHerrero() As Integer
 Public ObjCarpintero() As Integer
-Public MD5s() As String
 Public BanIps As New Collection
 Public Parties(1 To MAX_PARTIES) As clsParty
 Public ModClase(1 To NUMCLASES) As ModClase
@@ -1473,7 +1362,6 @@ Public Prision As WorldPos
 Public Libertad As WorldPos
 
 Public Ayuda As New cCola
-Public ConsultaPopular As New ConsultasPopulares
 Public SonidosMapas As New SoundMapInfo
 
 Public Declare Function GetTickCount Lib "kernel32" () As Long

@@ -64,7 +64,6 @@ Public Sub SendData(ByVal sndRoute As SendTarget, ByVal sndIndex As Integer, ByV
 On Error GoTo OnException
 
     Dim LoopC As Long
-    Dim map As Integer
     
     Select Case sndRoute
         Case SendTarget.ToUser
@@ -587,3 +586,4 @@ OnException:
     Call sndData.Clear
     
 End Sub
+

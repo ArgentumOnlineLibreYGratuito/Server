@@ -108,24 +108,6 @@ End If
 
 End Sub
 
-Public Sub ActualizaListaPjs()
-Dim LoopC As Long
-
-With cboPjs
-    .Clear
-    
-    For LoopC = 1 To LastUser
-        If UserList(LoopC).flags.UserLogged And UserList(LoopC).ConnID >= 0 And UserList(LoopC).ConnIDValida Then
-            If UserList(LoopC).flags.Privilegios And PlayerType.User Then
-                .AddItem UserList(LoopC).name
-                .ItemData(.NewIndex) = LoopC
-            End If
-        End If
-    Next LoopC
-End With
-
-End Sub
-
 Private Sub Command3_Click()
 Call EcharPjsNoPrivilegiados
 

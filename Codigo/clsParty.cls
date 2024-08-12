@@ -328,7 +328,6 @@ Public Function PuedeEntrar(ByVal UserIndex As Integer, ByRef razon As String) A
 'DEFINE LAS REGLAS DEL JUEGO PARA DEJAR ENTRAR A MIEMBROS
 Dim esArmada As Boolean
 Dim esCaos As Boolean
-Dim MyLevel As Integer
 Dim i As Integer
 Dim rv As Boolean
 Dim UI As Integer
@@ -336,7 +335,6 @@ Dim UI As Integer
 rv = True
 esArmada = (UserList(UserIndex).Faccion.ArmadaReal = 1)
 esCaos = (UserList(UserIndex).Faccion.FuerzasCaos = 1)
-MyLevel = UserList(UserIndex).Stats.ELV
 
 rv = Distancia(UserList(p_members(1).UserIndex).Pos, UserList(UserIndex).Pos) <= MAXDISTANCIAINGRESOPARTY
 If rv Then
@@ -444,3 +442,4 @@ End Sub
 Public Function CantMiembros() As Integer
 CantMiembros = p_CantMiembros
 End Function
+

@@ -59,8 +59,6 @@ On Error GoTo manejador
 
 'Call LogTarea("ClasePuedeUsarItem")
 
-Dim flag As Boolean
-
 'Admins can use ANYTHING!
 If UserList(UserIndex).flags.Privilegios And PlayerType.User Then
     If ObjData(ObjIndex).ClaseProhibida(1) <> 0 Then
@@ -166,7 +164,6 @@ On Error GoTo Errhandler
 
 'SI EL Pjta TIENE ORO LO TIRAMOS
 If (Cantidad > 0) And (Cantidad <= UserList(UserIndex).Stats.GLD) Then
-        Dim i As Byte
         Dim MiObj As Obj
         'info debug
         Dim loops As Integer
@@ -372,10 +369,7 @@ End Sub
 Function MeterItemEnInventario(ByVal UserIndex As Integer, ByRef MiObj As Obj) As Boolean
 On Error GoTo Errhandler
 
-'Call LogTarea("MeterItemEnInventario")
- 
-Dim X As Integer
-Dim Y As Integer
+'TODO Is this comment still valid? => Call LogTarea("MeterItemEnInventario")
 Dim Slot As Byte
 
 '¿el user ya tiene un objeto del mismo tipo?
@@ -424,7 +418,6 @@ End Function
 
 Sub GetObj(ByVal UserIndex As Integer)
 
-Dim Obj As ObjData
 Dim MiObj As Obj
 
 '¿Hay algun obj?
@@ -433,11 +426,10 @@ If MapData(UserList(UserIndex).Pos.map, UserList(UserIndex).Pos.X, UserList(User
     If ObjData(MapData(UserList(UserIndex).Pos.map, UserList(UserIndex).Pos.X, UserList(UserIndex).Pos.Y).ObjInfo.ObjIndex).Agarrable <> 1 Then
         Dim X As Integer
         Dim Y As Integer
-        Dim Slot As Byte
-        
+
         X = UserList(UserIndex).Pos.X
         Y = UserList(UserIndex).Pos.Y
-        Obj = ObjData(MapData(UserList(UserIndex).Pos.map, UserList(UserIndex).Pos.X, UserList(UserIndex).Pos.Y).ObjInfo.ObjIndex)
+        'Obj = ObjData(MapData(UserList(UserIndex).Pos.map, UserList(UserIndex).Pos.X, UserList(UserIndex).Pos.Y).ObjInfo.ObjIndex)
         MiObj.amount = MapData(UserList(UserIndex).Pos.map, X, Y).ObjInfo.amount
         MiObj.ObjIndex = MapData(UserList(UserIndex).Pos.map, X, Y).ObjInfo.ObjIndex
         
@@ -1327,3 +1319,4 @@ For i = 1 To MAX_INVENTORY_SLOTS
 Next i
 
 End Sub
+

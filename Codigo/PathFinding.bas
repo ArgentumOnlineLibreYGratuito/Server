@@ -91,8 +91,6 @@ End Type
 
 Dim TmpArray(1 To ROWS, 1 To COLUMS) As tIntermidiateWork
 
-Dim TilePosY As Integer
-
 Private Function Limites(ByVal vfila As Integer, ByVal vcolu As Integer)
 Limites = vcolu >= 1 And vcolu <= COLUMS And vfila >= 1 And vfila <= ROWS
 End Function

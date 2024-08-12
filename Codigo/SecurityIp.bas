@@ -305,17 +305,6 @@ Dim Middle As Long
     End Select
 End Function
 
-
-
-Public Function DumpTables()
-Dim I As Integer
-
-    For I = 0 To MaxConTablesEntry * 2 - 1 Step 2
-        'TODO Call LogCriticEvent(GetLongIp(MaxConTables(I)) & " > " & MaxConTables(I + 1))
-    Next I
-
-End Function
-
 Public Function GetLongIp(IPAddress As String) As Long
     Dim arrTemp As Variant
     Dim I       As Integer

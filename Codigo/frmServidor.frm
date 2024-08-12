@@ -12,23 +12,6 @@ Begin VB.Form frmServidor
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   323
    StartUpPosition =   3  'Windows Default
-   Begin VB.CommandButton Command26 
-      Caption         =   "Reset Listen"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   255
-      Left            =   1920
-      TabIndex        =   24
-      Top             =   6180
-      Width           =   1455
-   End
    Begin VB.PictureBox picFuera 
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
@@ -38,7 +21,7 @@ Begin VB.Form frmServidor
       ScaleHeight     =   287
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   304
-      TabIndex        =   6
+      TabIndex        =   5
       Top             =   120
       Width           =   4590
       Begin VB.VScrollBar VS1 
@@ -46,7 +29,7 @@ Begin VB.Form frmServidor
          LargeChange     =   50
          Left            =   4320
          SmallChange     =   17
-         TabIndex        =   22
+         TabIndex        =   21
          Top             =   0
          Width           =   255
       End
@@ -58,7 +41,7 @@ Begin VB.Form frmServidor
          ScaleHeight     =   353
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   289
-         TabIndex        =   7
+         TabIndex        =   6
          Top             =   0
          Width           =   4334
          Begin VB.CommandButton Command27 
@@ -74,7 +57,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   25
+            TabIndex        =   22
             Top             =   4920
             Width           =   4095
          End
@@ -91,7 +74,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   21
+            TabIndex        =   20
             Top             =   4680
             Width           =   4095
          End
@@ -108,7 +91,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   8
+            TabIndex        =   7
             Top             =   4440
             Width           =   4095
          End
@@ -125,7 +108,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   9
+            TabIndex        =   8
             Top             =   4200
             Width           =   4095
          End
@@ -142,25 +125,8 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   10
+            TabIndex        =   9
             Top             =   3960
-            Width           =   4095
-         End
-         Begin VB.CommandButton Command25 
-            Caption         =   "Reload MD5s"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   120
-            TabIndex        =   23
-            Top             =   3720
             Width           =   4095
          End
          Begin VB.CommandButton Command16 
@@ -176,7 +142,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   11
+            TabIndex        =   10
             Top             =   3480
             Width           =   4095
          End
@@ -193,7 +159,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   26
+            TabIndex        =   23
             Top             =   3240
             Width           =   4095
          End
@@ -210,7 +176,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   12
+            TabIndex        =   11
             Top             =   3000
             Width           =   4095
          End
@@ -227,7 +193,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   13
+            TabIndex        =   12
             Top             =   2760
             Width           =   4095
          End
@@ -244,7 +210,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   14
+            TabIndex        =   13
             Top             =   2520
             Width           =   4095
          End
@@ -261,7 +227,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   15
+            TabIndex        =   14
             Top             =   1320
             Width           =   4095
          End
@@ -278,7 +244,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   16
+            TabIndex        =   15
             Top             =   1080
             Width           =   4095
          End
@@ -295,7 +261,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   17
+            TabIndex        =   16
             Top             =   840
             Width           =   4095
          End
@@ -313,7 +279,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   18
+            TabIndex        =   17
             Top             =   600
             Width           =   4095
          End
@@ -330,7 +296,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   19
+            TabIndex        =   18
             Top             =   360
             Width           =   4095
          End
@@ -347,7 +313,7 @@ Begin VB.Form frmServidor
             EndProperty
             Height          =   255
             Left            =   120
-            TabIndex        =   20
+            TabIndex        =   19
             Top             =   120
             Width           =   4095
          End
@@ -366,7 +332,7 @@ Begin VB.Form frmServidor
       EndProperty
       Height          =   255
       Left            =   240
-      TabIndex        =   5
+      TabIndex        =   4
       Top             =   5520
       Width           =   4095
    End
@@ -429,23 +395,6 @@ Begin VB.Form frmServidor
       TabIndex        =   0
       Top             =   6180
       Width           =   945
-   End
-   Begin VB.CommandButton Command20 
-      Caption         =   "Reset sockets"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   255
-      Left            =   240
-      TabIndex        =   4
-      Top             =   6180
-      Width           =   1575
    End
    Begin VB.Shape Shape2 
       Height          =   1335
@@ -607,16 +556,6 @@ If MsgBox("Esta seguro que desea hacer WorldSave, guardar pjs y cerrar ?", vbYes
 End If
 End Sub
 
-Private Sub Command25_Click()
-Call MD5sCarga
-
-End Sub
-
-Private Sub Command27_Click()
-frmUserList.Show
-
-End Sub
-
 Private Sub Command28_Click()
     Call LoadBalance
 End Sub
@@ -703,9 +642,6 @@ frmServidor.Visible = False
 End Sub
 
 Private Sub Form_Load()
-
-Command20.Visible = True
-Command26.Visible = True
 
 VS1.min = 0
 If picCont.Height > picFuera.ScaleHeight Then
