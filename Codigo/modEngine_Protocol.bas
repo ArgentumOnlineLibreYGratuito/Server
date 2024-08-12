@@ -460,6 +460,10 @@ Public Sub OnClose(ByVal Connection As Network_Client)
     
     If (UserIndex > 0) Then
 
+        UserList(UserIndex).ConnID = -1
+        UserList(UserIndex).ConnIDValida = False
+
+            
         If UserList(UserIndex).flags.UserLogged Then
             Call Cerrar_Usuario(UserIndex)
         Else
