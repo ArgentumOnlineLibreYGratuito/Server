@@ -9678,7 +9678,7 @@ End Sub
 Public Sub WriteChangeMap(ByVal UserIndex As Integer, ByVal map As Integer, ByVal version As Integer)
         Call Writer_.WriteInt(ServerPacketID.ChangeMap)
         Call Writer_.WriteInt(map)
-        Call Writer_.WriteInt(version)
+        Call Writer_.WriteBool(MapInfo(map).Lluvia)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)

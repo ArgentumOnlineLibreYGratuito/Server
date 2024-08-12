@@ -1257,6 +1257,7 @@ Type MapInfo
     NoEncriptarMP As Byte
     InviSinEfecto As Byte
     ResuSinEfecto As Byte
+    Lluvia As Boolean
     
     Terreno As String
     Zona As String
