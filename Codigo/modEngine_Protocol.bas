@@ -49,7 +49,6 @@ Public Enum FontTypeNames
     FONTTYPE_CONSEJOCAOS
     FONTTYPE_CONSEJOVesA
     FONTTYPE_CONSEJOCAOSVesA
-    FONTTYPE_CENTINELA
     FONTTYPE_GMMSG
     FONTTYPE_GM
     FONTTYPE_CITIZEN
@@ -151,7 +150,6 @@ Private Enum ServerPacketID
     TradeOK                                      ' TRANSOK
     BankOK                                       ' BANCOOK
     ChangeUserTradeSlot                          ' COMUSUINV
-    SendNight                                    ' NOC
     Pong
     UpdateTagAndStatus
     
@@ -207,7 +205,6 @@ Private Enum ClientPacketID
     BankExtractItem                              'RETI
     CommerceSell                                 'VEND
     BankDeposit                                  'DEPO
-    ForumPost                                    'DEMSG
     MoveSpell                                    'DESPHE
     ClanCodexUpdate                              'DESCOD
     UserCommerceOffer                            'OFRECER
@@ -258,13 +255,11 @@ Private Enum ClientPacketID
     Inquiry                                      '/ENCUESTA ( params )
     GuildMessage                                 '/CMSG
     PartyMessage                                 '/PMSG
-    CentinelReport                               '/CENTINELA
     GuildOnline                                  '/ONLINECLAN
     PartyOnline                                  '/ONLINEPARTY
     CouncilMessage                               '/BMSG
     RoleMasterRequest                            '/ROL
     GMRequest                                    '/GM
-    bugReport                                    '/_BUG
     ChangeDescription                            '/DESC
     GuildVote                                    '/VOTO
     Punishments                                  '/PENAS
@@ -385,7 +380,6 @@ Private Enum ClientPacketID
     AlterPassword                                '/APASS
     AlterMail                                    '/AEMAIL
     AlterName                                    '/ANAME
-    ToggleCentinelActivated                      '/CENTINELAACTIVADO
     DoBackUp                                     '/DOBACKUP
     ShowGuildMessages                            '/SHOWCMSG
     SaveMap                                      '/GUARDAMAPA
@@ -400,13 +394,7 @@ Private Enum ClientPacketID
     SaveChars                                    '/GRABAR
     CleanSOS                                     '/BORRAR SOS
     ShowServerForm                               '/SHOW INT
-    night                                        '/NOCHE
     KickAllChars                                 '/ECHARTODOSPJS
-    ReloadNPCs                                   '/RELOADNPCS
-    ReloadServerIni                              '/RELOADSINI
-    ReloadSpells                                 '/RELOADHECHIZOS
-    ReloadObjects                                '/RELOADOBJ
-    Restart                                      '/REINICIAR
     ChatColor                                    '/CHATCOLOR
     Ignored                                      '/IGNORADO
     CheckSlot                                    '/SLOT
@@ -482,12 +470,7 @@ Public Sub OnClose(ByVal Connection As Network_Client)
     UserIndex = Connection.GetAttachment()
     
     If (UserIndex > 0) Then
-        
-        'Es el mismo user al que está revisando el centinela??
-        'Si estamos acá es porque se cerró la conexión, no es un /salir, y no queremos banearlo....
-        If Centinela.RevisandoUserIndex = UserIndex Then _
-            Call modCentinela.CentinelaUserLogout
-    
+
         If UserList(UserIndex).flags.UserLogged Then
             Call Cerrar_Usuario(UserIndex)
         Else
@@ -678,10 +661,7 @@ Public Sub Handle(ByVal Connection As Network_Client, ByVal Message As BinaryRea
         
         Case ClientPacketID.BankDeposit             'DEPO
             Call HandleBankDeposit(Message, UserIndex)
-        
-        Case ClientPacketID.ForumPost               'DEMSG
-            Call HandleForumPost(Message, UserIndex)
-        
+
         Case ClientPacketID.MoveSpell               'DESPHE
             Call HandleMoveSpell(Message, UserIndex)
         
@@ -831,10 +811,7 @@ Public Sub Handle(ByVal Connection As Network_Client, ByVal Message As BinaryRea
         
         Case ClientPacketID.PartyMessage            '/PMSG
             Call HandlePartyMessage(Message, UserIndex)
-        
-        Case ClientPacketID.CentinelReport          '/CENTINELA
-            Call HandleCentinelReport(Message, UserIndex)
-        
+
         Case ClientPacketID.GuildOnline             '/ONLINECLAN
             Call HandleGuildOnline(Message, UserIndex)
         
@@ -849,10 +826,7 @@ Public Sub Handle(ByVal Connection As Network_Client, ByVal Message As BinaryRea
         
         Case ClientPacketID.GMRequest               '/GM
             Call HandleGMRequest(Message, UserIndex)
-        
-        Case ClientPacketID.bugReport               '/_BUG
-            Call HandleBugReport(Message, UserIndex)
-        
+
         Case ClientPacketID.ChangeDescription       '/DESC
             Call HandleChangeDescription(Message, UserIndex)
         
@@ -1208,10 +1182,7 @@ Public Sub Handle(ByVal Connection As Network_Client, ByVal Message As BinaryRea
         
         Case ClientPacketID.AlterName               '/ANAME
             Call HandleAlterName(Message, UserIndex)
-        
-        Case ClientPacketID.ToggleCentinelActivated '/CENTINELAACTIVADO
-            Call HandleToggleCentinelActivated(Message, UserIndex)
-        
+
         Case ClientPacketID.DoBackUp                '/DOBACKUP
             Call HandleDoBackUp(Message, UserIndex)
         
@@ -1253,27 +1224,9 @@ Public Sub Handle(ByVal Connection As Network_Client, ByVal Message As BinaryRea
         
         Case ClientPacketID.ShowServerForm          '/SHOW INT
             Call HandleShowServerForm(Message, UserIndex)
-            
-        Case ClientPacketID.night                   '/NOCHE
-            Call HandleNight(Message, UserIndex)
-        
+    
         Case ClientPacketID.KickAllChars            '/ECHARTODOSPJS
             Call HandleKickAllChars(Message, UserIndex)
-
-        Case ClientPacketID.ReloadNPCs              '/RELOADNPCS
-            Call HandleReloadNPCs(Message, UserIndex)
-        
-        Case ClientPacketID.ReloadServerIni         '/RELOADSINI
-            Call HandleReloadServerIni(Message, UserIndex)
-        
-        Case ClientPacketID.ReloadSpells            '/RELOADHECHIZOS
-            Call HandleReloadSpells(Message, UserIndex)
-        
-        Case ClientPacketID.ReloadObjects           '/RELOADOBJ
-            Call HandleReloadObjects(Message, UserIndex)
-        
-        Case ClientPacketID.Restart                 '/REINICIAR
-            Call HandleRestart(Message, UserIndex)
 
         Case ClientPacketID.ChatColor               '/CHATCOLOR
             Call HandleChatColor(Message, UserIndex)
@@ -3046,66 +2999,6 @@ Private Sub HandleBankDeposit(ByVal Message As BinaryReader, ByVal UserIndex As 
 End Sub
 
 ''
-' Handles the "ForumPost" message.
-'
-' @param    userIndex The index of the user sending the message.
-
-Private Sub HandleForumPost(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-
-
-    With UserList(UserIndex)
-
-        
-        Dim file As String
-        Dim title As String
-        Dim msg As String
-        Dim postFile As String
-        
-        Dim Handle As Integer
-        Dim i As Long
-        Dim Count As Integer
-        
-        title = Message.ReadString16()
-        msg = Message.ReadString16()
-        
-        If .flags.TargetObj > 0 Then
-            file = App.Path & "\foros\" & UCase$(ObjData(.flags.TargetObj).ForoID) & ".for"
-            
-            If FileExist(file, vbNormal) Then
-                Count = val(GetVar(file, "INFO", "CantMSG"))
-                
-                'If there are too many messages, delete the forum
-                If Count > MAX_MENSAJES_FORO Then
-                    For i = 1 To Count
-                        Kill App.Path & "\foros\" & UCase$(ObjData(.flags.TargetObj).ForoID) & i & ".for"
-                    Next i
-                    Kill App.Path & "\foros\" & UCase$(ObjData(.flags.TargetObj).ForoID) & ".for"
-                    Count = 0
-                End If
-            Else
-                'Starting the forum....
-                Count = 0
-            End If
-            
-            Handle = FreeFile()
-            postFile = Left$(file, Len(file) - 4) & CStr(Count + 1) & ".for"
-            
-            'Create file
-            Open postFile For Output As Handle
-            Print #Handle, title
-            Print #Handle, msg
-            Close #Handle
-            
-            'Update post count
-            Call WriteVar(file, "INFO", "CantMSG", Count + 1)
-        End If
-
-    End With
-
-End Sub
-
-''
 ' Handles the "MoveSpell" message.
 '
 ' @param    userIndex The index of the user sending the message.
@@ -4632,22 +4525,6 @@ Private Sub HandlePartyMessage(ByVal Message As BinaryReader, ByVal UserIndex As
 End Sub
 
 ''
-' Handles the "CentinelReport" message.
-'
-' @param    userIndex The index of the user sending the message.
-
-Private Sub HandleCentinelReport(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-
-    
-    With UserList(UserIndex)
-
-        
-        Call CentinelaCheckClave(UserIndex, Message.ReadInt())
-    End With
-End Sub
-
-''
 ' Handles the "GuildOnline" message.
 '
 ' @param    userIndex The index of the user sending the message.
@@ -4754,39 +4631,6 @@ Private Sub HandleGMRequest(ByVal Message As BinaryReader, ByVal UserIndex As In
             Call WriteConsoleMsg(UserIndex, "Ya habías mandado un mensaje, tu mensaje ha sido movido al final de la cola de mensajes.", FontTypeNames.FONTTYPE_INFO)
         End If
     End With
-End Sub
-
-''
-' Handles the "BugReport" message.
-'
-' @param    userIndex The index of the user sending the message.
-
-Private Sub HandleBugReport(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-
-
-    With UserList(UserIndex)
-        
-        
-        Dim N As Integer
-        
-        
-        
-        
-        Dim bugReport As String
-        
-        bugReport = Message.ReadString16()
-        
-        N = FreeFile
-        Open App.Path & "\LOGS\BUGs.log" For Append Shared As N
-        Print #N, "Usuario:" & .name & "  Fecha:" & Date & "    Hora:" & time
-        Print #N, "BUG:"
-        Print #N, bugReport
-        Print #N, "########################################################################"
-        Close #N
-
-    End With
-
 End Sub
 
 ''
@@ -5984,10 +5828,6 @@ Private Sub HandleWorking(ByVal Message As BinaryReader, ByVal UserIndex As Inte
         For i = 1 To LastUser
             If UserList(i).flags.UserLogged And UserList(i).Counters.Trabajando > 0 Then
                 users = users & ", " & UserList(i).name
-                
-                ' Display the user being checked by the centinel
-                If modCentinela.Centinela.RevisandoUserIndex = i Then _
-                    users = users & " (*)"
             End If
         Next i
         
@@ -8667,100 +8507,6 @@ Public Sub HandleCheckSlot(ByVal Message As BinaryReader, ByVal UserIndex As Int
 End Sub
 
 ''
-' Handles the "Restart" message.
-'
-' @param    userIndex The index of the user sending the message.
-
-Public Sub HandleRestart(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-    With UserList(UserIndex)
-
-    
-        If .flags.Privilegios And (PlayerType.User Or PlayerType.Consejero Or PlayerType.SemiDios) Then Exit Sub
-        If UCase$(.name) <> "MARAXUS" Then Exit Sub
-        
-        'time and Time BUG!
-        Call LogGM(.name, .name & " reinicio el mundo")
-        
-        Call ReiniciarServidor(True)
-    End With
-End Sub
-
-''
-' Handles the "ReloadObjects" message.
-'
-' @param    userIndex The index of the user sending the message.
-
-Public Sub HandleReloadObjects(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-    With UserList(UserIndex)
-
-        
-        If .flags.Privilegios And (PlayerType.User Or PlayerType.Consejero Or PlayerType.SemiDios Or PlayerType.RoleMaster) Then Exit Sub
-        
-        Call LogGM(.name, .name & " ha recargado a los objetos.")
-        
-        Call LoadOBJData
-    End With
-End Sub
-
-''
-' Handles the "ReloadSpells" message.
-'
-' @param    userIndex The index of the user sending the message.
-
-Public Sub HandleReloadSpells(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-    With UserList(UserIndex)
-
-        
-        If .flags.Privilegios And (PlayerType.User Or PlayerType.Consejero Or PlayerType.SemiDios Or PlayerType.RoleMaster) Then Exit Sub
-        
-        Call LogGM(.name, .name & " ha recargado los hechizos.")
-        
-        Call CargarHechizos
-    End With
-End Sub
-
-''
-' Handle the "ReloadServerIni" message.
-'
-' @param userIndex The index of the user sending the message
-
-Public Sub HandleReloadServerIni(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-    With UserList(UserIndex)
-
-        
-        If .flags.Privilegios And (PlayerType.User Or PlayerType.Consejero Or PlayerType.SemiDios Or PlayerType.RoleMaster) Then Exit Sub
-        
-        Call LogGM(.name, .name & " ha recargado los INITs.")
-        
-        Call LoadSini
-    End With
-End Sub
-
-''
-' Handle the "ReloadNPCs" message
-'
-' @param userIndex The index of the user sending the message
-
-Public Sub HandleReloadNPCs(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-    With UserList(UserIndex)
-
-        
-        If .flags.Privilegios And (PlayerType.User Or PlayerType.Consejero Or PlayerType.SemiDios Or PlayerType.RoleMaster) Then Exit Sub
-         
-        Call LogGM(.name, .name & " ha recargado los NPCs.")
-    
-        Call CargaNpcsDat
-    
-        Call WriteConsoleMsg(UserIndex, "Npcs.dat recargado.", FontTypeNames.FONTTYPE_INFO)
-    End With
-End Sub
-
-''
 ' Handle the "KickAllChars" message
 '
 ' @param userIndex The index of the user sending the message
@@ -8775,31 +8521,6 @@ Public Sub HandleKickAllChars(ByVal Message As BinaryReader, ByVal UserIndex As 
         Call LogGM(.name, .name & " ha echado a todos los personajes.")
         
         Call EcharPjsNoPrivilegiados
-    End With
-End Sub
-
-''
-' Handle the "Night" message
-'
-' @param userIndex The index of the user sending the message
-
-Public Sub HandleNight(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-    With UserList(UserIndex)
-
-        
-        If .flags.Privilegios And (PlayerType.User Or PlayerType.Consejero Or PlayerType.SemiDios) Then Exit Sub
-        If UCase$(.name) <> "MARAXUS" Then Exit Sub
-        
-        DeNoche = Not DeNoche
-        
-        Dim i As Long
-        
-        For i = 1 To NumUsers
-            If UserList(i).flags.UserLogged And UserList(i).ConnID > -1 Then
-                Call EnviarNoche(i)
-            End If
-        Next i
     End With
 End Sub
 
@@ -9153,39 +8874,6 @@ Public Sub HandleDoBackUp(ByVal Message As BinaryReader, ByVal UserIndex As Inte
         Call LogGM(.name, .name & " ha hecho un backup")
         
         Call ES.DoBackUp 'Sino lo confunde con la id del paquete
-    End With
-End Sub
-
-''
-' Handle the "ToggleCentinelActivated" message
-'
-' @param userIndex The index of the user sending the message
-
-Public Sub HandleToggleCentinelActivated(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-    With UserList(UserIndex)
-
-        
-        If .flags.Privilegios And (PlayerType.User Or PlayerType.Consejero Or PlayerType.SemiDios) Then Exit Sub
-        
-        centinelaActivado = Not centinelaActivado
-        
-        With Centinela
-            .RevisandoUserIndex = 0
-            .clave = 0
-            .TiempoRestante = 0
-        End With
-    
-        If CentinelaNPCIndex Then
-            Call QuitarNPC(CentinelaNPCIndex)
-            CentinelaNPCIndex = 0
-        End If
-        
-        If centinelaActivado Then
-            Call SendData(SendTarget.ToAdmins, 0, PrepareMessageConsoleMsg("El centinela ha sido activado.", FontTypeNames.FONTTYPE_SERVER))
-        Else
-            Call SendData(SendTarget.ToAdmins, 0, PrepareMessageConsoleMsg("El centinela ha sido desactivado.", FontTypeNames.FONTTYPE_SERVER))
-        End If
     End With
 End Sub
 
@@ -10586,9 +10274,9 @@ End Sub
 ' @param    loops Number of repets for the midi.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WritePlayMidi(ByVal UserIndex As Integer, ByVal midi As Byte, Optional ByVal loops As Integer = -1)
+Public Sub WritePlayMidi(ByVal UserIndex As Integer, ByVal midi As Byte)
 
-    Call modSendData.SendData(ToUser, UserIndex, PrepareMessagePlayMidi(midi, loops))
+    Call modSendData.SendData(ToUser, UserIndex, PrepareMessagePlayMidi(midi))
 End Sub
 
 ''
@@ -11673,23 +11361,6 @@ Public Sub WriteChangeUserTradeSlot(ByVal UserIndex As Integer, ByVal ObjIndex A
 End Sub
 
 ''
-' Writes the "SendNight" message to the given user's outgoing data buffer.
-'
-' @param    UserIndex User to which the message is intended.
-' @remarks  The data is not actually sent until the buffer is properly flushed.
-
-Public Sub WriteSendNight(ByVal UserIndex As Integer, ByVal night As Boolean)
-
-'Author: Fredy Horacio Treboux (liquid)
-'Last Modification: 01/08/07
-        Call Writer_.WriteInt(ServerPacketID.SendNight)
-        Call Writer_.WriteBool(night)
-
-
-    Call modSendData.SendData(ToUser, UserIndex, Writer_)
-End Sub
-
-''
 ' Writes the "SpawnList" message to the given user's outgoing data buffer.
 '
 ' @param    UserIndex User to which the message is intended.
@@ -11991,13 +11662,12 @@ End Function
 ' @return   The formated message ready to be writen as is on outgoing buffers.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Function PrepareMessagePlayMidi(ByVal midi As Byte, Optional ByVal loops As Integer = -1) As BinaryWriter
+Public Function PrepareMessagePlayMidi(ByVal midi As Byte) As BinaryWriter
 
-'Prepares the "GuildChat" message and returns it
+
         Call Writer_.WriteInt(ServerPacketID.PlayMidi)
         Call Writer_.WriteInt(midi)
-        Call Writer_.WriteInt(loops)
-        
+
         
 
 

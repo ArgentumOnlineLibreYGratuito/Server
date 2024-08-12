@@ -327,16 +327,6 @@ End Sub
 
 Private Sub Auditoria_Timer()
 On Error GoTo errhand
-Static centinelSecs As Byte
-
-centinelSecs = centinelSecs + 1
-
-If centinelSecs = 5 Then
-    'Every 5 seconds, we try to call the player's attention so it will report the code.
-    Call modCentinela.CallUserAttention
-    
-    centinelSecs = 0
-End If
 
 Call PasarSegundo 'sistema de desconexion de 10 segs
 
@@ -383,8 +373,6 @@ Minutos = Minutos + 1
 Call ModAreas.AreasOptimizacion
 '¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
 
-'Actualizamos el centinela
-Call modCentinela.PasarMinutoCentinela
 
 If Minutos = MinutosWs - 1 Then
     Call SendData(SendTarget.ToAll, 0, PrepareMessageConsoleMsg("Worldsave en 1 minuto ...", FontTypeNames.FONTTYPE_VENENO))

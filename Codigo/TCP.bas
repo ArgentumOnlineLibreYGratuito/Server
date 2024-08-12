@@ -370,13 +370,7 @@ On Error GoTo Errhandler
     If UserList(UserIndex).ConnID <> -1 Then
         Call CloseSocketSL(UserIndex)
     End If
-    
-    'Es el mismo user al que está revisando el centinela??
-    'IMPORTANTE!!! hacerlo antes de resetear así todavía sabemos el nombre del user
-    ' y lo podemos loguear
-    If Centinela.RevisandoUserIndex = UserIndex Then _
-        Call modCentinela.CentinelaUserLogout
-    
+
     'mato los comercios seguros
     If UserList(UserIndex).ComUsu.DestUsu > 0 Then
         If UserList(UserList(UserIndex).ComUsu.DestUsu).flags.UserLogged Then
@@ -1071,7 +1065,6 @@ Sub ResetUserFlags(ByVal UserIndex As Integer)
 'Last modified: 06/28/2008
 'Resetea todos los valores generales y las stats
 '03/15/2006 Maraxus - Uso de With para mayor performance y claridad.
-'03/29/2006 Maraxus - Reseteo el CentinelaOK también.
 '06/28/2008 NicoNZ - Agrego el flag Inmovilizado
 '*************************************************
     With UserList(UserIndex).flags
@@ -1117,7 +1110,6 @@ Sub ResetUserFlags(ByVal UserIndex As Integer)
         .CountSH = 0
         .EstaEmpo = 0
         .Silenciado = 0
-        .CentinelaOK = False
         .AdminPerseguible = False
     End With
 End Sub
@@ -1287,11 +1279,6 @@ Exit Sub
 Errhandler:
 Call LogError("Error en CloseUser. Número " & Err.Number & " Descripción: " & Err.Description)
 
-End Sub
-
-Public Sub EnviarNoche(ByVal UserIndex As Integer)
-    Call WriteSendNight(UserIndex, IIf(DeNoche And (MapInfo(UserList(UserIndex).Pos.map).Zona = Campo Or MapInfo(UserList(UserIndex).Pos.map).Zona = Ciudad), True, False))
-    Call WriteSendNight(UserIndex, IIf(DeNoche, True, False))
 End Sub
 
 Public Sub EcharPjsNoPrivilegiados()

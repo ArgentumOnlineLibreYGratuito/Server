@@ -336,7 +336,6 @@ Call SendData(SendTarget.ToAll, 0, PrepareMessagePauseToggle())
 Call LimpiarMundo
 Call WorldSave
 Call modGuilds.v_RutinaElecciones
-Call ResetCentinelaInfo     'Reseteamos al centinela
 
 
 Call SendData(SendTarget.ToAll, 0, PrepareMessagePauseToggle())

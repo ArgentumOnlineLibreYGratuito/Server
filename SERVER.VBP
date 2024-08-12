@@ -48,7 +48,6 @@ Module=modGuilds; Codigo\modGuilds.bas
 Module=SecurityIp; Codigo\SecurityIp.bas
 Class=diccionario; Codigo\clsdicc.cls
 Module=ModAreas; Codigo\ModAreas.bas
-Module=modCentinela; Codigo\modCentinela.bas
 Class=clsIniReader; Codigo\clsIniReader.cls
 Module=modSendData; Codigo\modSendData.bas
 Module=Characters; Codigo\Characters.bas

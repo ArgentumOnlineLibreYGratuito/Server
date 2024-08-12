@@ -775,9 +775,6 @@ If InMapBounds(map, X, Y) Then
             
             If Len(Npclist(TempCharIndex).desc) > 1 Then
                 Call WriteChatOverHead(UserIndex, Npclist(TempCharIndex).desc, Npclist(TempCharIndex).Char.CharIndex, vbWhite)
-            ElseIf TempCharIndex = CentinelaNPCIndex Then
-                'Enviamos nuevamente el texto del centinela según quien pregunta
-                Call modCentinela.CentinelaSendClave(UserIndex)
             Else
                 If Npclist(TempCharIndex).MaestroUser > 0 Then
                     Call WriteConsoleMsg(UserIndex, estatus & Npclist(TempCharIndex).name & " es mascota de " & UserList(Npclist(TempCharIndex).MaestroUser).name, FontTypeNames.FONTTYPE_INFO)

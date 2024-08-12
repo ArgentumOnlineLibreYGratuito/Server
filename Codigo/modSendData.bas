@@ -71,11 +71,10 @@ On Error GoTo OnException
             If UserList(sndIndex).ConnID <> -1 Then
                 Call UserList(sndIndex).Connection.Write(sndData)
             End If
-            Exit Sub
+
         Case SendTarget.ToPCArea
             Call SendToUserArea(sndIndex, sndData)
-            Exit Sub
-        
+
         Case SendTarget.ToAdmins
             For LoopC = 1 To LastUser
                 If UserList(LoopC).ConnID <> -1 Then
@@ -84,8 +83,7 @@ On Error GoTo OnException
                    End If
                 End If
             Next LoopC
-            Exit Sub
-        
+
         Case SendTarget.ToAll
             For LoopC = 1 To LastUser
                 If UserList(LoopC).ConnID <> -1 Then
@@ -94,8 +92,7 @@ On Error GoTo OnException
                     End If
                 End If
             Next LoopC
-            Exit Sub
-        
+
         Case SendTarget.ToAllButIndex
             For LoopC = 1 To LastUser
                 If (UserList(LoopC).ConnID <> -1) And (LoopC <> sndIndex) Then
@@ -104,16 +101,13 @@ On Error GoTo OnException
                     End If
                 End If
             Next LoopC
-            Exit Sub
-        
+
         Case SendTarget.toMap
             Call SendToMap(sndIndex, sndData)
-            Exit Sub
-          
+
         Case SendTarget.ToMapButIndex
             Call SendToMapButIndex(sndIndex, sndData)
-            Exit Sub
-        
+
         Case SendTarget.ToGuildMembers
             LoopC = modGuilds.m_Iterador_ProximoUserIndex(sndIndex)
             While LoopC > 0
@@ -122,32 +116,25 @@ On Error GoTo OnException
                 End If
                 LoopC = modGuilds.m_Iterador_ProximoUserIndex(sndIndex)
             Wend
-            Exit Sub
-        
+
         Case SendTarget.ToDeadArea
             Call SendToDeadUserArea(sndIndex, sndData)
-            Exit Sub
-        
+
         Case SendTarget.ToPCAreaButIndex
             Call SendToUserAreaButindex(sndIndex, sndData)
-            Exit Sub
-        
+
         Case SendTarget.ToClanArea
             Call SendToUserGuildArea(sndIndex, sndData)
-            Exit Sub
-        
+
         Case SendTarget.ToPartyArea
             Call SendToUserPartyArea(sndIndex, sndData)
-            Exit Sub
-        
+
         Case SendTarget.ToAdminsAreaButConsejeros
             Call SendToAdminsButConsejerosArea(sndIndex, sndData)
-            Exit Sub
-        
+
         Case SendTarget.ToNPCArea
             Call SendToNpcArea(sndIndex, sndData)
-            Exit Sub
-        
+
         Case SendTarget.ToDiosesYclan
             LoopC = modGuilds.m_Iterador_ProximoUserIndex(sndIndex)
             While LoopC > 0
@@ -164,9 +151,7 @@ On Error GoTo OnException
                 End If
                 LoopC = modGuilds.Iterador_ProximoGM(sndIndex)
             Wend
-            
-            Exit Sub
-        
+
         Case SendTarget.ToConsejo
             For LoopC = 1 To LastUser
                 If (UserList(LoopC).ConnID <> -1) Then
@@ -175,8 +160,7 @@ On Error GoTo OnException
                     End If
                 End If
             Next LoopC
-            Exit Sub
-        
+ 
         Case SendTarget.ToConsejoCaos
             For LoopC = 1 To LastUser
                 If (UserList(LoopC).ConnID <> -1) Then
@@ -185,8 +169,7 @@ On Error GoTo OnException
                     End If
                 End If
             Next LoopC
-            Exit Sub
-        
+
         Case SendTarget.ToRolesMasters
             For LoopC = 1 To LastUser
                 If (UserList(LoopC).ConnID <> -1) Then
@@ -195,8 +178,7 @@ On Error GoTo OnException
                     End If
                 End If
             Next LoopC
-            Exit Sub
-        
+
         Case SendTarget.ToCiudadanos
             For LoopC = 1 To LastUser
                 If (UserList(LoopC).ConnID <> -1) Then
@@ -205,8 +187,7 @@ On Error GoTo OnException
                     End If
                 End If
             Next LoopC
-            Exit Sub
-        
+
         Case SendTarget.ToCriminales
             For LoopC = 1 To LastUser
                 If (UserList(LoopC).ConnID <> -1) Then
@@ -215,8 +196,7 @@ On Error GoTo OnException
                     End If
                 End If
             Next LoopC
-            Exit Sub
-        
+
         Case SendTarget.ToReal
             For LoopC = 1 To LastUser
                 If (UserList(LoopC).ConnID <> -1) Then
@@ -225,8 +205,7 @@ On Error GoTo OnException
                     End If
                 End If
             Next LoopC
-            Exit Sub
-        
+
         Case SendTarget.ToCaos
             For LoopC = 1 To LastUser
                 If (UserList(LoopC).ConnID <> -1) Then
@@ -235,8 +214,7 @@ On Error GoTo OnException
                     End If
                 End If
             Next LoopC
-            Exit Sub
-        
+
         Case SendTarget.ToCiudadanosYRMs
             For LoopC = 1 To LastUser
                 If (UserList(LoopC).ConnID <> -1) Then
@@ -245,8 +223,7 @@ On Error GoTo OnException
                     End If
                 End If
             Next LoopC
-            Exit Sub
-        
+
         Case SendTarget.ToCriminalesYRMs
             For LoopC = 1 To LastUser
                 If (UserList(LoopC).ConnID <> -1) Then
@@ -255,8 +232,7 @@ On Error GoTo OnException
                     End If
                 End If
             Next LoopC
-            Exit Sub
-        
+
         Case SendTarget.ToRealYRMs
             For LoopC = 1 To LastUser
                 If (UserList(LoopC).ConnID <> -1) Then
@@ -265,8 +241,7 @@ On Error GoTo OnException
                     End If
                 End If
             Next LoopC
-            Exit Sub
-        
+
         Case SendTarget.ToCaosYRMs
             For LoopC = 1 To LastUser
                 If (UserList(LoopC).ConnID <> -1) Then
@@ -275,7 +250,6 @@ On Error GoTo OnException
                     End If
                 End If
             Next LoopC
-            Exit Sub
     End Select
 
 OnException:

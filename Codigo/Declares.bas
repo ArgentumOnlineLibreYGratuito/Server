@@ -539,7 +539,6 @@ Public Const FONTTYPE_CONSEJO As String = "~130~130~255~1~0"
 Public Const FONTTYPE_CONSEJOCAOS As String = "~255~60~00~1~0"
 Public Const FONTTYPE_CONSEJOVesA As String = "~0~200~255~1~0"
 Public Const FONTTYPE_CONSEJOCAOSVesA As String = "~255~50~0~1~0"
-Public Const FONTTYPE_CENTINELA As String = "~0~255~0~1~0"
 
 'Estadisticas
 Public Const STAT_MAXELV As Byte = 255
@@ -1014,8 +1013,7 @@ Public Type UserFlags
     Silenciado As Byte
     
     Mimetizado As Byte
-    
-    CentinelaOK As Boolean 'Centinela
+
 End Type
 
 Public Type UserCounters
@@ -1059,8 +1057,8 @@ Public Type UserCounters
     TimerGolpeMagia As Long
     
     
-    Trabajando As Long  ' Para el centinela
-    Ocultando As Long   ' Unico trabajo no revisado por el centinela
+    Trabajando As Long
+    Ocultando As Long
 End Type
 
 'Cosas faccionarias.
