@@ -849,7 +849,6 @@ Public Type UserFlags
     Comerciando As Boolean '¿Esta comerciando?
     UserLogged As Boolean '¿Esta online?
     Meditando As Boolean
-    ModoCombate As Boolean
     Descuento As String
     Hambre As Byte
     Sed As Byte

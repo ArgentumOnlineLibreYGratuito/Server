@@ -835,11 +835,6 @@ End If
 
 If Obj.OBJType = eOBJType.otWeapon Then
     If Obj.proyectil = 1 Then
-        If Not UserList(UserIndex).flags.ModoCombate Then
-            Call WriteConsoleMsg(UserIndex, "No estás en modo de combate, presiona la tecla ""C"" para pasar al modo combate.", FontTypeNames.FONTTYPE_INFO)
-            Exit Sub
-        End If
-        
         'valido para evitar el flood pero no bloqueo. El bloqueo se hace en WLC con proyectiles.
         If Not IntervaloPermiteUsar(UserIndex, False) Then Exit Sub
     Else
@@ -907,11 +902,6 @@ Select Case Obj.OBJType
         
         
         If ObjData(ObjIndex).proyectil = 1 Then
-            'liquid: muevo esto aca adentro, para que solo pida modo combate si estamos por usar el arco
-            If Not UserList(UserIndex).flags.ModoCombate Then
-                Call WriteConsoleMsg(UserIndex, "No estás en modo de combate, presiona la tecla ""C"" para pasar al modo combate.", FontTypeNames.FONTTYPE_INFO)
-                Exit Sub
-            End If
             Call WriteWorkRequestTarget(UserIndex, Proyectiles)
         Else
             If UserList(UserIndex).flags.TargetObj = Leña Then

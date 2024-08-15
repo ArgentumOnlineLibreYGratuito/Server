@@ -353,10 +353,6 @@ Sub HandleHechizoTerreno(ByVal UserIndex As Integer, ByVal uh As Integer)
 'Last Modification: 05/01/08
 '
 '***************************************************
-If UserList(UserIndex).flags.ModoCombate = False Then
-    Call WriteConsoleMsg(UserIndex, "Debes estar en modo de combate para lanzar este hechizo.", FontTypeNames.FONTTYPE_INFO)
-    Exit Sub
-End If
 
 Dim b As Boolean
 
@@ -392,10 +388,6 @@ Sub HandleHechizoUsuario(ByVal UserIndex As Integer, ByVal uh As Integer)
 'Last Modification: 05/01/08
 '
 '***************************************************
-If UserList(UserIndex).flags.ModoCombate = False Then
-    Call WriteConsoleMsg(UserIndex, "Debes estar en modo de combate para lanzar este hechizo.", FontTypeNames.FONTTYPE_INFO)
-    Exit Sub
-End If
 
 Dim b As Boolean
 Select Case Hechizos(uh).Tipo

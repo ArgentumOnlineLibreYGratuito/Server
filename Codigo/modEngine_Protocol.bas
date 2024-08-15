@@ -555,10 +555,7 @@ Public Sub Handle(ByVal Connection As Network_Client, ByVal Message As BinaryRea
         
         Case ClientPacketID.PickUp                  'AG
             Call HandlePickUp(Message, UserIndex)
-        
-        Case ClientPacketID.CombatModeToggle        'TAB        - SHOULD BE HANLDED JUST BY THE CLIENT!!
-            Call HanldeCombatModeToggle(Message, UserIndex)
-        
+
         Case ClientPacketID.SafeToggle              '/SEG & SEG  (SEG's behaviour has to be coded in the client)
             Call HandleSafeToggle(Message, UserIndex)
         
@@ -1637,13 +1634,7 @@ Private Sub HandleAttack(ByVal Message As BinaryReader, ByVal UserIndex As Integ
             Call WriteConsoleMsg(UserIndex, "¡¡No podes atacar a nadie porque estas muerto!!.", FontTypeNames.FONTTYPE_INFO)
             Exit Sub
         End If
-        
-        'If not in combat mode, can't attack
-        If Not .flags.ModoCombate Then
-            Call WriteConsoleMsg(UserIndex, "No estás en modo de combate, presiona la tecla ""C"" para pasar al modo combate.", FontTypeNames.FONTTYPE_INFO)
-            Exit Sub
-        End If
-        
+
         'If user meditates, can't attack
         If .flags.Meditando Then
             Exit Sub
@@ -1700,26 +1691,6 @@ Private Sub HandlePickUp(ByVal Message As BinaryReader, ByVal UserIndex As Integ
         End If
         
         Call GetObj(UserIndex)
-    End With
-End Sub
-
-''
-' Handles the "CombatModeToggle" message.
-'
-' @param    userIndex The index of the user sending the message.
-
-Private Sub HanldeCombatModeToggle(ByVal Message As BinaryReader, ByVal UserIndex As Integer)
-
-    With UserList(UserIndex)
-
-        
-        If .flags.ModoCombate Then
-            Call WriteConsoleMsg(UserIndex, "Has salido del modo de combate.", FontTypeNames.FONTTYPE_INFO)
-        Else
-            Call WriteConsoleMsg(UserIndex, "Has pasado al modo de combate.", FontTypeNames.FONTTYPE_INFO)
-        End If
-        
-        .flags.ModoCombate = Not .flags.ModoCombate
     End With
 End Sub
 

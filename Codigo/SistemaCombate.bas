@@ -1240,13 +1240,6 @@ If UserList(attackerIndex).flags.Privilegios And PlayerType.Consejero Then
     Exit Function
 End If
 
-'Estas en modo Combate?
-If Not UserList(attackerIndex).flags.ModoCombate Then
-    Call WriteConsoleMsg(attackerIndex, "Debes estar en modo de combate poder atacar al NPC.", FontTypeNames.FONTTYPE_INFO)
-    PuedeAtacarNPC = False
-    Exit Function
-End If
-
 'Es una criatura atacable?
 If Npclist(NpcIndex).Attackable = 0 Then
 'No es una criatura atacable

@@ -86,8 +86,12 @@ End Sub
 
 Private Sub Network_OnRecv(ByVal Connection As Network_Client, ByVal Message As BinaryReader)
     
-    Call modEngine_Protocol.Decode(Connection, Message)
-    Call modEngine_Protocol.Handle(Connection, Message)
+    While (Message.GetAvailable() > 0)
+    
+        Call modEngine_Protocol.Decode(Connection, Message)
+        Call modEngine_Protocol.Handle(Connection, Message)
+    
+    Wend
     
 End Sub
 
