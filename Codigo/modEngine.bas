@@ -47,9 +47,9 @@ End Sub
 Public Sub NetListen(ByVal Address As String, ByVal Port As Long)
     
     Set NetProtocol_ = New Network_Protocol
-    Call NetProtocol_.Attach(AddressOf Network_OnAttach, AddressOf Network_OnDetach, AddressOf Network_OnRecv, AddressOf Network_OnSend)
+    Call NetProtocol_.Attach(AddressOf Network_OnAttach, AddressOf Network_OnDetach, AddressOf Network_OnRecv, AddressOf Network_OnSend, AddressOf Network_OnError)
     
-    Set NetListener_ = Kernel.Network.Listen(Address, Port, 1000)
+    Set NetListener_ = Kernel.Network.Listen(Address, Port)
     Call NetListener_.SetProtocol(NetProtocol_)
     
     Call modEngine_Protocol.Initialize

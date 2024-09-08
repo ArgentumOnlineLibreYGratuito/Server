@@ -166,7 +166,6 @@ Private Enum ClientPacketID
     RequestPositionUpdate                        'RPU
     Attack                                       'AT
     PickUp                                       'AG
-    CombatModeToggle                             'TAB        - SHOULD BE HANLDED JUST BY THE CLIENT!!
     SafeToggle                                   '/SEG & SEG  (SEG's behaviour has to be coded in the client)
     RequestGuildLeaderInfo                       'GLINFO
     RequestAtributes                             'ATR
@@ -1221,8 +1220,8 @@ Private Sub HandleLoginExistingChar(ByVal Message As BinaryReader, ByVal UserInd
     'Convert version number to string
     version = CStr(Message.ReadInt()) & "." & CStr(Message.ReadInt()) & "." & CStr(Message.ReadInt())
 
-    UserName = Message.ReadString8()
-    Password = Message.ReadString8()
+    UserName = Message.ReadString16()
+    Password = Message.ReadString16()
     
     If Not AsciiValidos(UserName) Then
         Call WriteErrorMsg(UserIndex, "Nombre invalido.")
@@ -1313,9 +1312,9 @@ Private Sub HandleLoginNewChar(ByVal Message As BinaryReader, ByVal UserIndex As
     'Convert version number to string
     version = CStr(Message.ReadInt()) & "." & CStr(Message.ReadInt()) & "." & CStr(Message.ReadInt())
 
-    UserName = Message.ReadString8()
-    Password = Message.ReadString8()
-    mail = Message.ReadString8()
+    UserName = Message.ReadString16()
+    Password = Message.ReadString16()
+    mail = Message.ReadString16()
 
     race = Message.ReadInt()
     gender = Message.ReadInt()
@@ -1345,7 +1344,7 @@ Private Sub HandleTalk(ByVal Message As BinaryReader, ByVal UserIndex As Integer
         
         Dim chat As String
         
-        chat = Message.ReadString8()
+        chat = Message.ReadString16()
         
         '[Consejeros & GMs]
         If .flags.Privilegios And (PlayerType.Consejero Or PlayerType.SemiDios) Then
@@ -1390,7 +1389,7 @@ Private Sub HandleYell(ByVal Message As BinaryReader, ByVal UserIndex As Integer
         
         Dim chat As String
         
-        chat = Message.ReadString8()
+        chat = Message.ReadString16()
         
         If UserList(UserIndex).flags.Muerto = 1 Then
             Call WriteConsoleMsg(UserIndex, "¡¡Estas muerto!! Los muertos no pueden comunicarse con el mundo de los vivos.", FontTypeNames.FONTTYPE_INFO)
@@ -1442,7 +1441,7 @@ Private Sub HandleWhisper(ByVal Message As BinaryReader, ByVal UserIndex As Inte
         Dim targetPriv As PlayerType
         
         targetCharIndex = Message.ReadInt()
-        chat = Message.ReadString8()
+        chat = Message.ReadString16()
         
         targetUserIndex = CharIndexToUserIndex(targetCharIndex)
         
@@ -2530,10 +2529,10 @@ Private Sub HandleCreateNewGuild(ByVal Message As BinaryReader, ByVal UserIndex 
         Dim codex() As String
         Dim errorStr As String
         
-        desc = Message.ReadString8()
-        GuildName = Message.ReadString8()
-        site = Message.ReadString8()
-        codex = Split(Message.ReadString8(), SEPARATOR)
+        desc = Message.ReadString16()
+        GuildName = Message.ReadString16()
+        site = Message.ReadString16()
+        codex = Split(Message.ReadString16(), SEPARATOR)
         
         If modGuilds.CrearNuevoClan(UserIndex, desc, GuildName, site, codex, .FundandoGuildAlineacion, errorStr) Then
             Call SendData(SendTarget.ToAll, UserIndex, PrepareMessageConsoleMsg(.name & " fundó el clan " & GuildName & " de alineación " & modGuilds.GuildAlignment(.guildIndex) & ".", FontTypeNames.FONTTYPE_GUILD))
@@ -2943,8 +2942,8 @@ Private Sub HandleClanCodexUpdate(ByVal Message As BinaryReader, ByVal UserIndex
         Dim desc As String
         Dim codex() As String
         
-        desc = Message.ReadString8()
-        codex = Split(Message.ReadString8(), SEPARATOR)
+        desc = Message.ReadString16()
+        codex = Split(Message.ReadString16(), SEPARATOR)
         
         Call modGuilds.ChangeCodexAndDesc(desc, codex, .guildIndex)
 
@@ -3057,7 +3056,7 @@ Private Sub HandleGuildAcceptPeace(ByVal Message As BinaryReader, ByVal UserInde
         Dim errorStr As String
         Dim otherClanIndex As String
         
-        guild = Message.ReadString8()
+        guild = Message.ReadString16()
         
         otherClanIndex = modGuilds.r_AceptarPropuestaDePaz(UserIndex, guild, errorStr)
         
@@ -3088,7 +3087,7 @@ Private Sub HandleGuildRejectAlliance(ByVal Message As BinaryReader, ByVal UserI
         Dim errorStr As String
         Dim otherClanIndex As String
         
-        guild = Message.ReadString8()
+        guild = Message.ReadString16()
         
         otherClanIndex = modGuilds.r_RechazarPropuestaDeAlianza(UserIndex, guild, errorStr)
         
@@ -3119,7 +3118,7 @@ Private Sub HandleGuildRejectPeace(ByVal Message As BinaryReader, ByVal UserInde
         Dim errorStr As String
         Dim otherClanIndex As String
         
-        guild = Message.ReadString8()
+        guild = Message.ReadString16()
         
         otherClanIndex = modGuilds.r_RechazarPropuestaDePaz(UserIndex, guild, errorStr)
         
@@ -3150,7 +3149,7 @@ Private Sub HandleGuildAcceptAlliance(ByVal Message As BinaryReader, ByVal UserI
         Dim errorStr As String
         Dim otherClanIndex As String
         
-        guild = Message.ReadString8()
+        guild = Message.ReadString16()
         
         otherClanIndex = modGuilds.r_AceptarPropuestaDeAlianza(UserIndex, guild, errorStr)
         
@@ -3181,8 +3180,8 @@ Private Sub HandleGuildOfferPeace(ByVal Message As BinaryReader, ByVal UserIndex
         Dim proposal As String
         Dim errorStr As String
         
-        guild = Message.ReadString8()
-        proposal = Message.ReadString8()
+        guild = Message.ReadString16()
+        proposal = Message.ReadString16()
         
         If modGuilds.r_ClanGeneraPropuesta(UserIndex, guild, RELACIONES_GUILD.PAZ, proposal, errorStr) Then
             Call WriteConsoleMsg(UserIndex, "Propuesta de paz enviada", FontTypeNames.FONTTYPE_GUILD)
@@ -3210,8 +3209,8 @@ Private Sub HandleGuildOfferAlliance(ByVal Message As BinaryReader, ByVal UserIn
         Dim proposal As String
         Dim errorStr As String
         
-        guild = Message.ReadString8()
-        proposal = Message.ReadString8()
+        guild = Message.ReadString16()
+        proposal = Message.ReadString16()
         
         If modGuilds.r_ClanGeneraPropuesta(UserIndex, guild, RELACIONES_GUILD.ALIADOS, proposal, errorStr) Then
             Call WriteConsoleMsg(UserIndex, "Propuesta de alianza enviada", FontTypeNames.FONTTYPE_GUILD)
@@ -3239,7 +3238,7 @@ Private Sub HandleGuildAllianceDetails(ByVal Message As BinaryReader, ByVal User
         Dim errorStr As String
         Dim details As String
         
-        guild = Message.ReadString8()
+        guild = Message.ReadString16()
         
         details = modGuilds.r_VerPropuesta(UserIndex, guild, RELACIONES_GUILD.ALIADOS, errorStr)
         
@@ -3269,7 +3268,7 @@ Private Sub HandleGuildPeaceDetails(ByVal Message As BinaryReader, ByVal UserInd
         Dim errorStr As String
         Dim details As String
         
-        guild = Message.ReadString8()
+        guild = Message.ReadString16()
         
         details = modGuilds.r_VerPropuesta(UserIndex, guild, RELACIONES_GUILD.PAZ, errorStr)
         
@@ -3298,7 +3297,7 @@ Private Sub HandleGuildRequestJoinerInfo(ByVal Message As BinaryReader, ByVal Us
         Dim User As String
         Dim details As String
         
-        User = Message.ReadString8()
+        User = Message.ReadString16()
         
         details = modGuilds.a_DetallesAspirante(UserIndex, User)
         
@@ -3352,7 +3351,7 @@ Private Sub HandleGuildDeclareWar(ByVal Message As BinaryReader, ByVal UserIndex
         Dim errorStr As String
         Dim otherGuildIndex As Integer
         
-        guild = Message.ReadString8()
+        guild = Message.ReadString16()
         
         otherGuildIndex = modGuilds.r_DeclararGuerra(UserIndex, guild, errorStr)
         
@@ -3382,7 +3381,7 @@ Private Sub HandleGuildNewWebsite(ByVal Message As BinaryReader, ByVal UserIndex
     With UserList(UserIndex)
 
         
-        Call modGuilds.ActualizarWebSite(UserIndex, Message.ReadString8())
+        Call modGuilds.ActualizarWebSite(UserIndex, Message.ReadString16())
 
     End With
 
@@ -3404,7 +3403,7 @@ Private Sub HandleGuildAcceptNewMember(ByVal Message As BinaryReader, ByVal User
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If Not modGuilds.a_AceptarAspirante(UserIndex, UserName, errorStr) Then
             Call WriteConsoleMsg(UserIndex, errorStr, FontTypeNames.FONTTYPE_GUILD)
@@ -3440,8 +3439,8 @@ Private Sub HandleGuildRejectNewMember(ByVal Message As BinaryReader, ByVal User
         Dim reason As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
-        reason = Message.ReadString8()
+        UserName = Message.ReadString16()
+        reason = Message.ReadString16()
         
         If Not modGuilds.a_RechazarAspirante(UserIndex, UserName, errorStr) Then
             Call WriteConsoleMsg(UserIndex, errorStr, FontTypeNames.FONTTYPE_GUILD)
@@ -3475,7 +3474,7 @@ Private Sub HandleGuildKickMember(ByVal Message As BinaryReader, ByVal UserIndex
         Dim UserName As String
         Dim guildIndex As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         guildIndex = modGuilds.m_EcharMiembroDeClan(UserIndex, UserName)
         
@@ -3502,7 +3501,7 @@ Private Sub HandleGuildUpdateNews(ByVal Message As BinaryReader, ByVal UserIndex
     With UserList(UserIndex)
 
         
-        Call modGuilds.ActualizarNoticias(UserIndex, Message.ReadString8())
+        Call modGuilds.ActualizarNoticias(UserIndex, Message.ReadString16())
 
     End With
 
@@ -3520,7 +3519,7 @@ Private Sub HandleGuildMemberInfo(ByVal Message As BinaryReader, ByVal UserIndex
     With UserList(UserIndex)
 
         
-        Call modGuilds.SendDetallesPersonaje(UserIndex, Message.ReadString8())
+        Call modGuilds.SendDetallesPersonaje(UserIndex, Message.ReadString16())
 
     End With
 
@@ -3562,8 +3561,8 @@ Private Sub HandleGuildRequestMembership(ByVal Message As BinaryReader, ByVal Us
         Dim application As String
         Dim errorStr As String
         
-        guild = Message.ReadString8()
-        application = Message.ReadString8()
+        guild = Message.ReadString16()
+        application = Message.ReadString16()
         
         If Not modGuilds.a_NuevoAspirante(UserIndex, guild, application, errorStr) Then
            Call WriteConsoleMsg(UserIndex, errorStr, FontTypeNames.FONTTYPE_GUILD)
@@ -3587,7 +3586,7 @@ Private Sub HandleGuildRequestDetails(ByVal Message As BinaryReader, ByVal UserI
     With UserList(UserIndex)
 
         
-        Call modGuilds.SendGuildDetails(UserIndex, Message.ReadString8())
+        Call modGuilds.SendGuildDetails(UserIndex, Message.ReadString16())
 
     End With
 
@@ -4367,7 +4366,7 @@ Private Sub HandleGuildMessage(ByVal Message As BinaryReader, ByVal UserIndex As
         
         Dim chat As String
         
-        chat = Message.ReadString8()
+        chat = Message.ReadString16()
         
         If LenB(chat) <> 0 Then
 
@@ -4396,7 +4395,7 @@ Private Sub HandlePartyMessage(ByVal Message As BinaryReader, ByVal UserIndex As
         
         Dim chat As String
         
-        chat = Message.ReadString8()
+        chat = Message.ReadString16()
         
         If LenB(chat) <> 0 Then
    
@@ -4457,7 +4456,7 @@ Private Sub HandleCouncilMessage(ByVal Message As BinaryReader, ByVal UserIndex 
         
         Dim chat As String
         
-        chat = Message.ReadString8()
+        chat = Message.ReadString16()
         
         If LenB(chat) <> 0 Then
 
@@ -4486,7 +4485,7 @@ Private Sub HandleRoleMasterRequest(ByVal Message As BinaryReader, ByVal UserInd
         
         Dim request As String
         
-        request = Message.ReadString8()
+        request = Message.ReadString16()
         
         If LenB(request) <> 0 Then
             Call WriteConsoleMsg(UserIndex, "Su solicitud ha sido enviada", FontTypeNames.FONTTYPE_INFO)
@@ -4532,7 +4531,7 @@ Private Sub HandleChangeDescription(ByVal Message As BinaryReader, ByVal UserInd
         
         Dim Description As String
         
-        Description = Message.ReadString8()
+        Description = Message.ReadString16()
         
         If .flags.Muerto = 1 Then
             Call WriteConsoleMsg(UserIndex, "No puedés cambiar la descripción estando muerto.", FontTypeNames.FONTTYPE_INFO)
@@ -4564,7 +4563,7 @@ Private Sub HandleGuildVote(ByVal Message As BinaryReader, ByVal UserIndex As In
         Dim vote As String
         Dim errorStr As String
         
-        vote = Message.ReadString8()
+        vote = Message.ReadString16()
         
         If Not modGuilds.v_UsuarioVota(UserIndex, vote, errorStr) Then
             Call WriteConsoleMsg(UserIndex, "Voto NO contabilizado: " & errorStr, FontTypeNames.FONTTYPE_GUILD)
@@ -4591,7 +4590,7 @@ Private Sub HandlePunishments(ByVal Message As BinaryReader, ByVal UserIndex As 
         Dim name As String
         Dim Count As Integer
         
-        name = Message.ReadString8()
+        name = Message.ReadString16()
         
         If LenB(name) <> 0 Then
             If (InStrB(name, "\") <> 0) Then
@@ -4640,8 +4639,8 @@ Private Sub HandleChangePassword(ByVal Message As BinaryReader, ByVal UserIndex 
         Dim oldPass2 As String
         
 
-        oldPass = Message.ReadString8()
-        newPass = Message.ReadString8()
+        oldPass = Message.ReadString16()
+        newPass = Message.ReadString16()
 
         
         If LenB(newPass) = 0 Then
@@ -4871,7 +4870,7 @@ Private Sub HandleDenounce(ByVal Message As BinaryReader, ByVal UserIndex As Int
         
         Dim Text As String
         
-        Text = Message.ReadString8()
+        Text = Message.ReadString16()
         
         If .flags.Silenciado = 0 Then
 
@@ -4942,7 +4941,7 @@ Private Sub HandlePartyKick(ByVal Message As BinaryReader, ByVal UserIndex As In
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         tUser = NameIndex(UserName)
         If tUser > 0 Then
@@ -4974,7 +4973,7 @@ Private Sub HandlePartySetLeader(ByVal Message As BinaryReader, ByVal UserIndex 
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         tUser = NameIndex(UserName)
         If tUser > 0 Then
@@ -5005,7 +5004,7 @@ Private Sub HandlePartyAcceptMember(ByVal Message As BinaryReader, ByVal UserInd
         
         rank = PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios Or PlayerType.Consejero
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         tUser = NameIndex(UserName)
         If tUser > 0 Then
@@ -5049,7 +5048,7 @@ Private Sub HandleGuildMemberList(ByVal Message As BinaryReader, ByVal UserIndex
         Dim i As Long
         Dim UserName As String
         
-        guild = Message.ReadString8()
+        guild = Message.ReadString16()
         
         If .flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios) Then
             If (InStrB(guild, "\") <> 0) Then
@@ -5090,7 +5089,7 @@ Private Sub HandleGMMessage(ByVal Message As BinaryReader, ByVal UserIndex As In
         
         Dim Text As String
         
-        Text = Message.ReadString8()
+        Text = Message.ReadString16()
         
         If Not .flags.Privilegios And PlayerType.User Then
             Call LogGM(.name, "Mensaje a Gms:" & Text)
@@ -5206,7 +5205,7 @@ Private Sub HandleGoNearby(ByVal Message As BinaryReader, ByVal UserIndex As Int
         
         Dim UserName As String
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         Dim tIndex As Integer
         Dim X As Long
@@ -5266,7 +5265,7 @@ Private Sub HandleComment(ByVal Message As BinaryReader, ByVal UserIndex As Inte
 
         
         Dim comment As String
-        comment = Message.ReadString8()
+        comment = Message.ReadString16()
         
         If Not .flags.Privilegios And PlayerType.User Then
             Call LogGM(.name, "Comentario: " & comment)
@@ -5310,7 +5309,7 @@ Private Sub HandleWhere(ByVal Message As BinaryReader, ByVal UserIndex As Intege
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If Not .flags.Privilegios And PlayerType.User Then
             tUser = NameIndex(UserName)
@@ -5463,7 +5462,7 @@ Private Sub HandleWarpChar(ByVal Message As BinaryReader, ByVal UserIndex As Int
         Dim Y As Byte
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         map = Message.ReadInt()
         X = Message.ReadInt()
         Y = Message.ReadInt()
@@ -5507,7 +5506,7 @@ Private Sub HandleSilence(ByVal Message As BinaryReader, ByVal UserIndex As Inte
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If Not .flags.Privilegios And PlayerType.User Then
             tUser = NameIndex(UserName)
@@ -5561,7 +5560,7 @@ Private Sub HandleSOSRemove(ByVal Message As BinaryReader, ByVal UserIndex As In
 
         
         Dim UserName As String
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If Not .flags.Privilegios And PlayerType.User Then _
             Call Ayuda.Quitar(UserName)
@@ -5585,7 +5584,7 @@ Private Sub HandleGoToChar(ByVal Message As BinaryReader, ByVal UserIndex As Int
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         tUser = NameIndex(UserName)
         
         If .flags.Privilegios And (PlayerType.Dios Or PlayerType.Admin Or PlayerType.SemiDios Or PlayerType.Consejero) Then
@@ -5753,8 +5752,8 @@ Private Sub HandleJail(ByVal Message As BinaryReader, ByVal UserIndex As Integer
         Dim Count As Byte
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
-        reason = Message.ReadString8()
+        UserName = Message.ReadString16()
+        reason = Message.ReadString16()
         jailTime = Message.ReadInt()
         
         If InStr(1, UserName, "+") Then
@@ -5856,8 +5855,8 @@ Private Sub HandleWarnUser(ByVal Message As BinaryReader, ByVal UserIndex As Int
         Dim privs As PlayerType
         Dim Count As Byte
         
-        UserName = Message.ReadString8()
-        reason = Message.ReadString8()
+        UserName = Message.ReadString16()
+        reason = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (Not .flags.Privilegios And PlayerType.User) <> 0 Then
             If LenB(UserName) = 0 Or LenB(reason) = 0 Then
@@ -5912,7 +5911,7 @@ Private Sub HandleEditChar(ByVal Message As BinaryReader, ByVal UserIndex As Int
         Dim LoopC As Byte
         Dim commandString As String
         
-        UserName = Replace(Message.ReadString8(), "+", " ")
+        UserName = Replace(Message.ReadString16(), "+", " ")
         
         If UCase$(UserName) = "YO" Then
             tUser = UserIndex
@@ -5921,8 +5920,8 @@ Private Sub HandleEditChar(ByVal Message As BinaryReader, ByVal UserIndex As Int
         End If
         
         opcion = Message.ReadInt()
-        Arg1 = Message.ReadString8()
-        Arg2 = Message.ReadString8()
+        Arg1 = Message.ReadString16()
+        Arg2 = Message.ReadString16()
         
         If .flags.Privilegios And PlayerType.RoleMaster Then
             Select Case .flags.Privilegios And (PlayerType.Dios Or PlayerType.SemiDios Or PlayerType.Consejero)
@@ -6202,7 +6201,7 @@ Private Sub HandleRequestCharInfo(ByVal Message As BinaryReader, ByVal UserIndex
         Dim targetName As String
         Dim targetIndex As Integer
         
-        targetName = Replace$(Message.ReadString8(), "+", " ")
+        targetName = Replace$(Message.ReadString16(), "+", " ")
         targetIndex = NameIndex(targetName)
         
         
@@ -6240,7 +6239,7 @@ Private Sub HandleRequestCharStats(ByVal Message As BinaryReader, ByVal UserInde
         
         Dim UserName As String
         Dim tUser As Integer
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios)) <> 0 Then
             Call LogGM(.name, "/STAT " & UserName)
@@ -6276,7 +6275,7 @@ Private Sub HandleRequestCharGold(ByVal Message As BinaryReader, ByVal UserIndex
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         tUser = NameIndex(UserName)
         
         If (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios)) Then
@@ -6311,7 +6310,7 @@ Private Sub HandleRequestCharInventory(ByVal Message As BinaryReader, ByVal User
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         tUser = NameIndex(UserName)
         
         
@@ -6347,7 +6346,7 @@ Private Sub HandleRequestCharBank(ByVal Message As BinaryReader, ByVal UserIndex
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         tUser = NameIndex(UserName)
         
         
@@ -6385,7 +6384,7 @@ Private Sub HandleRequestCharSkills(ByVal Message As BinaryReader, ByVal UserInd
         Dim LoopC As Long
         Dim Text As String
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         tUser = NameIndex(UserName)
         
         
@@ -6430,7 +6429,7 @@ Private Sub HandleReviveChar(ByVal Message As BinaryReader, ByVal UserIndex As I
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         
         If (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios)) Then
@@ -6553,7 +6552,7 @@ Private Sub HandleForgive(ByVal Message As BinaryReader, ByVal UserIndex As Inte
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios)) <> 0 Then
             tUser = NameIndex(UserName)
@@ -6591,7 +6590,7 @@ Private Sub HandleKick(ByVal Message As BinaryReader, ByVal UserIndex As Integer
         
         rank = PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios Or PlayerType.Consejero
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios)) Then
             tUser = NameIndex(UserName)
@@ -6629,7 +6628,7 @@ Private Sub HandleExecute(ByVal Message As BinaryReader, ByVal UserIndex As Inte
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios)) <> 0 Then
             tUser = NameIndex(UserName)
@@ -6667,8 +6666,8 @@ Private Sub HandleBanChar(ByVal Message As BinaryReader, ByVal UserIndex As Inte
         Dim UserName As String
         Dim reason As String
         
-        UserName = Message.ReadString8()
-        reason = Message.ReadString8()
+        UserName = Message.ReadString16()
+        reason = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios)) <> 0 Then
             Call BanCharacter(UserIndex, UserName, reason)
@@ -6694,7 +6693,7 @@ Private Sub HandleUnbanChar(ByVal Message As BinaryReader, ByVal UserIndex As In
         Dim UserName As String
         Dim cantPenas As Byte
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios)) <> 0 Then
             If (InStrB(UserName, "\") <> 0) Then
@@ -6764,7 +6763,7 @@ Private Sub HandleSummonChar(ByVal Message As BinaryReader, ByVal UserIndex As I
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios)) Then
             tUser = NameIndex(UserName)
@@ -6875,7 +6874,7 @@ Private Sub HandleServerMessage(ByVal Message As BinaryReader, ByVal UserIndex A
 
         
         Dim Text As String
-        Text = Message.ReadString8()
+        Text = Message.ReadString16()
         
         If (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios)) Then
             If LenB(Text) <> 0 Then
@@ -6905,7 +6904,7 @@ Private Sub HandleNickToIP(ByVal Message As BinaryReader, ByVal UserIndex As Int
         Dim tUser As Integer
         Dim priv As PlayerType
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios)) <> 0 Then
             tUser = NameIndex(UserName)
@@ -7008,7 +7007,7 @@ Private Sub HandleGuildOnlineMembers(ByVal Message As BinaryReader, ByVal UserIn
         Dim GuildName As String
         Dim tGuild As Integer
         
-        GuildName = Message.ReadString8()
+        GuildName = Message.ReadString16()
         
         If (InStrB(GuildName, "+") <> 0) Then
             GuildName = Replace(GuildName, "+", " ")
@@ -7162,7 +7161,7 @@ Private Sub HandleSetCharDescription(ByVal Message As BinaryReader, ByVal UserIn
         Dim tUser As Integer
         Dim desc As String
         
-        desc = Message.ReadString8()
+        desc = Message.ReadString16()
         
         If (.flags.Privilegios And (PlayerType.Dios Or PlayerType.Admin)) <> 0 Or (.flags.Privilegios And PlayerType.RoleMaster) <> 0 Then
             tUser = .flags.TargetUser
@@ -7264,7 +7263,7 @@ Private Sub HandleRoyalArmyMessage(ByVal Message As BinaryReader, ByVal UserInde
 
         
         Dim Text As String
-        Text = Message.ReadString8()
+        Text = Message.ReadString16()
         
         'Solo dioses, admins y RMS
         If .flags.Privilegios And (PlayerType.Dios Or PlayerType.Admin Or PlayerType.RoleMaster) Then
@@ -7289,7 +7288,7 @@ Private Sub HandleChaosLegionMessage(ByVal Message As BinaryReader, ByVal UserIn
 
         
         Dim Text As String
-        Text = Message.ReadString8()
+        Text = Message.ReadString16()
         
         'Solo dioses, admins y RMS
         If .flags.Privilegios And (PlayerType.Dios Or PlayerType.Admin Or PlayerType.RoleMaster) Then
@@ -7314,7 +7313,7 @@ Private Sub HandleCitizenMessage(ByVal Message As BinaryReader, ByVal UserIndex 
 
         
         Dim Text As String
-        Text = Message.ReadString8()
+        Text = Message.ReadString16()
         
         'Solo dioses, admins y RMS
         If .flags.Privilegios And (PlayerType.Dios Or PlayerType.Admin Or PlayerType.RoleMaster) Then
@@ -7339,7 +7338,7 @@ Private Sub HandleCriminalMessage(ByVal Message As BinaryReader, ByVal UserIndex
 
         
         Dim Text As String
-        Text = Message.ReadString8()
+        Text = Message.ReadString16()
         
         'Solo dioses, admins y RMS
         If .flags.Privilegios And (PlayerType.Dios Or PlayerType.Admin Or PlayerType.RoleMaster) Then
@@ -7364,7 +7363,7 @@ Private Sub HandleTalkAsNPC(ByVal Message As BinaryReader, ByVal UserIndex As In
 
         
         Dim Text As String
-        Text = Message.ReadString8()
+        Text = Message.ReadString16()
         
         'Solo dioses, admins y RMS
         If .flags.Privilegios And (PlayerType.Dios Or PlayerType.Admin Or PlayerType.RoleMaster) Then
@@ -7427,7 +7426,7 @@ Private Sub HandleAcceptRoyalCouncilMember(ByVal Message As BinaryReader, ByVal 
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
             tUser = NameIndex(UserName)
@@ -7464,7 +7463,7 @@ Private Sub HandleAcceptChaosCouncilMember(ByVal Message As BinaryReader, ByVal 
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
             tUser = NameIndex(UserName)
@@ -7531,7 +7530,7 @@ Private Sub HandleCouncilKick(ByVal Message As BinaryReader, ByVal UserIndex As 
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) <> 0 Then
             tUser = NameIndex(UserName)
@@ -7686,7 +7685,7 @@ Private Sub HandleGuildBan(ByVal Message As BinaryReader, ByVal UserIndex As Int
         Dim tIndex As Integer
         Dim tFile As String
         
-        GuildName = Message.ReadString8()
+        GuildName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
             tFile = App.Path & "\guilds\" & GuildName & "-members.mem"
@@ -7754,7 +7753,7 @@ Private Sub HandleBanIP(ByVal Message As BinaryReader, ByVal UserIndex As Intege
             bannedIP = bannedIP & Message.ReadInt() & "."
             bannedIP = bannedIP & Message.ReadInt()
         Else
-            tUser = NameIndex(Message.ReadString8())
+            tUser = NameIndex(Message.ReadString16())
             
             If tUser <= 0 Then
                 Call WriteConsoleMsg(UserIndex, "El personaje no está online.", FontTypeNames.FONTTYPE_INFO)
@@ -7763,7 +7762,7 @@ Private Sub HandleBanIP(ByVal Message As BinaryReader, ByVal UserIndex As Intege
             End If
         End If
         
-        reason = Message.ReadString8()
+        reason = Message.ReadString16()
         
         If LenB(bannedIP) > 0 Then
             If .flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios) Then
@@ -7902,7 +7901,7 @@ Private Sub HandleChaosLegionKick(ByVal Message As BinaryReader, ByVal UserIndex
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) <> 0 Then
             If (InStrB(UserName, "\") <> 0) Then
@@ -7952,7 +7951,7 @@ Private Sub HandleRoyalArmyKick(ByVal Message As BinaryReader, ByVal UserIndex A
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) <> 0 Then
             If (InStrB(UserName, "\") <> 0) Then
@@ -8046,9 +8045,9 @@ Private Sub HandleRemovePunishment(ByVal Message As BinaryReader, ByVal UserInde
         Dim punishment As Byte
         Dim NewText As String
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         punishment = Message.ReadInt
-        NewText = Message.ReadString8()
+        NewText = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
             If LenB(UserName) = 0 Then
@@ -8166,7 +8165,7 @@ Private Sub HandleLastIP(ByVal Message As BinaryReader, ByVal UserIndex As Integ
         Dim validCheck As Boolean
         
         priv = PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios Or PlayerType.Consejero
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios Or PlayerType.SemiDios)) <> 0 Then
             'Handle special chars
@@ -8262,7 +8261,7 @@ Public Sub HandleCheckSlot(ByVal Message As BinaryReader, ByVal UserIndex As Int
         Dim Slot As Byte
         Dim tIndex As Integer
         
-        UserName = Message.ReadString8() 'Que UserName?
+        UserName = Message.ReadString16() 'Que UserName?
         Slot = Message.ReadInt() 'Que Slot?
         tIndex = NameIndex(UserName)  'Que user index?
         
@@ -8435,7 +8434,7 @@ Public Sub HandleChangeMapInfoRestricted(ByVal Message As BinaryReader, ByVal Us
     With UserList(UserIndex)
 
         
-        tStr = Message.ReadString8()
+        tStr = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) <> 0 Then
             If tStr = "NEWBIE" Or tStr = "NO" Or tStr = "ARMADA" Or tStr = "CAOS" Or tStr = "FACCION" Then
@@ -8542,7 +8541,7 @@ Public Sub HandleChangeMapInfoLand(ByVal Message As BinaryReader, ByVal UserInde
     With UserList(UserIndex)
 
         
-        tStr = Message.ReadString8()
+        tStr = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) <> 0 Then
             If tStr = "BOSQUE" Or tStr = "NIEVE" Or tStr = "DESIERTO" Or tStr = "CIUDAD" Or tStr = "CAMPO" Or tStr = "DUNGEON" Then
@@ -8575,7 +8574,7 @@ Public Sub HandleChangeMapInfoZone(ByVal Message As BinaryReader, ByVal UserInde
     With UserList(UserIndex)
 
         
-        tStr = Message.ReadString8()
+        tStr = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) <> 0 Then
             If tStr = "BOSQUE" Or tStr = "NIEVE" Or tStr = "DESIERTO" Or tStr = "CIUDAD" Or tStr = "CAMPO" Or tStr = "DUNGEON" Then
@@ -8628,7 +8627,7 @@ Public Sub HandleShowGuildMessages(ByVal Message As BinaryReader, ByVal UserInde
         
         Dim guild As String
         
-        guild = Message.ReadString8()
+        guild = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
             Call modGuilds.GMEscuchaClan(UserIndex, guild)
@@ -8675,8 +8674,8 @@ Public Sub HandleAlterName(ByVal Message As BinaryReader, ByVal UserIndex As Int
         Dim changeNameUI As Integer
         Dim guildIndex As Integer
         
-        UserName = Message.ReadString8()
-        newName = Message.ReadString8()
+        UserName = Message.ReadString16()
+        newName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
             If LenB(UserName) = 0 Or LenB(newName) = 0 Then
@@ -8740,8 +8739,8 @@ Public Sub HandleAlterMail(ByVal Message As BinaryReader, ByVal UserIndex As Int
         Dim UserName As String
         Dim newMail As String
         
-        UserName = Message.ReadString8()
-        newMail = Message.ReadString8()
+        UserName = Message.ReadString16()
+        newMail = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
             If LenB(UserName) = 0 Or LenB(newMail) = 0 Then
@@ -8779,8 +8778,8 @@ Public Sub HandleAlterPassword(ByVal Message As BinaryReader, ByVal UserIndex As
         Dim copyFrom As String
         Dim Password As String
         
-        UserName = Replace(Message.ReadString8(), "+", " ")
-        copyFrom = Replace(Message.ReadString8(), "+", " ")
+        UserName = Replace(Message.ReadString16(), "+", " ")
+        copyFrom = Replace(Message.ReadString16(), "+", " ")
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
             Call LogGM(.name, "Ha alterado la contraseña de " & UserName)
@@ -8946,7 +8945,7 @@ Public Sub HandleTurnCriminal(ByVal Message As BinaryReader, ByVal UserIndex As 
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
             Call LogGM(.name, "/CONDEN " & UserName)
@@ -8976,7 +8975,7 @@ Public Sub HandleResetFactions(ByVal Message As BinaryReader, ByVal UserIndex As
         Dim UserName As String
         Dim tUser As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
             Call LogGM(.name, "/RAJAR " & UserName)
@@ -9007,7 +9006,7 @@ Public Sub HandleRemoveCharFromGuild(ByVal Message As BinaryReader, ByVal UserIn
         Dim UserName As String
         Dim guildIndex As Integer
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
             Call LogGM(.name, "/RAJARCLAN " & UserName)
@@ -9042,7 +9041,7 @@ Public Sub HandleRequestCharMail(ByVal Message As BinaryReader, ByVal UserIndex 
         Dim UserName As String
         Dim mail As String
         
-        UserName = Message.ReadString8()
+        UserName = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
             If FileExist(CharPath & UserName & ".chr") Then
@@ -9070,7 +9069,7 @@ Public Sub HandleSystemMessage(ByVal Message As BinaryReader, ByVal UserIndex As
 
         
         Dim Text As String
-        Text = Message.ReadString8()
+        Text = Message.ReadString16()
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
             Call LogGM(.name, "Mensaje de sistema:" & Text)
@@ -9099,7 +9098,7 @@ Public Sub HandleSetMOTD(ByVal Message As BinaryReader, ByVal UserIndex As Integ
         Dim auxiliaryString() As String
         Dim LoopC As Long
         
-        newMOTD = Message.ReadString8()
+        newMOTD = Message.ReadString16()
         auxiliaryString = Split(newMOTD, vbCrLf)
         
         If (Not .flags.Privilegios And PlayerType.RoleMaster) <> 0 And (.flags.Privilegios And (PlayerType.Admin Or PlayerType.Dios)) Then
@@ -9747,7 +9746,7 @@ End Sub
 
 Public Sub WriteShowMessageBox(ByVal UserIndex As Integer, ByVal Message As String)
         Call Writer_.WriteInt(ServerPacketID.ShowMessageBox)
-        Call Writer_.WriteString8(Message)
+        Call Writer_.WriteString16(Message)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -9882,7 +9881,7 @@ Public Sub WriteGuildList(ByVal UserIndex As Integer, ByRef guildList() As Strin
         If Len(Tmp) Then _
             Tmp = Left$(Tmp, Len(Tmp) - 1)
         
-        Call Writer_.WriteString8(Tmp)
+        Call Writer_.WriteString16(Tmp)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -9984,7 +9983,7 @@ Public Sub WriteChangeInventorySlot(ByVal UserIndex As Integer, ByVal Slot As By
         End If
         
         Call Writer_.WriteInt(ObjIndex)
-        Call Writer_.WriteString8(obData.name)
+        Call Writer_.WriteString16(obData.name)
         Call Writer_.WriteInt(UserList(UserIndex).Invent.Object(Slot).amount)
         Call Writer_.WriteBool(UserList(UserIndex).Invent.Object(Slot).Equipped)
         Call Writer_.WriteInt(obData.GrhIndex)
@@ -10020,7 +10019,7 @@ Public Sub WriteChangeBankSlot(ByVal UserIndex As Integer, ByVal Slot As Byte)
             obData = ObjData(ObjIndex)
         End If
         
-        Call Writer_.WriteString8(obData.name)
+        Call Writer_.WriteString16(obData.name)
         Call Writer_.WriteInt(UserList(UserIndex).BancoInvent.Object(Slot).amount)
         Call Writer_.WriteInt(obData.GrhIndex)
         Call Writer_.WriteInt(obData.OBJType)
@@ -10046,9 +10045,9 @@ Public Sub WriteChangeSpellSlot(ByVal UserIndex As Integer, ByVal Slot As Intege
         Call Writer_.WriteInt(UserList(UserIndex).Stats.UserHechizos(Slot))
         
         If UserList(UserIndex).Stats.UserHechizos(Slot) > 0 Then
-            Call Writer_.WriteString8(Hechizos(UserList(UserIndex).Stats.UserHechizos(Slot)).Nombre)
+            Call Writer_.WriteString16(Hechizos(UserList(UserIndex).Stats.UserHechizos(Slot)).Nombre)
         Else
-            Call Writer_.WriteString8("(None)")
+            Call Writer_.WriteString16("(None)")
         End If
 
 
@@ -10103,7 +10102,7 @@ Public Sub WriteBlacksmithWeapons(ByVal UserIndex As Integer)
         ' Write the needed data of each object
         For i = 1 To Count
             Obj = ObjData(ArmasHerrero(validIndexes(i)))
-            Call Writer_.WriteString8(Obj.name)
+            Call Writer_.WriteString16(Obj.name)
             Call Writer_.WriteInt(Obj.LingH)
             Call Writer_.WriteInt(Obj.LingP)
             Call Writer_.WriteInt(Obj.LingO)
@@ -10144,7 +10143,7 @@ Public Sub WriteBlacksmithArmors(ByVal UserIndex As Integer)
         ' Write the needed data of each object
         For i = 1 To Count
             Obj = ObjData(ArmadurasHerrero(validIndexes(i)))
-            Call Writer_.WriteString8(Obj.name)
+            Call Writer_.WriteString16(Obj.name)
             Call Writer_.WriteInt(Obj.LingH)
             Call Writer_.WriteInt(Obj.LingP)
             Call Writer_.WriteInt(Obj.LingO)
@@ -10188,7 +10187,7 @@ Public Sub WriteCarpenterObjects(ByVal UserIndex As Integer)
         ' Write the needed data of each object
         For i = 1 To Count
             Obj = ObjData(ObjCarpintero(validIndexes(i)))
-            Call Writer_.WriteString8(Obj.name)
+            Call Writer_.WriteString16(Obj.name)
             Call Writer_.WriteInt(Obj.Madera)
             Call Writer_.WriteInt(ObjCarpintero(validIndexes(i)))
         Next i
@@ -10250,7 +10249,7 @@ Public Sub WriteChangeNPCInventorySlot(ByVal UserIndex As Integer, ByVal Slot As
     End If
         Call Writer_.WriteInt(ServerPacketID.ChangeNPCInventorySlot)
         Call Writer_.WriteInt(Slot)
-        Call Writer_.WriteString8(ObjInfo.name)
+        Call Writer_.WriteString16(ObjInfo.name)
         Call Writer_.WriteInt(Obj.amount)
         Call Writer_.WriteReal32(price)
         Call Writer_.WriteInt(ObjInfo.GrhIndex)
@@ -10434,7 +10433,7 @@ Public Sub WriteTrainerCreatureList(ByVal UserIndex As Integer, ByVal NpcIndex A
         If LenB(str) > 0 Then _
             str = Left$(str, Len(str) - 1)
         
-        Call Writer_.WriteString8(str)
+        Call Writer_.WriteString16(str)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -10458,7 +10457,7 @@ Public Sub WriteGuildNews(ByVal UserIndex As Integer, ByVal guildNews As String,
     Dim Tmp As String
         Call Writer_.WriteInt(ServerPacketID.guildNews)
         
-        Call Writer_.WriteString8(guildNews)
+        Call Writer_.WriteString16(guildNews)
         
         'Prepare enemies' list
         For i = LBound(enemies()) To UBound(enemies())
@@ -10468,7 +10467,7 @@ Public Sub WriteGuildNews(ByVal UserIndex As Integer, ByVal guildNews As String,
         If Len(Tmp) Then _
             Tmp = Left$(Tmp, Len(Tmp) - 1)
         
-        Call Writer_.WriteString8(Tmp)
+        Call Writer_.WriteString16(Tmp)
         
         Tmp = vbNullString
         'Prepare allies' list
@@ -10479,7 +10478,7 @@ Public Sub WriteGuildNews(ByVal UserIndex As Integer, ByVal guildNews As String,
         If Len(Tmp) Then _
             Tmp = Left$(Tmp, Len(Tmp) - 1)
         
-        Call Writer_.WriteString8(Tmp)
+        Call Writer_.WriteString16(Tmp)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -10499,7 +10498,7 @@ Public Sub WriteOfferDetails(ByVal UserIndex As Integer, ByVal details As String
 
         Call Writer_.WriteInt(ServerPacketID.OfferDetails)
         
-        Call Writer_.WriteString8(details)
+        Call Writer_.WriteString16(details)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -10529,7 +10528,7 @@ Public Sub WriteAlianceProposalsList(ByVal UserIndex As Integer, ByRef guilds() 
         If Len(Tmp) Then _
             Tmp = Left$(Tmp, Len(Tmp) - 1)
         
-        Call Writer_.WriteString8(Tmp)
+        Call Writer_.WriteString16(Tmp)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -10559,7 +10558,7 @@ Public Sub WritePeaceProposalsList(ByVal UserIndex As Integer, ByRef guilds() As
         If Len(Tmp) Then _
             Tmp = Left$(Tmp, Len(Tmp) - 1)
         
-        Call Writer_.WriteString8(Tmp)
+        Call Writer_.WriteString16(Tmp)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -10591,7 +10590,7 @@ Public Sub WriteCharacterInfo(ByVal UserIndex As Integer, ByVal charName As Stri
                             ByVal CaosLegion As Boolean, ByVal citicensKilled As Long, ByVal criminalsKilled As Long)
         Call Writer_.WriteInt(ServerPacketID.CharacterInfo)
         
-        Call Writer_.WriteString8(charName)
+        Call Writer_.WriteString16(charName)
         Call Writer_.WriteInt(race)
         Call Writer_.WriteInt(Class)
         Call Writer_.WriteInt(gender)
@@ -10601,9 +10600,9 @@ Public Sub WriteCharacterInfo(ByVal UserIndex As Integer, ByVal charName As Stri
         Call Writer_.WriteInt(bank)
         Call Writer_.WriteInt(reputation)
         
-        Call Writer_.WriteString8(previousPetitions)
-        Call Writer_.WriteString8(currentGuild)
-        Call Writer_.WriteString8(previousGuilds)
+        Call Writer_.WriteString16(previousPetitions)
+        Call Writer_.WriteString16(currentGuild)
+        Call Writer_.WriteString16(previousGuilds)
         
         Call Writer_.WriteBool(RoyalArmy)
         Call Writer_.WriteBool(CaosLegion)
@@ -10641,7 +10640,7 @@ Public Sub WriteGuildLeaderInfo(ByVal UserIndex As Integer, ByRef guildList() As
         If Len(Tmp) Then _
             Tmp = Left$(Tmp, Len(Tmp) - 1)
         
-        Call Writer_.WriteString8(Tmp)
+        Call Writer_.WriteString16(Tmp)
         
         ' Prepare guild member's list
         Tmp = vbNullString
@@ -10652,10 +10651,10 @@ Public Sub WriteGuildLeaderInfo(ByVal UserIndex As Integer, ByRef guildList() As
         If Len(Tmp) Then _
             Tmp = Left$(Tmp, Len(Tmp) - 1)
         
-        Call Writer_.WriteString8(Tmp)
+        Call Writer_.WriteString16(Tmp)
         
         ' Store guild news
-        Call Writer_.WriteString8(guildNews)
+        Call Writer_.WriteString16(guildNews)
         
         ' Prepare the join request's list
         Tmp = vbNullString
@@ -10666,7 +10665,7 @@ Public Sub WriteGuildLeaderInfo(ByVal UserIndex As Integer, ByRef guildList() As
         If Len(Tmp) Then _
             Tmp = Left$(Tmp, Len(Tmp) - 1)
         
-        Call Writer_.WriteString8(Tmp)
+        Call Writer_.WriteString16(Tmp)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -10703,21 +10702,21 @@ Public Sub WriteGuildDetails(ByVal UserIndex As Integer, ByVal GuildName As Stri
     Dim temp As String
         Call Writer_.WriteInt(ServerPacketID.GuildDetails)
         
-        Call Writer_.WriteString8(GuildName)
-        Call Writer_.WriteString8(founder)
-        Call Writer_.WriteString8(foundationDate)
-        Call Writer_.WriteString8(leader)
-        Call Writer_.WriteString8(URL)
+        Call Writer_.WriteString16(GuildName)
+        Call Writer_.WriteString16(founder)
+        Call Writer_.WriteString16(foundationDate)
+        Call Writer_.WriteString16(leader)
+        Call Writer_.WriteString16(URL)
         
         Call Writer_.WriteInt(memberCount)
         Call Writer_.WriteBool(electionsOpen)
         
-        Call Writer_.WriteString8(alignment)
+        Call Writer_.WriteString16(alignment)
         
         Call Writer_.WriteInt(enemiesCount)
         Call Writer_.WriteInt(AlliesCount)
         
-        Call Writer_.WriteString8(antifactionPoints)
+        Call Writer_.WriteString16(antifactionPoints)
         
         For i = LBound(codex()) To UBound(codex())
             temp = temp & codex(i) & SEPARATOR
@@ -10726,9 +10725,9 @@ Public Sub WriteGuildDetails(ByVal UserIndex As Integer, ByVal GuildName As Stri
         If Len(temp) > 1 Then _
             temp = Left$(temp, Len(temp) - 1)
         
-        Call Writer_.WriteString8(temp)
+        Call Writer_.WriteString16(temp)
         
-        Call Writer_.WriteString8(guildDesc)
+        Call Writer_.WriteString16(guildDesc)
 
 End Sub
 
@@ -10777,7 +10776,7 @@ End Sub
 Public Sub WriteShowUserRequest(ByVal UserIndex As Integer, ByVal details As String)
         Call Writer_.WriteInt(ServerPacketID.ShowUserRequest)
         
-        Call Writer_.WriteString8(details)
+        Call Writer_.WriteString16(details)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -10829,7 +10828,7 @@ Public Sub WriteChangeUserTradeSlot(ByVal UserIndex As Integer, ByVal ObjIndex A
         Call Writer_.WriteInt(ServerPacketID.ChangeUserTradeSlot)
         
         Call Writer_.WriteInt(ObjIndex)
-        Call Writer_.WriteString8(ObjData(ObjIndex).name)
+        Call Writer_.WriteString16(ObjData(ObjIndex).name)
         Call Writer_.WriteInt(amount)
         Call Writer_.WriteInt(ObjData(ObjIndex).GrhIndex)
         Call Writer_.WriteInt(ObjData(ObjIndex).OBJType)
@@ -10865,7 +10864,7 @@ Public Sub WriteSpawnList(ByVal UserIndex As Integer, ByRef npcNames() As String
         If Len(Tmp) Then _
             Tmp = Left$(Tmp, Len(Tmp) - 1)
         
-        Call Writer_.WriteString8(Tmp)
+        Call Writer_.WriteString16(Tmp)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -10893,7 +10892,7 @@ Public Sub WriteShowSOSForm(ByVal UserIndex As Integer)
         If LenB(Tmp) <> 0 Then _
             Tmp = Left$(Tmp, Len(Tmp) - 1)
         
-        Call Writer_.WriteString8(Tmp)
+        Call Writer_.WriteString16(Tmp)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -10909,7 +10908,7 @@ End Sub
 Public Sub WriteShowMOTDEditionForm(ByVal UserIndex As Integer, ByVal currentMOTD As String)
         Call Writer_.WriteInt(ServerPacketID.ShowMOTDEditionForm)
         
-        Call Writer_.WriteString8(currentMOTD)
+        Call Writer_.WriteString16(currentMOTD)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -10954,7 +10953,7 @@ Public Sub WriteUserNameList(ByVal UserIndex As Integer, ByRef userNamesList() A
         If Len(Tmp) Then _
             Tmp = Left$(Tmp, Len(Tmp) - 1)
         
-        Call Writer_.WriteString8(Tmp)
+        Call Writer_.WriteString16(Tmp)
 
 
     Call modSendData.SendData(ToUser, UserIndex, Writer_)
@@ -11014,7 +11013,7 @@ Public Function PrepareMessageChatOverHead(ByVal chat As String, ByVal CharIndex
 
 'Prepares the "ChatOverHead" message and returns it.
         Call Writer_.WriteInt(ServerPacketID.ChatOverHead)
-        Call Writer_.WriteString8(chat)
+        Call Writer_.WriteString16(chat)
         Call Writer_.WriteInt(CharIndex)
         
         ' Write rgb channels and save one byte from long :D
@@ -11040,7 +11039,7 @@ Public Function PrepareMessageConsoleMsg(ByVal chat As String, ByVal FontIndex A
 
 'Prepares the "ConsoleMsg" message and returns it.
         Call Writer_.WriteInt(ServerPacketID.ConsoleMsg)
-        Call Writer_.WriteString8(chat)
+        Call Writer_.WriteString16(chat)
         Call Writer_.WriteInt(FontIndex)
         
         
@@ -11110,7 +11109,7 @@ Public Function PrepareMessageGuildChat(ByVal chat As String) As BinaryWriter
 
 'Prepares the "GuildChat" message and returns it
         Call Writer_.WriteInt(ServerPacketID.GuildChat)
-        Call Writer_.WriteString8(chat)
+        Call Writer_.WriteString16(chat)
         
         
 
@@ -11129,7 +11128,7 @@ Public Function PrepareMessageShowMessageBox(ByVal chat As String) As BinaryWrit
 
 'Prepares the "ShowMessageBox" message and returns it
         Call Writer_.WriteInt(ServerPacketID.ShowMessageBox)
-        Call Writer_.WriteString8(chat)
+        Call Writer_.WriteString16(chat)
         
         
 
@@ -11333,7 +11332,7 @@ Public Function PrepareMessageCharacterCreate(ByVal body As Integer, ByVal Head 
         Call Writer_.WriteInt(helmet)
         Call Writer_.WriteInt(FX)
         Call Writer_.WriteInt(FXLoops)
-        Call Writer_.WriteString8(name)
+        Call Writer_.WriteString16(name)
         Call Writer_.WriteInt(criminal)
         Call Writer_.WriteInt(privileges)
         
@@ -11420,7 +11419,7 @@ Public Function PrepareMessageUpdateTagAndStatus(ByVal UserIndex As Integer, isC
         
         Call Writer_.WriteInt(UserList(UserIndex).Char.CharIndex)
         Call Writer_.WriteBool(isCriminal)
-        Call Writer_.WriteString8(Tag)
+        Call Writer_.WriteString16(Tag)
         
         
 
@@ -11438,7 +11437,7 @@ Public Function PrepareMessageErrorMsg(ByVal Message As String) As BinaryWriter
 
 'Prepares the "ErrorMsg" message and returns it
         Call Writer_.WriteInt(ServerPacketID.ErrorMsg)
-        Call Writer_.WriteString8(Message)
+        Call Writer_.WriteString16(Message)
         
         
 
