@@ -47,9 +47,9 @@ End Sub
 Public Sub NetListen(ByVal Address As String, ByVal Port As Long)
     
     Set NetProtocol_ = New Network_Protocol
-    Call NetProtocol_.Attach(AddressOf Network_OnAttach, AddressOf Network_OnDetach, AddressOf Network_OnRecv, AddressOf Network_OnSend, AddressOf Network_OnError)
+    Call NetProtocol_.Attach(AddressOf Network_OnAttach, AddressOf Network_OnDetach, AddressOf Network_OnRecv, AddressOf Network_OnSend)
     
-    Set NetListener_ = Kernel.Network.Listen(Address, Port)
+    Set NetListener_ = Kernel.Network.Listen(Address, Port, 1000)
     Call NetListener_.SetProtocol(NetProtocol_)
     
     Call modEngine_Protocol.Initialize
@@ -66,7 +66,7 @@ Public Sub NetFlush()
     
     If (Not NetListener_ Is Nothing) Then
     
-        Call NetListener_.Flush
+        'Call NetListener_.Flush
         
     End If
 

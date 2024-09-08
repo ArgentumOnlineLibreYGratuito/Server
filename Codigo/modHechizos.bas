@@ -774,14 +774,7 @@ End If
 
 If Hechizos(H).Revivir = 1 Then
     If UserList(tU).flags.Muerto = 1 Then
-        
-        'Seguro de resurreccion (solo afecta a los hechizos, no al sacerdote ni al comando de GM)
-        If UserList(tU).flags.SeguroResu Then
-            Call WriteConsoleMsg(UserIndex, "¡El espíritu no tiene intenciones de regresar al mundo de los vivos!", FontTypeNames.FONTTYPE_INFO)
-            b = False
-            Exit Sub
-        End If
-    
+
         'No usar resu en mapas con ResuSinEfecto
         If MapInfo(UserList(tU).Pos.map).ResuSinEfecto > 0 Then
             Call WriteConsoleMsg(UserIndex, "¡Revivir no está permitido aqui! Retirate de la Zona si deseas utilizar el Hechizo.", FontTypeNames.FONTTYPE_INFO)

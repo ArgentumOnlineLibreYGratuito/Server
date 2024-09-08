@@ -1062,9 +1062,7 @@ On Error GoTo ErrorHandler
     UserList(UserIndex).flags.AtacadoPorUser = 0
     UserList(UserIndex).flags.Envenenado = 0
     UserList(UserIndex).flags.Muerto = 1
-    UserList(UserIndex).flags.SeguroResu = True
-    Call WriteResuscitationSafeOn(UserIndex)
-    
+
     aN = UserList(UserIndex).flags.AtacadoPorNpc
     If aN > 0 Then
         Npclist(aN).Movement = Npclist(aN).flags.OldMovement

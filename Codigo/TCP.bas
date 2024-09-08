@@ -118,8 +118,7 @@ ValidateSkills = True
     
 End Function
 
-Sub ConnectNewUser(ByVal UserIndex As Integer, ByRef name As String, ByRef Password As String, ByVal UserRaza As eRaza, ByVal UserSexo As eGenero, ByVal UserClase As eClass, _
-                    ByRef skills() As Byte, ByRef UserEmail As String, ByVal Hogar As eCiudad)
+Sub ConnectNewUser(ByVal UserIndex As Integer, ByVal name As String, ByVal Password As String, ByVal UserRaza As eRaza, ByVal UserSexo As eGenero, ByVal UserClase As eClass, ByVal UserEmail As String)
 '*************************************************
 'Author: Unknown
 'Last modified: 20/4/2007
@@ -147,7 +146,6 @@ If UserList(UserIndex).flags.UserLogged Then
 End If
 
 Dim LoopC As Long
-Dim totalskpts As Long
 
 '¿Existe el personaje?
 If FileExist(CharPath & UCase$(name) & ".chr", vbNormal) = True Then
@@ -181,7 +179,7 @@ UserList(UserIndex).clase = UserClase
 UserList(UserIndex).raza = UserRaza
 UserList(UserIndex).genero = UserSexo
 UserList(UserIndex).email = UserEmail
-UserList(UserIndex).Hogar = Hogar
+UserList(UserIndex).Hogar = RandomNumber(cUllathorpe, cArghal)
 
 '[Pablo (Toxic Waste) 9/01/08]
 UserList(UserIndex).Stats.UserAtributos(eAtributos.Fuerza) = UserList(UserIndex).Stats.UserAtributos(eAtributos.Fuerza) + ModRaza(UserRaza).Fuerza
@@ -192,17 +190,9 @@ UserList(UserIndex).Stats.UserAtributos(eAtributos.Constitucion) = UserList(User
 '[/Pablo (Toxic Waste)]
 
 For LoopC = 1 To NUMSKILLS
-    UserList(UserIndex).Stats.UserSkills(LoopC) = skills(LoopC - 1)
-    totalskpts = totalskpts + Abs(UserList(UserIndex).Stats.UserSkills(LoopC))
+    UserList(UserIndex).Stats.UserSkills(LoopC) = 0
 Next LoopC
 
-
-If totalskpts > 10 Then
-    Call LogHackAttemp(UserList(UserIndex).name & " intento hackear los skills.")
-    Call BorrarUsuario(UserList(UserIndex).name)
-    Call CloseSocket(UserIndex)
-    Exit Sub
-End If
 '%%%%%%%%%%%%% PREVENIR HACKEO DE LOS SKILLS %%%%%%%%%%%%%
 
 UserList(UserIndex).Char.heading = eHeading.SOUTH
@@ -564,14 +554,6 @@ If UserList(UserIndex).Invent.EscudoEqpSlot = 0 Then UserList(UserIndex).Char.Sh
 If UserList(UserIndex).Invent.CascoEqpSlot = 0 Then UserList(UserIndex).Char.CascoAnim = NingunCasco
 If UserList(UserIndex).Invent.WeaponEqpSlot = 0 Then UserList(UserIndex).Char.WeaponAnim = NingunArma
 
-If (UserList(UserIndex).flags.Muerto = 0) Then
-    UserList(UserIndex).flags.SeguroResu = False
-    Call WriteResuscitationSafeOff(UserIndex)
-Else
-    UserList(UserIndex).flags.SeguroResu = True
-    Call WriteResuscitationSafeOn(UserIndex)
-End If
-
 Call UpdateUserInv(True, UserIndex, 0)
 Call UpdateUserHechizos(True, UserIndex, 0)
 
@@ -822,7 +804,7 @@ Close #N
 N = FreeFile
 'Log
 Open App.Path & "\logs\Connect.log" For Append Shared As #N
-Print #N, UserList(UserIndex).name & " ha entrado al juego. UserIndex:" & UserIndex & " " & time & " " & Date
+Print #N, UserList(UserIndex).name & " ha entrado al juego. UserIndex:" & UserIndex & " " & Time & " " & Date
 Close #N
 
 End Sub
